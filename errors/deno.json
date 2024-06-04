@@ -1,0 +1,27 @@
+{
+    "name": "@gnome/errors",
+    "version": "0.0.1",
+    "exports": {
+        ".": "./mod.ts",
+        "./system-error": "./system_error.ts",
+        "./aggregate-error": "./aggregate_error.ts",
+        "./argument-error": "./argument_error.ts",
+        "./assertion-error": "./assertion_error.ts",
+        "./argument-null-error": "./argument_null_error.ts",
+        "./argument-range-error": "./argument_range_error.ts",
+        "./argument-whitespace-error": "./argument_whitespace_error.ts",
+        "./argument-empty-error": "./argument_empty_error.ts",
+        "./collect-errors": "./collect_errors.ts",
+        "./format-error": "./format_error.ts",
+        "./invalid-cast-error": "./invalid_cast_error.ts",
+        "./invalid-operation-error": "./invalid_operation_error.ts",
+        "./not-implemented-error": "./not_implemented_error.ts",
+        "./not-supported-error": "./not_supported_error.ts",
+        "./object-disposed-error": "./object_disposed_error.ts",
+        "./abort-error": "./abort_error.ts",
+        "./print-error": "./print_error.ts",
+        "./timeout-error": "./timeout_error.ts",
+        "./walk-error": "./walk_error.ts",
+        "./errorf": "./errorf.ts"
+    }
+}

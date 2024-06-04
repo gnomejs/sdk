@@ -1,0 +1,33 @@
+{
+    "compilerOptions": {
+        "lib": [
+            "deno.window"
+        ],
+        "strict": true
+    },
+
+    "exclude": [
+        ".git",
+        "cov",
+        "docs"
+    ],
+
+    "fmt": {
+        "exclude": ["**/*.md"],
+        "lineWidth": 120,
+        "indentWidth": 4
+    },
+
+    "imports": {
+        "@gnome/errors": "jsr:@gnome/errors@^0.0.0",
+        "@gnome/runtime-constants": "jsr:@gnome/runtime-constants@^0.0.0",
+        "@std/assert": "jsr:@std/assert@^0.226.0",
+        "@std/fmt": "jsr:@std/fmt@^0.225.3"
+    },
+
+    "workspaces": [
+        "./errors",
+        "./os-constants",
+        "./runtime-constants"
+    ]
+}

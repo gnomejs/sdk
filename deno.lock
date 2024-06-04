@@ -1,0 +1,23 @@
+{
+  "version": "3",
+  "packages": {
+    "specifiers": {
+      "jsr:@std/fmt@^0.225.3": "jsr:@std/fmt@0.225.3"
+    },
+    "jsr": {
+      "@std/fmt@0.225.3": {
+        "integrity": "cb6ea567155f9865b80b502b2dde7671803eddd6dad743d8851d0de2c40bd349"
+      }
+    }
+  },
+  "remote": {},
+  "workspace": {
+    "dependencies": [
+      "jsr:@std/assert@^0.226.0",
+      "jsr:@std/fmt@^0.225.3"
+    ],
+    "members": {
+      "@gnome/errors": {}
+    }
+  }
+}
