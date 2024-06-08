@@ -1,6 +1,5 @@
 import { SystemError } from "./system_error.ts";
 
-
 /**
  * Recursively walks through an error and its inner errors (if any),
  * and invokes a callback function for each error encountered.

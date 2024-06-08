@@ -1,4 +1,3 @@
-
 /**
  * Represents an inner error.
  */
@@ -7,7 +6,7 @@ export interface InnerError extends Record<string, unknown> {
      * The error message.
      */
     readonly message?: string;
-    
+
     /**
      * The error code.
      */
@@ -34,9 +33,6 @@ export interface ErrorProps extends InnerError {
     details?: ErrorProps[];
 }
 
-
-
-
 function from(e: Error): SystemError {
     if (e instanceof globalThis.AggregateError) {
         return SystemAggregateError.from(e);
@@ -46,7 +42,6 @@ function from(e: Error): SystemError {
     exception.stack = e.stack;
     return exception;
 }
-
 
 /**
  * Represents an aggregate error that contains multiple errors.
@@ -64,13 +59,10 @@ export class SystemAggregateError extends AggregateError implements ErrorProps {
 
     #stackLines?: string[];
 
-    
     /**
      * The errors that occurred.
      */
     errors: SystemError[];
-
-    
 
     /**
      * Creates a new instance of the AggregateError class.
@@ -82,8 +74,9 @@ export class SystemAggregateError extends AggregateError implements ErrorProps {
         super(message ?? "One or more errors occurred.");
         this.name = "AggregateError";
         this.errors = errors ?? [];
-        if (innerError) 
+        if (innerError) {
             this.#innerError = from(innerError);
+        }
     }
 
     [key: string]: unknown;
@@ -180,8 +173,6 @@ export class SystemAggregateError extends AggregateError implements ErrorProps {
         };
     }
 
-    
-
     /**
      * Creates an AggregateError instance from an existing AggregateError.
      * @param error - The existing AggregateError instance.
@@ -191,11 +182,10 @@ export class SystemAggregateError extends AggregateError implements ErrorProps {
         return new SystemAggregateError(
             error.message,
             error.errors.map((o) => from(o)),
-            error 
+            error,
         );
     }
 }
-
 
 /**
  * Represents a system error.

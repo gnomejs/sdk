@@ -1,0 +1,7 @@
+{
+    "import-asserts": {
+        "body": ["import { assertEquals as equals, assert as ok } from \"@std/assert\""],
+        "prefix": "import-asserts",
+        "description": "imports deno asserts"
+    }
+}

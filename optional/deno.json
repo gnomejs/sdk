@@ -1,0 +1,38 @@
+{
+    "name": "@gnome/optional",
+    "version": "0.0.0",
+    "exports": {
+        ".": "./mod.ts",
+        "./option": "./option.ts",
+        "./result": "./result.ts"
+    },
+    "compilerOptions": {
+        "lib": ["deno.window"]
+    },
+    "fmt": {
+        "indentWidth": 4,
+        "useTabs": false,
+        "lineWidth": 120,
+        "exclude": ["**/*.md"]
+    },
+    "tasks": {
+        "test": "deno test -A",
+        "coverage": "deno test --coverage=.artifacts/code-coverage -A",
+        "lcov": "deno coverage .artifacts/code-coverage --lcov > .artifacts/code-coverage.lcov",
+        "publish:test": "deno publish --dry-run --allow-dirty"
+    },
+
+    "publish": {
+        "include": [
+            "mod.ts",
+            "option.ts",
+            "result.ts",
+            "README.md",
+            "LICENSE.md",
+            "deno.json"
+        ]
+    },
+    "imports": {
+        "@gnome/errors": "jsr:@gnome/errors@^0.0.0"
+    }
+}

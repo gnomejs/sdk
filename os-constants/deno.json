@@ -1,22 +1,7 @@
 {
     "name": "@gnome/os-constants",
-    "version": "0.0.1",
+    "version": "0.0.0",
     "exports": "./mod.ts",
-    "compilerOptions": {
-        "lib": ["deno.ns", "deno.unstable", "dom"]
-    },
-    "fmt": {
-        "indentWidth": 4,
-        "useTabs": false,
-        "lineWidth": 120,
-        "exclude": ["**/*.md"]
-    },
-
-    "tasks": {
-        "test": "deno test -A",
-        "coverage": "deno test --coverage=.artifacts/code-coverage -A",
-        "lcov": "deno coverage .artifacts/code-coverage --lcov > .artifacts/code-coverage.lcov"
-    },
 
     "publish": {
         "include": [
@@ -25,9 +10,5 @@
             "LICENSE.md",
             "deno.json"
         ]
-    },
-    "imports": {
-        "@gnome/runtime-constants": "jsr:@gnome/runtime-constants@^0.0.0",
-        "@gnome/runtime-info": "jsr:@gnome/runtime-info@^0.0.0"
     }
 }

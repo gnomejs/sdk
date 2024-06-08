@@ -1,4 +1,4 @@
-import { SystemError, type ErrorProps } from "./system_error.ts";
+import { type ErrorProps, SystemError } from "./system_error.ts";
 
 /**
  * Represents an error that occurs when an invalid argument is passed to a function or method.

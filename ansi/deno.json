@@ -1,0 +1,27 @@
+{
+    "name": "@gnome/ansi",
+    "version": "0.0.0",
+    "exports": {
+        ".": "./mod.ts",
+        "./ansi": "./ansi.ts",
+        "./detector": "./detector.ts",
+        "./enums": "./enums.ts",
+        "./settings": "./settings.ts",
+        "./writer": "./writer.ts"
+    },
+
+    "publish": {
+        "include": [
+            "mod.ts",
+            "_lazy.ts",
+            "ansi.ts",
+            "detector.ts",
+            "enums.ts",
+            "settings.ts",
+            "writer.ts",
+            "README.md",
+            "LICENSE.md",
+            "deno.json"
+        ]
+    }
+}

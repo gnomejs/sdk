@@ -1,0 +1,24 @@
+{
+    "name": "@gnome/char",
+    "version": "0.0.0",
+    "exports": {
+        ".": "./mod.ts",
+        "./char": "./char.ts",
+        "./constants": "./constants.ts",
+        "./unicode-category": "./unicode-category.ts",
+        "./utils": "./utils.ts"
+    },
+
+    "publish": {
+        "include": [
+            "constants.ts",
+            "char.ts",
+            "utils.ts",
+            "unicode-category.ts",
+            "mod.ts",
+            "README.md",
+            "LICENSE.md",
+            "deno.json"
+        ]
+    }
+}

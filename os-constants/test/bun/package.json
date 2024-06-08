@@ -1,0 +1,27 @@
+{
+    "name": "@gnome/os-constants",
+    "version": "0.0.1",
+    "description": "",
+    "main": "index.js",
+    "type": "module",
+    "exports": {
+        ".": {
+            "import": "./index.js"
+        },
+        "./mod": {
+            "import": "./mod.js"
+        }
+    },
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "",
+    "license": "MIT",
+    "dependencies": {
+        "@gnome/runtime-constants": "npm:@jsr/gnome__runtime-constants"
+    },
+    "devDependencies": {
+        "jsr": "^0.12.3",
+        "tsx": "^4.8.2"
+    }
+}

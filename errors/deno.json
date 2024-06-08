@@ -4,7 +4,6 @@
     "exports": {
         ".": "./mod.ts",
         "./system-error": "./system_error.ts",
-        "./aggregate-error": "./aggregate_error.ts",
         "./argument-error": "./argument_error.ts",
         "./assertion-error": "./assertion_error.ts",
         "./argument-null-error": "./argument_null_error.ts",
