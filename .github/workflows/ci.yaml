@@ -50,7 +50,7 @@ jobs:
         uses: actions/upload-artifact@v4
         if: github.ref == 'refs/heads/main'
         with:
-          name: code-coverage
+          name: ${{ matrix.os }}-cov
           path: .artifacts/code-coverage.lcov
 
       - name: Publish To Codecov
@@ -59,7 +59,7 @@ jobs:
         env: 
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         with:
-          name: ${{ matrix.os }}
+          name: ${{ matrix.os }}-cov
           files: .artifacts/code-coverage.lcov
 
       - name: Publish Dry Run
