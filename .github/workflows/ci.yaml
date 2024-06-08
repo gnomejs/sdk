@@ -63,7 +63,7 @@ jobs:
           files: .artifacts/code-coverage.lcov
 
       - name: Publish Dry Run
-        run: deno publish --dry-run
+        run: deno publish --dry-run --allow-dirty
         if: matrix.os == 'ubuntu-latest'
 
   publish:
