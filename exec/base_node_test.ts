@@ -148,7 +148,7 @@ Deno.test("Command with log", {ignore: echo === undefined }, async () => {
     let f: string = "";
     let args: string[] | undefined = [];
 
-    const cmd = new Command("echo", ["hello"], {
+    const cmd = new Command(echo!, ["hello"], {
         log: (file, a) => {
             f = file;
             args = a;
@@ -156,7 +156,11 @@ Deno.test("Command with log", {ignore: echo === undefined }, async () => {
     });
     const output = await cmd.output();
     equals(output.code, 0);
-    ok(f.endsWith("echo"));
+    if (WINDOWS) {
+        ok(f.endsWith("echo.exe"));
+    } else {
+        ok(f.endsWith("echo"));
+    }
     ok(args !== undefined, "args is undefined");
     equals(args.length, 1);
 });
