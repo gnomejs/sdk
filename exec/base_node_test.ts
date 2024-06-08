@@ -15,6 +15,8 @@ import type { ShellCommandOptions } from "./command.ts";
 import { remove, writeTextFile } from "@gnome/fs";
 import { dirname, fromFileUrl } from "@std/path";
 
+const EOL = WINDOWS ? "\r\n" : "\n";
+
 const echo = await which("echo");
 const ls = await which("ls");
 
@@ -142,7 +144,7 @@ Deno.test("Command with json", async () => {
     equals(output.hello, "world");
 });
 
-Deno.test("Command with log", async () => {
+Deno.test("Command with log", {ignore: !echo }, async () => {
     let f: string = "";
     let args: string[] | undefined = [];
 
@@ -221,7 +223,7 @@ Deno.test("ShellCommand with inline", async () => {
     const cmd = new Pwsh("Write-Host 'Hello, World!'");
     const output = await cmd.output();
     equals(output.code, 0);
-    equals(output.text(), "Hello, World!\n");
+    equals(output.text(), `Hello, World!${EOL}`);
 });
 
 Deno.test("ShellCommand with file", async () => {
@@ -229,7 +231,7 @@ Deno.test("ShellCommand with file", async () => {
     const cmd = new Pwsh("hello.ps1");
     const output = await cmd.output();
     equals(output.code, 0);
-    equals(output.text(), "Hello, World!\n");
+    equals(output.text(), `Hello, World!${EOL}`);
     await remove("hello.ps1");
 });
 
@@ -240,6 +242,6 @@ Deno.test("ShellCommand with spawn", async () => {
 
     const output = await process.output();
     equals(output.code, 0);
-    equals(output.text(), "Hello, World!\n");
+    equals(output.text(), `Hello, World!${EOL}`);
     await remove("hello2.ps1");
 });
