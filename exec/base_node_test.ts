@@ -144,7 +144,7 @@ Deno.test("Command with json", async () => {
     equals(output.hello, "world");
 });
 
-Deno.test("Command with log", {ignore: !echo }, async () => {
+Deno.test("Command with log", {ignore: echo === undefined }, async () => {
     let f: string = "";
     let args: string[] | undefined = [];
 

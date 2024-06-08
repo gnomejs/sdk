@@ -67,8 +67,8 @@ Deno.test("os-constants: node", { ignore: !hasNode }, async () => {
 
     ok(r.code === 0, "npm install failed");
 
-    const cmd = new Deno.Command("node", {
-        args: [`${_dir}/test/node/node_modules/.bin/tsx${c}`, `${_dir}/test/node/load_platform.ts`],
+    const cmd = new Deno.Command(`${_dir}/test/node/node_modules/.bin/tsx${c}`, {
+        args: [`${_dir}/test/node/load_platform.ts`],
         stdout: "piped",
         stderr: "piped",
     });
