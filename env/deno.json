@@ -37,10 +37,5 @@
             "LICENSE.md",
             "deno.json"
         ]
-    },
-    "imports": {
-        "@gnome/char": "jsr:@gnome/char@^0.0.0",
-        "@gnome/os-constants": "jsr:@gnome/os-constants@^0.0.0",
-        "@gnome/strings": "jsr:@gnome/strings@^0.1.0"
     }
 }

@@ -157,13 +157,7 @@
           "jsr:@std/fmt@^0.225.2"
         ]
       },
-      "@gnome/env": {
-        "dependencies": [
-          "jsr:@gnome/char@^0.0.0",
-          "jsr:@gnome/os-constants@^0.0.0",
-          "jsr:@gnome/strings@^0.1.0"
-        ]
-      },
+      "@gnome/env": {},
       "@gnome/errors": {},
       "@gnome/exec": {
         "dependencies": [
