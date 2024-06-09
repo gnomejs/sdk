@@ -17,6 +17,17 @@ export interface SplatOptions {
      * The prefix to use for commandline options. Defaults to `"--"`.
      */
     prefix?: string;
+
+    /**
+     * Treats the flags as options that emit values.
+     */
+    noFlags?: string[] | boolean;
+
+    /**
+     * The values for true and false for flags.
+     */
+    noFlagValues?: { t?: string, f?: string }
+
     /**
      * A lookup of aliases to remap the keys of the object
      * to the actual commandline option.  e.g. `{ "yes": "-y" }`
@@ -144,7 +155,6 @@ export function splat(
             splat.push(key + (value ? `${options.assign}${value}` : ""));
         } else {
             splat.push(key);
-
             if (value) {
                 splat.push(value);
             }
@@ -158,6 +168,21 @@ export function splat(
             splat.push(value);
         }
     };
+
+    let isNoFlag = (_key: string) : boolean => {
+        return false;
+    }
+
+    if (options.noFlags !== undefined) {
+        if (options.noFlagValues === undefined) {
+            options.noFlagValues = {t: "true", f: "false"}
+        }
+
+        if (Array.isArray(options.noFlags))
+            isNoFlag = (key) => (options.noFlags as string[]).includes(key);
+        else 
+            isNoFlag = (_key) => true;
+    }
 
     let argz: unknown[] = [];
     if (object.arguments && Array.isArray(object.arguments)) {
@@ -220,11 +245,17 @@ export function splat(
         }
 
         if (value === true && !options.ignoreTrue) {
-            pushArguments(key, "");
+            if (isNoFlag(key))
+                pushArguments(key, options.noFlagValues?.t);
+            else 
+                pushArguments(key);
         }
 
         if (value === false && !options.ignoreFalse) {
-            pushArguments(`no-${key}`);
+            if (isNoFlag(key))
+                pushArguments(key, options.noFlagValues?.f)
+            else 
+                pushArguments(`no-${key}`);
         }
 
         if (typeof value === "string") {

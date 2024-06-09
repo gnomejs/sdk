@@ -1,4 +1,4 @@
-import { equalsIgnoreCase, trim } from "@gnome/strings";
+import { equalsIgnoreCase } from "@gnome/strings";
 import { expand } from "../expand.ts";
 import { Env, EnvPath, SubstitutionOptions } from "../types.d.ts";
 import { DENO, BUN, NODE } from "@gnome/runtime-constants";
