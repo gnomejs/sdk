@@ -1,23 +1,29 @@
 import { basename } from "@std/path";
 import { FileInfo, FsFile, FsSupports, SeekMode } from "../types.ts";
 import fs from "node:fs";
-import { DENO, BUN } from "@gnome/runtime-constants";
+import { BUN, DENO } from "@gnome/runtime-constants";
 
+// deno-lint-ignore no-unused-vars
+let lockFile = (fd: number, exclusive?: boolean): Promise<void> => Promise.reject(new Error("Not implemented"));
+// deno-lint-ignore no-unused-vars
+let lockFileSync = (fd: number, exclusive?: boolean): void => {
+    throw new Error("Not implemented");
+};
+// deno-lint-ignore no-unused-vars
+let unlockFile = (fd: number): Promise<void> => Promise.reject(new Error("Not implemented"));
+// deno-lint-ignore no-unused-vars
+let unlockFileSync = (fd: number): void => {
+    throw new Error("Not implemented");
+};
+// deno-lint-ignore no-unused-vars
+let seekFile = (fd: number, offset: number | bigint, whence?: SeekMode): Promise<number> =>
+    Promise.reject(new Error("Not implemented"));
+// deno-lint-ignore no-unused-vars
+let seekFileSync = (fd: number, offset: number | bigint, whence?: SeekMode): number => {
+    throw new Error("Not implemented");
+};
 
-// deno-lint-ignore no-unused-vars
-let lockFile = (fd: number, exclusive?: boolean) : Promise<void> => Promise.reject(new Error("Not implemented"));
-// deno-lint-ignore no-unused-vars
-let lockFileSync  = (fd: number, exclusive?: boolean) : void => { throw new Error("Not implemented") };
-// deno-lint-ignore no-unused-vars
-let unlockFile = (fd: number) : Promise<void> => Promise.reject(new Error("Not implemented"));
-// deno-lint-ignore no-unused-vars
-let unlockFileSync = (fd: number) : void => { throw new Error("Not implemented") };
-// deno-lint-ignore no-unused-vars
-let seekFile = (fd: number, offset: number | bigint, whence?: SeekMode) : Promise<number> => Promise.reject(new Error("Not implemented"));
-// deno-lint-ignore no-unused-vars
-let seekFileSync = (fd: number, offset: number | bigint, whence?: SeekMode) : number => { throw new Error("Not implemented") };
-
-const defaultSupports : FsSupports[] = [];
+const defaultSupports: FsSupports[] = [];
 
 function translate(whence?: SeekMode): number {
     switch (whence) {
@@ -39,63 +45,64 @@ try {
     if (g._LOAD_NODE_FS_EXT === false) {
         load = false;
     }
-    
+
     if (load) {
-        const { flock, flockSync, fseek, fseekSync } = await import ("npm:fs-ext@2.0.0");
-        lockFile = (fd: number, exclusive?: boolean) => new Promise((resolve, reject) => {
-            flock(fd, exclusive ? "ex" : "sh", (err: unknown) => {
-                if (err) reject(err);
-                resolve();
+        const { flock, flockSync, fseek, fseekSync } = await import("npm:fs-ext@2.0.0");
+        lockFile = (fd: number, exclusive?: boolean) =>
+            new Promise((resolve, reject) => {
+                flock(fd, exclusive ? "ex" : "sh", (err: unknown) => {
+                    if (err) reject(err);
+                    resolve();
+                });
             });
-        });
-    
+
         lockFileSync = (fd: number, exclusive?: boolean) => {
             flockSync(fd, exclusive ? "ex" : "sh");
-        }
-    
-        unlockFile = (fd: number) => new Promise((resolve, reject) => {
-            flock(fd, "un", (err: unknown) => {
-                if (err) reject(err);
-                resolve();
+        };
+
+        unlockFile = (fd: number) =>
+            new Promise((resolve, reject) => {
+                flock(fd, "un", (err: unknown) => {
+                    if (err) reject(err);
+                    resolve();
+                });
             });
-        });
-    
+
         unlockFileSync = (fd: number) => {
             flockSync(fd, "un");
-        }
-    
-        seekFile = (fd: number, offset: number | bigint, whence?: SeekMode) => new Promise<number>((resolve, reject) => {
-            fseek(fd, offset, translate(whence), (err: unknown, pos: number) => {
-                if (err) reject(err);
-                resolve(pos);
+        };
+
+        seekFile = (fd: number, offset: number | bigint, whence?: SeekMode) =>
+            new Promise<number>((resolve, reject) => {
+                fseek(fd, offset, translate(whence), (err: unknown, pos: number) => {
+                    if (err) reject(err);
+                    resolve(pos);
+                });
             });
-        });
-    
-        seekFileSync = (fd: number, offset: number | bigint, whence?: SeekMode) : number => {
+
+        seekFileSync = (fd: number, offset: number | bigint, whence?: SeekMode): number => {
             return fseekSync(fd, offset, translate(whence));
         };
-    
+
         defaultSupports.push("lock", "seek");
     }
-
-} catch  {
+} catch {
     // do nothing
 }
 
-
 export class File implements FsFile {
-    #fd: number
-    #path: string
-    #supports: FsSupports[] = []
-    #readable?: ReadableStream<Uint8Array>
-    #writeable?: WritableStream<Uint8Array>
-    
+    #fd: number;
+    #path: string;
+    #supports: FsSupports[] = [];
+    #readable?: ReadableStream<Uint8Array>;
+    #writeable?: WritableStream<Uint8Array>;
+
     constructor(fd: number, path: string, supports: FsSupports[] = []) {
         this.#fd = fd;
         this.#path = path;
         this.#supports = supports.concat(defaultSupports);
     }
-    
+
     [x: string]: unknown;
 
     [Symbol.dispose](): void {
@@ -106,11 +113,11 @@ export class File implements FsFile {
         return this.close();
     }
 
-    get readable() : ReadableStream<Uint8Array> {
+    get readable(): ReadableStream<Uint8Array> {
         const fd = this.#fd;
         this.#readable ??= new ReadableStream({
             start: (controller) => {
-                while(true) {
+                while (true) {
                     const buf = new Uint8Array(1024);
                     const size = this.readSync(buf);
                     if (size === null) {
@@ -123,15 +130,13 @@ export class File implements FsFile {
             },
             cancel() {
                 fs.closeSync(fd);
-            }
+            },
         });
 
         return this.#readable;
     }
 
-
-
-    get writeable() : WritableStream<Uint8Array> {
+    get writeable(): WritableStream<Uint8Array> {
         const fd = this.#fd;
         this.#writeable ??= new WritableStream({
             write(chunk, controller) {
@@ -141,20 +146,20 @@ export class File implements FsFile {
                             controller.error(err);
                             return;
                         }
-        
+
                         resolve();
                     });
-                })
+                });
             },
             close() {
                 fs.closeSync(fd);
-            }
+            },
         });
 
         return this.writeable;
     }
 
-    get supports() : FsSupports[] {
+    get supports(): FsSupports[] {
         return this.#supports;
     }
 
@@ -165,18 +170,16 @@ export class File implements FsFile {
     close(): Promise<void> {
         return new Promise((resolve, reject) => {
             fs.close(this.#fd, (err) => {
-                if(err) reject(err);
+                if (err) reject(err);
                 resolve();
             });
-        })
+        });
     }
-
-
 
     flush(): Promise<void> {
         return new Promise((resolve, reject) => {
             fs.fsync(this.#fd, (err) => {
-                if(err) reject(err);
+                if (err) reject(err);
                 resolve();
             });
         });
@@ -189,7 +192,7 @@ export class File implements FsFile {
     flushData(): Promise<void> {
         return new Promise((resolve, reject) => {
             fs.fdatasync(this.#fd, (err) => {
-                if(err) reject(err);
+                if (err) reject(err);
                 resolve();
             });
         });
@@ -206,8 +209,9 @@ export class File implements FsFile {
     }
     readSync(p: Uint8Array): number | null {
         const v = fs.readSync(this.#fd, p);
-        if (v < 1)
+        if (v < 1) {
             return null;
+        }
 
         return v;
     }
@@ -216,14 +220,14 @@ export class File implements FsFile {
             fs.read(this.#fd, p, 0, p.length, null, (err, size) => {
                 if (err) {
                     reject(err);
-                    return
+                    return;
                 }
 
                 resolve(size);
-            })
+            });
         });
     }
-  
+
     seekSync(offset: number | bigint, whence?: SeekMode | undefined): number {
         return seekFileSync(this.#fd, offset, whence);
     }
@@ -297,7 +301,6 @@ export class File implements FsFile {
             isFifo: stat.isFIFO(),
         } as FileInfo;
     }
-
 
     writeSync(p: Uint8Array): number {
         return fs.writeSync(this.#fd, p);

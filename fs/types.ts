@@ -191,8 +191,8 @@ export interface SymlinkOptions {
     type: "file" | "dir";
 }
 
-export type SeekMode = 'start' | 'current' | 'end';
-export type FsSupports = 'write' | 'read' | 'lock' | 'seek' | 'truncate'
+export type SeekMode = "start" | "current" | "end";
+export type FsSupports = "write" | "read" | "lock" | "seek" | "truncate";
 
 export interface OpenOptions {
     /** Sets the option for read access. This option, when `true`, means that
@@ -249,69 +249,67 @@ export interface FsFile extends Record<string, unknown> {
     readable: ReadableStream<Uint8Array>;
     writeable: WritableStream<Uint8Array>;
     supports: FsSupports[];
-    
-    [Symbol.dispose](): void
 
-    [Symbol.asyncDispose]() : Promise<void>
+    [Symbol.dispose](): void;
+
+    [Symbol.asyncDispose](): Promise<void>;
 
     /**
      * Closes the file.
      */
-    close(): Promise<void>
+    close(): Promise<void>;
 
-    closeSync(): void 
+    closeSync(): void;
 
-
-    
     /**
      * Flushes any buffered data to the file asynchronously.
      * @returns A promise that resolves when the data is flushed.
      */
     flush(): Promise<void>;
-    
+
     /**
      * Flushes any buffered data to the file synchronously.
      */
     flushSync(): void;
-    
+
     /**
      * Flushes any buffered data and metadata to the file asynchronously.
      * @returns A promise that resolves when the data and metadata are flushed.
      */
     flushData(): Promise<void>;
-    
+
     /**
      * Flushes any buffered data and metadata to the file synchronously.
      */
     flushDataSync(): void;
-    
+
     /**
      * Locks the file for exclusive or shared access asynchronously.
      * @param exclusive - Whether to acquire an exclusive lock. Default is false (shared lock).
      * @returns A promise that resolves when the lock is acquired.
      */
     lock(exclusive?: boolean): Promise<void>;
-    
+
     /**
      * Locks the file for exclusive or shared access synchronously.
      * @param exclusive - Whether to acquire an exclusive lock. Default is false (shared lock).
      */
     lockSync(exclusive?: boolean): void;
-    
+
     /**
      * Reads data from the file synchronously.
      * @param p - The buffer to read the data into.
      * @returns The number of bytes read, or null if the end of the file has been reached.
      */
     readSync(p: Uint8Array): number | null;
-    
+
     /**
      * Reads data from the file asynchronously.
      * @param p - The buffer to read the data into.
      * @returns A promise that resolves with the number of bytes read, or null if the end of the file has been reached.
      */
     read(p: Uint8Array): Promise<number | null>;
-    
+
     /**
      * Sets the file position synchronously.
      * @param offset - The new file position.
@@ -319,52 +317,51 @@ export interface FsFile extends Record<string, unknown> {
      * @returns The new file position.
      */
     seekSync(offset: number | bigint, whence?: SeekMode): number;
-    
+
     /**
      * Sets the file position asynchronously.
      * @param offset - The new file position.
      * @returns A promise that resolves with the new file position.
      */
     seek(offset: number | bigint, whence?: SeekMode): Promise<number>;
-    
+
     /**
      * Retrieves information about the file asynchronously.
      * @returns A promise that resolves with the file information.
      */
     stat(): Promise<FileInfo>;
-    
+
     /**
      * Retrieves information about the file synchronously.
      * @returns The file information.
      */
     statSync(): FileInfo;
-    
+
     /**
      * Writes data to the file synchronously.
      * @param p - The buffer containing the data to write.
      * @returns The number of bytes written.
      */
     writeSync(p: Uint8Array): number;
-    
+
     /**
      * Writes data to the file asynchronously.
      * @param p - The buffer containing the data to write.
      * @returns A promise that resolves with the number of bytes written.
      */
     write(p: Uint8Array): Promise<number>;
-    
+
     /**
      * Unlocks the file asynchronously.
      * @returns A promise that resolves when the file is unlocked.
      */
     unlock(): Promise<void>;
-    
+
     /**
      * Unlocks the file synchronously.
      */
     unlockSync(): void;
 }
-
 
 /**
  * Represents a file system with various methods for interacting with files and directories.
@@ -552,6 +549,68 @@ export interface FileSystem {
      * @returns A promise that resolves with the path to the created temporary file.
      */
     makeTempFile(options?: MakeTempOptions): Promise<string>;
+
+    /**
+     * Open a file and resolve to an instance of {@linkcode FsFile}. The
+     * file does not need to previously exist if using the `create` or `createNew`
+     * open options. The caller may have the resulting file automatically closed
+     * by the runtime once it's out of scope by declaring the file variable with
+     * the `using` keyword.
+     *
+     * ```ts
+     * import { open } from "@gnome/fs"
+     * using file = await open("/foo/bar.txt", { read: true, write: true });
+     * // Do work with file
+     * ```
+     *
+     * Alternatively, the caller may manually close the resource when finished with
+     * it.
+     *
+     * ```ts
+     * import { open } from "@gnome/fs"
+     * const file = await open("/foo/bar.txt", { read: true, write: true });
+     * // Do work with file
+     * file.close();
+     * ```
+     *
+     * Requires `allow-read` and/or `allow-write` permissions depending on
+     * options.
+     *
+     * @tags allow-read, allow-write
+     * @category File System
+     */
+    open(path: string | URL, option?: OpenOptions): Promise<FsFile>;
+
+    /**
+     * Synchronously open a file and return an instance of
+     * {@linkcode Deno.FsFile}. The file does not need to previously exist if
+     * using the `create` or `createNew` open options. The caller may have the
+     * resulting file automatically closed by the runtime once it's out of scope
+     * by declaring the file variable with the `using` keyword.
+     *
+     * ```ts
+     * import { openSync } from "@gnome/fs";
+     * using file = openSync("/foo/bar.txt", { read: true, write: true });
+     * // Do work with file
+     * ```
+     *
+     * Alternatively, the caller may manually close the resource when finished with
+     * it.
+     *
+     * ```ts
+     * import { openSync } from "@gnome/fs";
+     * const file = openSync("/foo/bar.txt", { read: true, write: true });
+     * // Do work with file
+     * file.close();
+     * ```
+     *
+     * Requires `allow-read` and/or `allow-write` permissions depending on
+     * options.
+     *
+     * @tags allow-read, allow-write
+     * @category File System
+     */
+    openSync(path: string | URL, options?: OpenOptions): FsFile;
 
     /**
      * Reads the contents of a directory asynchronously.

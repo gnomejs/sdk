@@ -147,7 +147,6 @@ Deno.test("deno env.joinPath", () => {
     ok(joined.includes("/deno_test21"));
 });
 
-
 Deno.test("deno env.getBool", () => {
     env.set("TEST_BOOL", "1");
     env.set("NON_BOOL", "bool");
@@ -156,7 +155,6 @@ Deno.test("deno env.getBool", () => {
     ok(!env.getBool("NON_BOOL"));
     ok(env.getBool("NO_EXIST") === undefined);
 });
-
 
 Deno.test("deno env.getInt", () => {
     env.set("TEST_INT", "1");
@@ -170,7 +168,7 @@ Deno.test("deno env.getInt", () => {
 Deno.test("deno env.getNumber", () => {
     env.set("TEST_FLOAT", "1.1");
     env.set("NON_FLOAT", "float");
- 
+
     equals(env.getNumber("TEST_FLOAT"), 1.1);
     ok(env.getNumber("NON_FLOAT") === undefined);
     ok(env.getNumber("NO_EXIST") === undefined);
@@ -204,12 +202,16 @@ Deno.test("deno env.getJson", () => {
     equals(env.getJson("TEST_JSON"), { key: "value" });
     ok(env.getJson("NON_JSON") === undefined);
     ok(env.getJson("NO_EXIST") === undefined);
-})
+});
 
 Deno.test("deno env.getBinary", () => {
     env.set("TEST_BINARY", "SGVsbG8gV29ybGQ=");
     env.set("NON_BINARY", "binary");
 
-    equals(env.getBinary("TEST_BINARY"), new TextEncoder().encode("Hello World"), "Binary value is not set or does not match");
+    equals(
+        env.getBinary("TEST_BINARY"),
+        new TextEncoder().encode("Hello World"),
+        "Binary value is not set or does not match",
+    );
     ok(env.getBinary("NO_EXIST") === undefined);
 });

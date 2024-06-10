@@ -1,19 +1,19 @@
 import { equalsIgnoreCase } from "@gnome/strings";
 import { expand } from "../expand.ts";
 import { Env, EnvPath, SubstitutionOptions } from "../types.d.ts";
-import { DENO, BUN, NODE } from "@gnome/runtime-constants";
+import { BUN, DENO, NODE } from "@gnome/runtime-constants";
 import { PATH_SEP, WINDOWS } from "@gnome/os-constants";
 import { decodeBase64 } from "@std/encoding";
 
 const RT = DENO || BUN || NODE;
-const SEP = RT ? PATH_SEP : ':';
-const PATH_NAME = WINDOWS &&  RT ?  "Path" : "PATH"; 
+const SEP = RT ? PATH_SEP : ":";
+const PATH_NAME = WINDOWS && RT ? "Path" : "PATH";
 
 /**
  * Represents a class that manages the environment path.
  */
 export class DefaultEnvPath implements EnvPath {
-    #env: EnvBase
+    #env: EnvBase;
 
     /**
      * Constructs a new instance of the DefaultEnvPath class.
@@ -68,7 +68,7 @@ export class DefaultEnvPath implements EnvPath {
         const paths = this.split();
         if (!this.hasPath(paths, path)) {
             paths.push(path);
-            this.overwrite(paths.filter(o => o.length > 0).join(SEP));
+            this.overwrite(paths.filter((o) => o.length > 0).join(SEP));
         }
     }
 
@@ -80,7 +80,7 @@ export class DefaultEnvPath implements EnvPath {
         const paths = this.split();
         if (!this.hasPath(paths, path)) {
             paths.unshift(path);
-            this.overwrite(paths.filter(o => o.length > 0).join(SEP));
+            this.overwrite(paths.filter((o) => o.length > 0).join(SEP));
         }
     }
 
@@ -158,8 +158,6 @@ export class DefaultEnvPath implements EnvPath {
             return false;
         }
 
-      
-
         return paths.includes(path);
     }
 
@@ -172,13 +170,12 @@ export class DefaultEnvPath implements EnvPath {
  * Represents the environment variables and provides methods to interact with them.
  */
 export abstract class EnvBase implements Env {
-    #path!: EnvPath
-    #proxy!: Record<string, string | undefined>
+    #path!: EnvPath;
+    #proxy!: Record<string, string | undefined>;
 
     constructor() {
         this.init();
     }
-  
 
     /**
      * Returns a proxy object that allows you to access, set, or delete
@@ -192,7 +189,6 @@ export abstract class EnvBase implements Env {
         this.#proxy = obj;
     }
 
-    
     /**
      * Gets the path of the environment.
      * @returns The path of the environment.
@@ -208,30 +204,32 @@ export abstract class EnvBase implements Env {
     /**
      * Returns the value associated with the specified name from the environment variables.
      * If the value is undefined, returns the provided default value.
-     * 
+     *
      * @param name - The name of the environment variable.
      * @param defaultValue - The default value to return if the environment variable is undefined. Default is an empty string.
      * @returns The value of the environment variable or the default value if it is undefined.
      */
-    defaultString(name: string, defaultValue = "") : string {
+    defaultString(name: string, defaultValue = ""): string {
         const value = this.get(name);
-        if (value === undefined)
+        if (value === undefined) {
             return defaultValue;
+        }
 
         return value;
     }
 
     /**
      * Returns the boolean value associated with the specified name, or the default value if the value is undefined.
-     * 
+     *
      * @param name - The name of the boolean value.
      * @param defaultValue - The default value to return if the value is undefined. Defaults to `false`.
      * @returns The boolean value associated with the specified name, or the default value if the value is undefined.
      */
-    defaultBool(name: string, defaultValue = false) : boolean {
+    defaultBool(name: string, defaultValue = false): boolean {
         const value = this.getBool(name);
-        if (value === undefined)
+        if (value === undefined) {
             return defaultValue;
+        }
 
         return value;
     }
@@ -244,10 +242,11 @@ export abstract class EnvBase implements Env {
      * @param defaultValue - The default value to return if the configuration option is undefined. Default is 0.
      * @returns The value of the configuration option or the default value.
      */
-    defaultNumber(name: string, defaultValue = 0) : number {
+    defaultNumber(name: string, defaultValue = 0): number {
         const value = this.getNumber(name);
-        if (value === undefined)
+        if (value === undefined) {
             return defaultValue;
+        }
 
         return value;
     }
@@ -255,16 +254,17 @@ export abstract class EnvBase implements Env {
     /**
      * Retrieves the integer value associated with the specified name from the environment.
      * If the value is not found, returns the default value.
-     * 
+     *
      * @param name - The name of the environment variable.
      * @param defaultValue - The default value to return if the environment variable is not found. Default is 0.
      * @param radix - An optional radix (base) for parsing the integer value. Default is 10.
      * @returns The integer value associated with the specified name, or the default value if not found.
      */
-    defaultInt(name: string, defaultValue = 0, radix?: number) : number {
+    defaultInt(name: string, defaultValue = 0, radix?: number): number {
         const value = this.getInt(name, radix);
-        if (value === undefined)
+        if (value === undefined) {
             return defaultValue;
+        }
 
         return value;
     }
@@ -276,31 +276,29 @@ export abstract class EnvBase implements Env {
      * @param defaultValue - The default value to return if the property value is undefined. Defaults to a date representing January 1, 1971.
      * @returns The value of the date property or the default value.
      */
-    defaultDate(name: string, defaultValue?: Date) : Date {
+    defaultDate(name: string, defaultValue?: Date): Date {
         const value = this.getDate(name);
-        if (value === undefined)
-        {
+        if (value === undefined) {
             defaultValue ??= new Date(1971, 1, 1, 0, 0, 0, 0);
             return defaultValue;
         }
-        
+
         return value;
     }
 
     /**
      * Retrieves the JSON value with the specified name from the environment and returns it.
      * If the JSON value is not found, the defaultValue is returned instead.
-     * 
+     *
      * @template T - The type of the JSON value.
      * @param {string} name - The name of the JSON value.
-     * @param {T} [defaultValue] - The default value to return if the JSON value is not found. 
+     * @param {T} [defaultValue] - The default value to return if the JSON value is not found.
      * Defaults to `unknown` and returns an object.
      * @returns {T} - The JSON value or the defaultValue if not found. Defaults to `unnkown`.
      */
-    defaultJson<T = unknown>(name: string, defaultValue?: T) : T {
+    defaultJson<T = unknown>(name: string, defaultValue?: T): T {
         const json = this.getJson<T>(name);
-        if (json === undefined)
-        {
+        if (json === undefined) {
             defaultValue ??= {} as T;
             return defaultValue;
         }
@@ -339,7 +337,7 @@ export abstract class EnvBase implements Env {
      * @example
      * ```ts
      * import { env } from "@gnome/env";
-     * 
+     *
      * console.log(env.get("HOME")); // /home/alice
      * ```
      */
@@ -347,54 +345,58 @@ export abstract class EnvBase implements Env {
         return this.proxy[name];
     }
 
-    getArray(name: string, separator: string = ',') : string[] | undefined {
+    getArray(name: string, separator: string = ","): string[] | undefined {
         const value = this.get(name);
-        if (value === undefined)
+        if (value === undefined) {
             return undefined;
+        }
 
         return value.split(separator);
     }
-    
 
     /**
      * Retrieves a boolean value from the environment variable with the given name.
-     * 
+     *
      * @description
      * The following values are considered `true`:
      * - `1`
      * - `true` (case-insensitive)
-     * 
+     *
      * @param name - The name of the environment variable.
      * @returns The boolean value of the environment variable, or `undefined` if the variable is not set or has an invalid value.
      */
-    getBool(name: string) : boolean | undefined {
+    getBool(name: string): boolean | undefined {
         const value = this.get(name);
-        if (value === undefined)
-            return undefined
+        if (value === undefined) {
+            return undefined;
+        }
 
-        if (value === 'null')
-            return undefined
+        if (value === "null") {
+            return undefined;
+        }
 
-        return value === '1' || value === 'true' || equalsIgnoreCase(value, 'true');
+        return value === "1" || value === "true" || equalsIgnoreCase(value, "true");
     }
 
     /**
      * Retrieves the binary data associated with the specified name.
-     * 
+     *
      * @description
      * The binary data is expected to be encoded as a base64 string.
-     * 
+     *
      * @param name - The name of the binary data.
      * @returns The binary data as a Uint8Array, or undefined if the binary data is not found or empty.
      */
-    getBinary(name: string) : Uint8Array | undefined {
+    getBinary(name: string): Uint8Array | undefined {
         let value = this.get(name);
-        if (value === undefined)
+        if (value === undefined) {
             return undefined;
+        }
 
-        value = value.trim()
-        if (value.length === 0)
+        value = value.trim();
+        if (value.length === 0) {
             return undefined;
+        }
 
         return decodeBase64(value);
     }
@@ -402,88 +404,97 @@ export abstract class EnvBase implements Env {
     /**
      * Retrieves the value associated with the specified name and converts it to a number.
      * Returns `undefined` if the value is not found or cannot be converted to a number.
-     * 
+     *
      * @param name - The name of the value to retrieve.
      * @returns The converted number value, or `undefined` if the value is not found or cannot be converted.
      * @example
      * ```ts
      * import { env } from "@gnome/env";
-     * 
+     *
      * ent.set("PORT", "8080");
      * console.log(env.getNumber("PORT")); // 8080
      * ```
      */
-    getNumber(name: string) : number | undefined {
+    getNumber(name: string): number | undefined {
         const value = this.get(name);
-        if (value === undefined)
+        if (value === undefined) {
             return undefined;
+        }
 
         const n = Number(value);
-        if (isNaN(n))
+        if (isNaN(n)) {
             return undefined;
+        }
 
         return n;
     }
 
     /**
      * Retrieves the integer value associated with the specified name from the environment.
-     * 
+     *
      * @param name - The name of the environment variable.
      * @param radix - An optional radix (base) for parsing the value. Defaults to 10 if not provided.
      * @returns The parsed integer value, or `undefined` if the value is not found or cannot be parsed as an integer.
      */
-    getInt(name: string, radix?: number) : number | undefined {
+    getInt(name: string, radix?: number): number | undefined {
         const value = this.get(name);
-        if (value === undefined)
+        if (value === undefined) {
             return undefined;
+        }
 
         const i = parseInt(value, radix);
-        if (isNaN(i))
+        if (isNaN(i)) {
             return undefined;
+        }
 
         return i;
     }
 
     /**
      * Retrieves the value associated with the specified name and converts it to a Date object.
-     * 
+     *
      * @param name - The name of the value to retrieve.
      * @returns The Date object representing the value, or undefined if the value is not found.
      */
-    getDate(name: string) : Date | undefined {
+    getDate(name: string): Date | undefined {
         const value = this.get(name);
-        if (value === undefined)
+        if (value === undefined) {
             return undefined;
+        }
 
         const d = new Date(value);
-        if (d.toString() === 'Invalid Date')
+        if (d.toString() === "Invalid Date") {
             return undefined;
-        
+        }
+
         return d;
     }
 
     /**
      * Retrieves a JSON value from the environment variables by name.
-     * 
+     *
      * @param name - The name of the environment variable.
      * @returns The parsed JSON value if it exists, otherwise undefined.
      * @template T - The type of the parsed JSON value. Defaults to `unknown`.
      */
-    getJson<T = unknown>(name: string) : T | undefined {
+    getJson<T = unknown>(name: string): T | undefined {
         const value = this.get(name);
-        if (value === undefined)
+        if (value === undefined) {
             return undefined;
+        }
 
         try {
             const v = JSON.parse(value);
-            if (v === undefined)
+            if (v === undefined) {
                 return v;
-    
-            if (v === null)
+            }
+
+            if (v === null) {
                 return undefined;
-    
+            }
+
             return v as T;
-        } catch { 
+        } catch {
             return undefined;
         }
     }
@@ -594,7 +605,7 @@ export abstract class EnvBase implements Env {
         return paths.join(SEP);
     }
 
-    /**   
+    /**
      * Initializes the path and proxy objects
      */
     protected init() {

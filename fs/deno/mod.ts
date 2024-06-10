@@ -4,8 +4,8 @@ import type {
     CreateDirectoryOptions,
     DirectoryInfo,
     FileInfo,
-    FsSupports,
     FsFile,
+    FsSupports,
     MakeTempOptions,
     OpenOptions,
     ReadOptions,
@@ -14,8 +14,6 @@ import type {
     WriteOptions,
 } from "../types.ts";
 import { File } from "./file.ts";
-
-
 
 export function uid(): number | null {
     return Deno.uid();
@@ -199,33 +197,40 @@ export function makeDirSync(
 export async function open(path: string | URL, options: OpenOptions): Promise<FsFile> {
     const file = await Deno.open(path, options);
     const p = path instanceof URL ? path.toString() : path;
-    const supports : FsSupports[] = ['lock', 'seek'];
-    if (options.read)
-        supports.push('read');
-    if (options.write)
-        supports.push('write');
-    if (options.truncate)
-        supports.push('truncate');
-    return new File(file, p, supports); 
+    const supports: FsSupports[] = ["lock", "seek"];
+    if (options.write || options.append) {
+        supports.push("write");
+    }
+
+    if (options.read) {
+        supports.push("read");
+    }
+
+    if (options.truncate || options.create) {
+        supports.push("truncate");
+    }
+
+    return new File(file, p, supports);
 }
 
 export function openSync(path: string | URL, options: OpenOptions): FsFile {
     const file = Deno.openSync(path, options);
     const p = path instanceof URL ? path.toString() : path;
-    const supports : FsSupports[] = ['lock', 'seek'];
-    
-    if (options.write || options.append) {
-        supports.push('write');
-    }
-    
-    if (options.read) {
-        supports.push('read');
-    }
-    
-    if (options.truncate || options.create)
-        supports.push('truncate');
+    const supports: FsSupports[] = ["lock", "seek"];
 
-    return new File(file, p, supports); 
+    if (options.write || options.append) {
+        supports.push("write");
+    }
+
+    if (options.read) {
+        supports.push("read");
+    }
+
+    if (options.truncate || options.create) {
+        supports.push("truncate");
+    }
+
+    return new File(file, p, supports);
 }
 
 export function stat(path: string | URL): Promise<FileInfo> {

@@ -1,9 +1,9 @@
 import { env } from "./mod.ts";
-export type AppEnv = 'development' | 'staging' | 'production' | 'test' | 'qa' | 'uat';
+export type AppEnv = "development" | "staging" | "production" | "test" | "qa" | "uat";
 
 let DEBUG = env.defaultBool("DEBUG", false);
 let TRACE = env.defaultBool("TRACE", false);
-let APP_ENV : AppEnv | string = 'development';
+let APP_ENV: AppEnv | string = "development";
 
 if (env.has("NODE_ENV")) {
     APP_ENV = env.get("NODE_ENV") as AppEnv;
@@ -38,29 +38,27 @@ export function isTrace() {
 }
 
 export function isProduction() {
-    return APP_ENV === 'production' || APP_ENV === "prod" || APP_ENV.includes("prod");
+    return APP_ENV === "production" || APP_ENV === "prod" || APP_ENV.includes("prod");
 }
 
 export function isDevelopment() {
-    return APP_ENV === 'development' || APP_ENV === "dev" || APP_ENV.includes("dev");
+    return APP_ENV === "development" || APP_ENV === "dev" || APP_ENV.includes("dev");
 }
 
 export function isTest() {
-    return APP_ENV === 'test' ||APP_ENV.includes("test");
+    return APP_ENV === "test" || APP_ENV.includes("test");
 }
 
 export function isStaging() {
-    return APP_ENV === 'staging' || APP_ENV.includes("stag");
+    return APP_ENV === "staging" || APP_ENV.includes("stag");
 }
 
 export function isQA() {
-    return APP_ENV === 'qa' || APP_ENV.includes("qa");
+    return APP_ENV === "qa" || APP_ENV.includes("qa");
 }
 
 export function isUAT() {
-    return APP_ENV === 'uat' || APP_ENV.includes("uat");
+    return APP_ENV === "uat" || APP_ENV.includes("uat");
 }
 
-
-export { DEBUG, TRACE, APP_ENV }
-
+export { APP_ENV, DEBUG, TRACE };

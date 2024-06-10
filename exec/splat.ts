@@ -26,7 +26,7 @@ export interface SplatOptions {
     /**
      * The values for true and false for flags.
      */
-    noFlagValues?: { t?: string, f?: string }
+    noFlagValues?: { t?: string; f?: string };
 
     /**
      * A lookup of aliases to remap the keys of the object
@@ -169,19 +169,20 @@ export function splat(
         }
     };
 
-    let isNoFlag = (_key: string) : boolean => {
+    let isNoFlag = (_key: string): boolean => {
         return false;
-    }
+    };
 
     if (options.noFlags !== undefined) {
         if (options.noFlagValues === undefined) {
-            options.noFlagValues = {t: "true", f: "false"}
+            options.noFlagValues = { t: "true", f: "false" };
         }
 
-        if (Array.isArray(options.noFlags))
+        if (Array.isArray(options.noFlags)) {
             isNoFlag = (key) => (options.noFlags as string[]).includes(key);
-        else 
+        } else {
             isNoFlag = (_key) => true;
+        }
     }
 
     let argz: unknown[] = [];
@@ -245,17 +246,19 @@ export function splat(
         }
 
         if (value === true && !options.ignoreTrue) {
-            if (isNoFlag(key))
+            if (isNoFlag(key)) {
                 pushArguments(key, options.noFlagValues?.t);
-            else 
+            } else {
                 pushArguments(key);
+            }
         }
 
         if (value === false && !options.ignoreFalse) {
-            if (isNoFlag(key))
-                pushArguments(key, options.noFlagValues?.f)
-            else 
+            if (isNoFlag(key)) {
+                pushArguments(key, options.noFlagValues?.f);
+            } else {
                 pushArguments(`no-${key}`);
+            }
         }
 
         if (typeof value === "string") {

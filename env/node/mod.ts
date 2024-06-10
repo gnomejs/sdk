@@ -8,31 +8,25 @@ if (!proc) {
 }
 
 class NodeEnv extends EnvBase {
-   
-
     protected override init(): void {
         super.proxy = proc.env;
         super.path = new DefaultEnvPath(this);
     }
 
-
     override get(name: string): string | undefined {
         return proc.env[name];
-    }   
-
+    }
 
     override set(name: string, value: string): this {
         proc.env[name] = value;
         return this;
     }
 
-
     override has(name: string): boolean {
         const value = proc.env[name];
         return value !== undefined && value !== null;
     }
 
-    
     override remove(name: string): this {
         delete proc.env[name];
         return this;

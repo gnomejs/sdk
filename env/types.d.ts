@@ -114,21 +114,21 @@ export interface Env extends Iterable<{ key: string; value: string }> {
     /**
      * Returns the value associated with the specified name from the environment variables.
      * If the value is undefined, returns the provided default value.
-     * 
+     *
      * @param name - The name of the environment variable.
      * @param defaultValue - The default value to return if the environment variable is undefined. Default is an empty string.
      * @returns The value of the environment variable or the default value if it is undefined.
      */
-    defaultString(name: string, defaultValue?: string) : string;
+    defaultString(name: string, defaultValue?: string): string;
 
     /**
      * Returns the boolean value associated with the specified name, or the default value if the value is undefined.
-     * 
+     *
      * @param name - The name of the boolean value.
      * @param defaultValue - The default value to return if the value is undefined. Defaults to `false`.
      * @returns The boolean value associated with the specified name, or the default value if the value is undefined.
      */
-    defaultBool(name: string, defaultValue?: boolean) : boolean;
+    defaultBool(name: string, defaultValue?: boolean): boolean;
 
     /**
      * Returns the value of the specified number configuration option.
@@ -138,18 +138,18 @@ export interface Env extends Iterable<{ key: string; value: string }> {
      * @param defaultValue - The default value to return if the configuration option is undefined. Default is 0.
      * @returns The value of the configuration option or the default value.
      */
-    defaultNumber(name: string, defaultValue?: number) : number
+    defaultNumber(name: string, defaultValue?: number): number;
 
     /**
      * Retrieves the integer value associated with the specified name from the environment.
      * If the value is not found, returns the default value.
-     * 
+     *
      * @param name - The name of the environment variable.
      * @param defaultValue - The default value to return if the environment variable is not found. Default is 0.
      * @param radix - An optional radix (base) for parsing the integer value. Default is 10.
      * @returns The integer value associated with the specified name, or the default value if not found.
      */
-    defaultInt(name: string, defaultValue?: number, radix?: number) : number
+    defaultInt(name: string, defaultValue?: number, radix?: number): number;
 
     /**
      * Retrieves the value of the specified date property from the environment.
@@ -158,20 +158,19 @@ export interface Env extends Iterable<{ key: string; value: string }> {
      * @param defaultValue - The default value to return if the property value is undefined. Defaults to a date representing January 1, 1971.
      * @returns The value of the date property or the default value.
      */
-    defaultDate(name: string, defaultValue?: Date) : Date
+    defaultDate(name: string, defaultValue?: Date): Date;
 
     /**
      * Retrieves the JSON value with the specified name from the environment and returns it.
      * If the JSON value is not found, the defaultValue is returned instead.
-     * 
+     *
      * @template T - The type of the JSON value.
      * @param {string} name - The name of the JSON value.
-     * @param {T} [defaultValue] - The default value to return if the JSON value is not found. 
+     * @param {T} [defaultValue] - The default value to return if the JSON value is not found.
      * Defaults to `unknown` and returns an object.
      * @returns {T} - The JSON value or the defaultValue if not found. Defaults to `unnkown`.
      */
-    defaultJson<T = unknown>(name: string, defaultValue?: T) : T
-    
+    defaultJson<T = unknown>(name: string, defaultValue?: T): T;
 
     /**
      * Expands a template string by replacing placeholders with their corresponding values.
@@ -197,65 +196,64 @@ export interface Env extends Iterable<{ key: string; value: string }> {
      */
     get(name: string): string | undefined;
 
-    getArray(name: string, separator?: string) : string[] | undefined;
+    getArray(name: string, separator?: string): string[] | undefined;
 
-    getBinary(name: string) : Uint8Array | undefined
+    getBinary(name: string): Uint8Array | undefined;
 
-     /**
+    /**
      * Retrieves a boolean value from the environment variable with the given name.
-     * 
+     *
      * @description
      * The following values are considered `true`:
      * - `1`
      * - `true` (case-insensitive)
-     * 
+     *
      * @param name - The name of the environment variable.
      * @returns The boolean value of the environment variable, or `undefined` if the variable is not set or has an invalid value.
      */
-     getBool(name: string) : boolean | undefined;
+    getBool(name: string): boolean | undefined;
 
     /**
      * Retrieves the value associated with the specified name and converts it to a number.
      * Returns `undefined` if the value is not found or cannot be converted to a number.
-     * 
+     *
      * @param name - The name of the value to retrieve.
      * @returns The converted number value, or `undefined` if the value is not found or cannot be converted.
      * @example
      * ```ts
      * import { env } from "@gnome/env";
-     * 
+     *
      * ent.set("PORT", "8080");
      * console.log(env.getNumber("PORT")); // 8080
      * ```
      */
-    getNumber(name: string) : number | undefined;
+    getNumber(name: string): number | undefined;
 
     /**
      * Retrieves the integer value associated with the specified name from the environment.
-     * 
+     *
      * @param name - The name of the environment variable.
      * @param radix - An optional radix (base) for parsing the value. Defaults to 10 if not provided.
      * @returns The parsed integer value, or `undefined` if the value is not found or cannot be parsed as an integer.
      */
-    getInt(name: string, radix?: number) : number | undefined;
+    getInt(name: string, radix?: number): number | undefined;
 
     /**
      * Retrieves the value associated with the specified name and converts it to a Date object.
-     * 
+     *
      * @param name - The name of the value to retrieve.
      * @returns The Date object representing the value, or undefined if the value is not found.
      */
-    getDate(name: string) : Date | undefined;
+    getDate(name: string): Date | undefined;
 
     /**
      * Retrieves a JSON value from the environment variables by name.
-     * 
+     *
      * @param name - The name of the environment variable.
      * @returns The parsed JSON value if it exists, otherwise undefined.
      * @template T - The type of the parsed JSON value. Defaults to `unknown`.
      */
-    getJson<T = unknown>(name: string) : T | undefined
-
+    getJson<T = unknown>(name: string): T | undefined;
 
     /**
      * Retrieves the value of the specified environment variable.

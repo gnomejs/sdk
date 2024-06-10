@@ -394,6 +394,6 @@ export class PipelineWriter extends DefaultAnsiWriter {
     }
 }
 
-export const writer: PipelineWriter = new PipelineWriter();
+export const plWriter: PipelineWriter = new PipelineWriter();
 
 export { defaultSecretMasker as secretMasker };

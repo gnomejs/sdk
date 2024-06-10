@@ -337,7 +337,6 @@ export class PathFinder {
                     } catch {
                         continue;
                     }
-                    
 
                     if (isFileSync(next)) {
                         options.cached = next;
@@ -359,7 +358,6 @@ export class PathFinder {
                         // todo: get trace/debug writer to handle
                         continue;
                     }
-                    
 
                     if (isFileSync(next)) {
                         options.cached = next;
@@ -380,7 +378,6 @@ export class PathFinder {
                 } catch {
                     continue;
                 }
-                
 
                 if (isFileSync(next)) {
                     options.cached = next;

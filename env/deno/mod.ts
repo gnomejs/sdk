@@ -37,8 +37,6 @@ const proxy = new Proxy({}, {
  * Represents the environment variables and provides methods to interact with them.
  */
 class DenoEnv extends EnvBase {
-    
-
     protected override init(): void {
         super.proxy = proxy;
         super.path = new DefaultEnvPath(this);
@@ -54,7 +52,6 @@ class DenoEnv extends EnvBase {
         return deno.env.get(name);
     }
 
-   
     /**
      * Merges the provided environment variables into the current environment.
      * @param env - The environment variables to merge.

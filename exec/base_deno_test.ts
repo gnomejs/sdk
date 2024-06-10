@@ -161,7 +161,7 @@ Deno.test("Command with log", { ignore: echo === undefined }, async () => {
     } else {
         ok(f.endsWith("echo"));
     }
-    
+
     ok(args !== undefined, "args is undefined");
     equals(args.length, 1);
 });

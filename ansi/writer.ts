@@ -4,6 +4,7 @@ import { blue, cyan, gray, green, magenta, red, yellow } from "./ansi.ts";
 import { sprintf } from "@std/fmt/printf";
 import { AnsiLogLevel } from "./enums.ts";
 import { isStdoutTerminal } from "./settings.ts";
+import type { SecretMasker } from "@gnome/secrets";
 
 export { AnsiLogLevel, AnsiSettings };
 
@@ -98,7 +99,7 @@ export interface AnsiWriter {
 
     level: AnsiLogLevel;
 
-    set secretMasker(value: ISecretMasker);
+    set secretMasker(value: SecretMasker);
 
     enabled(level: AnsiLogLevel): boolean;
 
@@ -134,9 +135,9 @@ export interface AnsiWriter {
 export class DefaultAnsiWriter implements AnsiWriter {
     #interactive?: boolean;
     #level: AnsiLogLevel;
-    #secretMasker?: ISecretMasker;
+    #secretMasker?: SecretMasker;
 
-    constructor(level?: AnsiLogLevel, secretMasker?: ISecretMasker) {
+    constructor(level?: AnsiLogLevel, secretMasker?: SecretMasker) {
         this.#level = level ?? AnsiLogLevel.Debug;
         this.#secretMasker = secretMasker;
     }
@@ -149,7 +150,7 @@ export class DefaultAnsiWriter implements AnsiWriter {
         this.#level = value;
     }
 
-    set secretMasker(value: ISecretMasker) {
+    set secretMasker(value: SecretMasker) {
         this.#secretMasker = value;
     }
 
@@ -210,7 +211,7 @@ export class DefaultAnsiWriter implements AnsiWriter {
         let splat = "";
         if (args.length > 0) {
             if (this.#secretMasker !== undefined) {
-                splat = this.#secretMasker.mask(args.join(" "));
+                splat = this.#secretMasker.mask(args.join(" ")) ?? "";
             } else {
                 splat = args.join(" ");
             }
@@ -423,4 +424,4 @@ export class DefaultAnsiWriter implements AnsiWriter {
     }
 }
 
-export const writer: AnsiWriter = new DefaultAnsiWriter();
+export const ansiWriter: AnsiWriter = new DefaultAnsiWriter();

@@ -1,3 +1,8 @@
+// Source from color.ts is from github.com/denoland/deno_std which is under Deno's
+// license and copyright. The code is modified. So any changes made to the code
+// is under a different MIT license, such as the apply function and checks
+// to see if color is enabled.
+//
 // Copyright 2018-2024 the Deno authors. All rights reserved. MIT license.
 // This module is browser compatible.
 // A module to print ANSI terminal colors. Inspired by chalk, kleur, and colors

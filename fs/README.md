@@ -32,8 +32,7 @@ await remove("/home/my_user/test", { recursive: true });
 
 ## TODO
 
-- [ ] Implement open and openSync
-- [ ] Implement create and createSync
+- [X] Implement open and openSync
 
 ## License
 

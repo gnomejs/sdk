@@ -126,8 +126,8 @@ Deno.test("splat: noFlags", () => {
         "other": true,
         splat: {
             noFlags: ["force"],
-        } as SplatOptions
-    })
+        } as SplatOptions,
+    });
 
     equals(args.length, 3);
     equals(args[0], "--force");
@@ -141,9 +141,9 @@ Deno.test("splat: noFlagsValues", () => {
         "other": true,
         splat: {
             noFlags: ["force"],
-            noFlagValues: {t: "1", f: "2"}
-        } as SplatOptions
-    })
+            noFlagValues: { t: "1", f: "2" },
+        } as SplatOptions,
+    });
 
     equals(args.length, 3);
     equals(args[0], "--force");

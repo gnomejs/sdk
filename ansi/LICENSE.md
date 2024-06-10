@@ -19,4 +19,11 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY
 WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-The ansi.ts is under the Deno MIT license.
+## Other Licenses
+
+- The source for [./ansi.ts](./ansi.ts) is mostly from
+  the deno [std][color-src] and anything copied is under
+  the deno [MIT License][color-license].
+
+[color-src]: https://github.com/denoland/deno_std/blob/main/fmt/colors.ts
+[color-license]: https://github.com/denoland/deno_std/blob/main/LICENSE

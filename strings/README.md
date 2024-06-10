@@ -13,13 +13,10 @@ The strings module provides case insenstive methods like `equalsIgnoreCase`,
 `endsWithIgnoreCase` to avoid using string allocation by using comparisons with
 toLowerCase/toUpperCase.
 
-A `Utf8StringBuilder` class is included to avoid allocations for building text.
+A `Utf8StringBuilder` and `StringBuilder` classes are included to avoid
+uness unnecessary allocations for building text.
 
 Trim methods that take other characters than whitespace for trimming a string.
-
-Inflections are included from
-[github.com/dreamerslab/node.inflection](https://github.com/dreamerslab/node.inflection/blob/master/src/inflection.ts)
-under the MIT.
 
 ## Basic Usage
 
@@ -42,4 +39,7 @@ sb.appendString("test")
 console.log(sb.toString())
 ```
 
-[MIT License](./LICENSE.md)
+## LICENSE
+
+[MIT License](./LICENSE.md) and additional MIT License for the
+inflection code, see [License](./LICENSE.md) for details.

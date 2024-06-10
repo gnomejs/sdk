@@ -1,10 +1,10 @@
-import { writer } from "./writer.ts";
+import { ansiWriter } from "./writer.ts";
 import { apply, bgBlue, bold, green } from "./ansi.ts";
 
 Deno.test("writer", () => {
-    writer.write("Hello, World!").writeLine();
-    writer.debug("Hello, World!");
-    writer.info("Hello, World!");
-    writer.success("Hello, World!");
-    writer.writeLine(apply("Hello, World!", bold, green, bgBlue) + " test");
+    ansiWriter.write("Hello, World!").writeLine();
+    ansiWriter.debug("Hello, World!");
+    ansiWriter.info("Hello, World!");
+    ansiWriter.success("Hello, World!");
+    ansiWriter.writeLine(apply("Hello, World!", bold, green, bgBlue) + " test");
 });

@@ -1,9 +1,9 @@
 /**
  * ## Overview
  *
- * The `ci-pipelines` module providers a writer that helps with
+ * The `ci-pipelines` module provides a plWriter for
  * writing to stdout within pipelines and includes special logic
- * for github actions and azure devops.
+ * for github actions and azure devops to handle logging commands.
  *
  * The `CI` variable returns true when running in a pipeline. The
  * `CI_PROVIDER` returns the current ci/cd application such as
@@ -12,21 +12,21 @@
  * ## Basic Usage
  *
  * ```typescript
- * import { writer } from "@gnome/ci-pipelines";
+ * import { plWriter } from "@gnome/ci-pipelines";
  *
- * writer.debug("debug");
- * writer.info("info");
- * writer.warn("warn");
- * writer.error("error");
- * writer.progress("progress", 10);
- * writer.progress("progress", 100);
- * writer.writeLine();
- * writer.command("az", ["login"]);
- * writer.success("success");
- * writer.startGroup("group");
- * writer.writeLine(" within group");
- * writer.endGroup();
- * console.log(writer.interactive);
+ * plWriter.debug("debug");
+ * plWriter.info("info");
+ * plWriter.warn("warn");
+ * plWriter.error("error");
+ * plWriter.progress("progress", 10);
+ * plWriter.progress("progress", 100);
+ * plWriter.writeLine();
+ * plWriter.command("az", ["login"]);
+ * plWriter.success("success");
+ * plWriter.startGroup("group");
+ * plWriter.writeLine(" within group");
+ * plWriter.endGroup();
+ * console.log(plWriter.interactive);
  * ```
  *
  * [MIT License](./LICENSE.md)

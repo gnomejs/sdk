@@ -1,8 +1,8 @@
 import fs from "node:fs";
 import fsa from "node:fs/promises";
 import process from "node:process";
-import { basename, join } from "node:path";
-import { File } from "./file.ts"
+import { basename, join } from "@std/path";
+import { File } from "./file.ts";
 import type {
     CreateDirectoryOptions,
     DirectoryInfo,
@@ -18,7 +18,6 @@ import type {
 } from "../types.ts";
 
 const WIN = process.platform === "win32";
-
 
 export function uid(): number | null {
     if (process.getuid === undefined) {
@@ -368,30 +367,26 @@ export function statSync(path: string | URL): FileInfo {
     };
 }
 
-export function open(path : string | URL, options: OpenOptions) : Promise<FsFile> {
-    let flags = "r"
-    const supports : FsSupports[] = [];
-    if (options.read)
-    if (options.write) {
-        flags = "w";
-        supports.push("write");
-    }
-    else if (!options.append) {
-        flags = "a";
-        supports.push('write');
-   } else {
-        flags = "r";
-        supports.push('read');
-   }
-       
-
-    if (options.create && (options.write || options.append)) {
-        flags += "+"
-        supports.push("truncate")
+export function open(path: string | URL, options: OpenOptions): Promise<FsFile> {
+    let flags = "r";
+    const supports: FsSupports[] = [];
+    if (options.read) {
+        if (options.write) {
+            flags = "w";
+            supports.push("write");
+        } else if (!options.append) {
+            flags = "a";
+            supports.push("write");
+        } else {
+            flags = "r";
+            supports.push("read");
+        }
     }
 
-    if (options.truncate && (options.write)) {
-        flags += "+"
+    if (options.createNew && (options.write || options.append)) {
+        flags += "x+";
+    } else if ((options.create || options.truncate) && (options.write || options.append)) {
+        flags += "+";
         supports.push("truncate");
     }
 
@@ -408,29 +403,25 @@ export function open(path : string | URL, options: OpenOptions) : Promise<FsFile
 }
 
 export function openSync(path: string | URL, options: OpenOptions): FsFile {
-    let flags = "r"
-    const supports : FsSupports[] = [];
-    if (options.read)
-    if (options.write) {
-        flags = "w";
-        supports.push("write");
-    }
-    else if (!options.append) {
-        flags = "a";
-        supports.push('write');
-   } else {
-        flags = "r";
-        supports.push('read');
-   }
-       
-
-    if (options.create && (options.write || options.append)) {
-        flags += "+"
-        supports.push("truncate")
+    let flags = "r";
+    const supports: FsSupports[] = [];
+    if (options.read) {
+        if (options.write) {
+            flags = "w";
+            supports.push("write");
+        } else if (!options.append) {
+            flags = "a";
+            supports.push("write");
+        } else {
+            flags = "r";
+            supports.push("read");
+        }
     }
 
-    if (options.truncate && (options.write)) {
-        flags += "+"
+    if (options.createNew && (options.write || options.append)) {
+        flags += "x+";
+    } else if ((options.create || options.truncate) && (options.write || options.append)) {
+        flags += "+";
         supports.push("truncate");
     }
 

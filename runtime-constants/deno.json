@@ -1,5 +1,13 @@
 {
     "name": "@gnome/runtime-constants",
     "version": "0.0.0",
-    "exports": "./mod.ts"
+    "exports": "./mod.ts",
+    "publish": {
+        "include": [
+            "deno.json",
+            "mod.ts",
+            "README.md",
+            "LICENSE.md"
+        ]
+    }
 }
