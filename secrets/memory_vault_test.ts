@@ -1,4 +1,4 @@
-import { MemoryVault } from "./memory-vault.ts";
+import { MemoryVault } from "./memory_vault.ts";
 import { isFile, remove } from "@gnome/fs";
 import { assert as ok, assertEquals as equals } from "@std/assert";
 

@@ -1,10 +1,11 @@
 {
     "name": "@gnome/optional",
-    "version": "0.0.0",
+    "version": "0.1.0",
     "exports": {
         ".": "./mod.ts",
         "./option": "./option.ts",
-        "./result": "./result.ts"
+        "./result": "./result.ts",
+        "./lazy": "./lazy.ts"
     },
 
     "publish": {
@@ -12,6 +13,7 @@
             "mod.ts",
             "option.ts",
             "result.ts",
+            "lazy.ts",
             "README.md",
             "LICENSE.md",
             "deno.json"

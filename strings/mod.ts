@@ -34,8 +34,8 @@
  * @module
  */
 
-export * from "./utf8-string-builder.ts";
-export * from "./string-builder.ts";
+export * from "./utf8_string_builder.ts";
+export * from "./string_builder.ts";
 export * from "./utils.ts";
 export * from "./transform.ts";
 export * from "./utils.ts";

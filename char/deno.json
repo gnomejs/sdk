@@ -1,11 +1,11 @@
 {
     "name": "@gnome/char",
-    "version": "0.0.0",
+    "version": "0.1.0",
     "exports": {
         ".": "./mod.ts",
         "./char": "./char.ts",
         "./constants": "./constants.ts",
-        "./unicode-category": "./unicode-category.ts",
+        "./unicode-category": "./unicode_category.ts",
         "./utils": "./utils.ts"
     },
 
@@ -14,7 +14,7 @@
             "constants.ts",
             "char.ts",
             "utils.ts",
-            "unicode-category.ts",
+            "unicode_category.ts",
             "mod.ts",
             "README.md",
             "LICENSE.md",

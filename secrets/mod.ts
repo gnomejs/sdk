@@ -73,6 +73,6 @@
 
 export * from "./generator.ts";
 export * from "./masker.ts";
-export * from "./vault-utils.ts";
-export * from "./memory-vault.ts";
-export * from "./json-vault.ts";
+export * from "./vault_utils.ts";
+export * from "./memory_vault.ts";
+export * from "./json_vault.ts";

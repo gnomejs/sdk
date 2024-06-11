@@ -1,6 +1,6 @@
 {
     "name": "@gnome/exec",
-    "version": "0.4.4",
+    "version": "0.5.0",
     "exports": {
         ".": "./mod.ts",
         "./deno": "./deno/mod.ts",
@@ -22,9 +22,7 @@
             "command.ts",
             "command-args.ts",
             "deno/mod.ts",
-            "deno/file.ts",
             "node/mod.ts",
-            "node/file.ts",
             "errors.ts",
             "base.ts",
             "path-finder.ts",

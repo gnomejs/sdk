@@ -52,7 +52,7 @@ The overall goal for the char module to enable inspecting
 characters and avoid string allocations when possible.
 
 When checking for upper case and lower case characters outside
-of latin1 characters, the fall back to use regex like `/\\p{L}/`
+of latin1 characters, the fall back uses regex like `/\\p{L}/`
 to handle it as JavaScript has limited built in globalization
 capabilities through regex and the Intl api.
 

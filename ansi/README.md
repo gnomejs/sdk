@@ -14,11 +14,16 @@ codes, and an ansi writer.
 ## Basic Usage
 
 ```typescript
-import { blue, writer, bgBlue, bold, apply } from "@gnome/ansi";
+import { blue, ansiWriter, bgBlue, green, bold, apply } from "@gnome/ansi";
 
+
+ansiWriter.write("Hello, World!").writeLine();
+ansiWriter.debug("Hello, World!");
+ansiWriter.info("Hello, World!");
+ansiWriter.success("Hello, World!");
+ansiWriter.writeLine(apply("Hello, World!", bold, green, bgBlue) + " test");
 writer.info("An informational message");
 writer.writeLine(blue("My message"));
-
 writer.writeLine(apply("Multiple Styles", bgBlue, bold));
 ```
 

@@ -200,7 +200,7 @@ export class DefaultAnsiWriter implements AnsiWriter {
     }
 
     progress(name: string, value: number): AnsiWriter {
-        this.write(`${name}: ${value.toString().padStart(2)}% \r`);
+        this.write(`${name}: ${green(value.toString().padStart(2))}% \r`);
         return this;
     }
 

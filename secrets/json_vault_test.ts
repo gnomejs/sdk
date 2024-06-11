@@ -1,4 +1,4 @@
-import { JsonVault } from "./json-vault.ts";
+import { JsonVault } from "./json_vault.ts";
 import { isFile, remove } from "@gnome/fs";
 import { assert as ok, assertEquals as equals } from "@std/assert";
 

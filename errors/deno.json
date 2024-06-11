@@ -1,6 +1,6 @@
 {
     "name": "@gnome/errors",
-    "version": "0.0.0",
+    "version": "0.1.0",
     "exports": {
         ".": "./mod.ts",
         "./system-error": "./system_error.ts",

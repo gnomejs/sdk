@@ -1,5 +1,5 @@
 import { WINDOWS } from "@gnome/os-constants";
-import { Utf8StringBuilder } from "./utf8-string-builder.ts";
+import { Utf8StringBuilder } from "./utf8_string_builder.ts";
 import { assertEquals as equals } from "@std/assert";
 
 Deno.test("appendString", () => {
