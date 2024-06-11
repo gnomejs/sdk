@@ -1,7 +1,7 @@
 // Copyright 2018-2024 the Deno authors. All rights reserved. MIT license.
 import { assert, assertEquals, assertStringIncludes } from "@std/assert";
 import { fromFileUrl, join, joinGlobs, normalize, relative } from "@std/path";
-import { expandGlob, type ExpandGlobOptions, expandGlobSync } from "./expand-glob.ts";
+import { expandGlob, type ExpandGlobOptions, expandGlobSync } from "./expand_glob.ts";
 import { cwd } from "./base.ts";
 
 async function expandGlobArray(

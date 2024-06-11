@@ -1,4 +1,4 @@
-import { splitArguments } from "./split-arguments.ts";
+import { splitArguments } from "./split_arguments.ts";
 import { assert as ok, assertEquals as equals } from "jsr:@std/assert@0.225.0";
 
 Deno.test("splitArguments", () => {

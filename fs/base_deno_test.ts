@@ -1,6 +1,6 @@
 import { assertEquals as equals } from "@std/assert";
 import { open, remove } from "./base.ts";
-import { ensureDir } from "./ensure-dir.ts";
+import { ensureDir } from "./ensure_dir.ts";
 import { dirname, fromFileUrl, join } from "@std/path";
 
 const _dir = dirname(fromFileUrl(import.meta.url));

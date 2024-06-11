@@ -1,5 +1,5 @@
 import { splat, type SplatObject } from "./splat.ts";
-import { splitArguments } from "./split-arguments.ts";
+import { splitArguments } from "./split_arguments.ts";
 
 export type CommandArgs = string[] | string | SplatObject;
 

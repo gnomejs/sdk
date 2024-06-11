@@ -1,6 +1,6 @@
 // Copyright 2018-2024 the Deno authors. All rights reserved. MIT license.
 import { dirname, resolve } from "@std/path";
-import { ensureDir, ensureDirSync } from "./ensure-dir.ts";
+import { ensureDir, ensureDirSync } from "./ensure_dir.ts";
 import { getFileInfoType, toPathString } from "./utils.ts";
 import { isAlreadyExistsError, lstat, lstatSync, readLink, readLinkSync, symlink, symlinkSync } from "./base.ts";
 import type { SymlinkOptions } from "./types.ts";

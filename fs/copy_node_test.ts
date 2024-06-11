@@ -4,9 +4,9 @@ import { assert, assertEquals, assertRejects, assertThrows } from "@std/assert";
 import * as path from "@std/path";
 import { copy, copySync } from "./copy.ts";
 import { existsSync } from "./exists.ts";
-import { ensureDir, ensureDirSync } from "./ensure-dir.ts";
-import { ensureFile, ensureFileSync } from "./ensure-file.ts";
-import { ensureSymlink, ensureSymlinkSync } from "./ensure-symlink.ts";
+import { ensureDir, ensureDirSync } from "./ensure_dir.ts";
+import { ensureFile, ensureFileSync } from "./ensure_file.ts";
+import { ensureSymlink, ensureSymlinkSync } from "./ensure_symlink.ts";
 import {
     lstat,
     lstatSync,

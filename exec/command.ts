@@ -1,4 +1,4 @@
-import { type CommandArgs, convertCommandArgs } from "./command-args.ts";
+import { type CommandArgs, convertCommandArgs } from "./command_args.ts";
 import type { ChildProcess, CommandOptions, Output } from "./types.d.ts";
 
 /**

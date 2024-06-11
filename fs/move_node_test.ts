@@ -4,8 +4,8 @@ import { assert, assertEquals, assertRejects, assertThrows } from "@std/assert";
 import * as path from "@std/path";
 import { SubdirectoryMoveError } from "./errors.ts";
 import { move, moveSync } from "./move.ts";
-import { ensureFile, ensureFileSync } from "./ensure-file.ts";
-import { ensureDir, ensureDirSync } from "./ensure-dir.ts";
+import { ensureFile, ensureFileSync } from "./ensure_file.ts";
+import { ensureDir, ensureDirSync } from "./ensure_dir.ts";
 import { existsSync } from "./exists.ts";
 import {
     lstat,

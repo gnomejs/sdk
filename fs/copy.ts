@@ -1,5 +1,5 @@
 import { basename, join, resolve } from "@std/path";
-import { ensureDir, ensureDirSync } from "./ensure-dir.ts";
+import { ensureDir, ensureDirSync } from "./ensure_dir.ts";
 import {
     copyFile as cpf,
     copyFileSync as cpfSync,
