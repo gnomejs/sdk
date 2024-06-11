@@ -1,10 +1,10 @@
 import { EMPTY } from "@gnome/strings";
 import type { ChildProcess, CommandOptions, CommandStatus, Output, Signal } from "../types.d.ts";
-import { type CommandArgs, convertCommandArgs } from "../command-args.ts";
+import { type CommandArgs, convertCommandArgs } from "../command_args.ts";
 import { Command, ShellCommand } from "../command.ts";
 import { remove, removeSync } from "@gnome/fs";
 import { CommandError, NotFoundOnPathError } from "../errors.ts";
-import { pathFinder } from "../path-finder.ts";
+import { pathFinder } from "../path_finder.ts";
 
 class DenoChildProcess implements ChildProcess {
     #childProcess: Deno.ChildProcess;

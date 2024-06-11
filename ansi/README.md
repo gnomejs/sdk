@@ -11,21 +11,23 @@
 The `ansi` module provides color detection, writing ansi
 codes, and an ansi writer.
 
-The module relies upon the @gnome/exec module and
-has the same basic usage as the `Command` class.
-
-The code for the ansi.ts is from deno @std/fmt/color.ts
-and is in under the MIT license from deno.
-
 ## Basic Usage
 
 ```typescript
-import { blue, writer, bgBlue, bold, apply } from "@gnome/ansi";
+import { blue, ansiWriter, bgBlue, green, bold, apply } from "@gnome/ansi";
 
+
+ansiWriter.write("Hello, World!").writeLine();
+ansiWriter.debug("Hello, World!");
+ansiWriter.info("Hello, World!");
+ansiWriter.success("Hello, World!");
+ansiWriter.writeLine(apply("Hello, World!", bold, green, bgBlue) + " test");
 writer.info("An informational message");
 writer.writeLine(blue("My message"));
-
 writer.writeLine(apply("Multiple Styles", bgBlue, bold));
 ```
 
-[MIT License](./LICENSE.md)
+## License
+
+[MIT License](./LICENSE.md) and code from other sources
+are detailed in the [License File](./LICENSE.md)

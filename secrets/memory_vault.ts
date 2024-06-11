@@ -1,4 +1,4 @@
-import { normalizeKey, type SecretRecord, type Vault } from "./vault-utils.ts";
+import { normalizeKey, type SecretRecord, type Vault } from "./vault_utils.ts";
 
 /**
  * Represents a memory vault that stores secrets in memory.

@@ -1,9 +1,9 @@
 import type { ChildProcess, CommandStatus, Output, Signal } from "../types.d.ts";
 import { type ChildProcess as Node2ChildProcess, type IOType, spawn, spawnSync } from "node:child_process";
-import { type CommandArgs, convertCommandArgs } from "../command-args.ts";
+import { type CommandArgs, convertCommandArgs } from "../command_args.ts";
 import { Command, ShellCommand, type ShellCommandOptions } from "../command.ts";
 import { remove, removeSync } from "@gnome/fs";
-import { pathFinder } from "../path-finder.ts";
+import { pathFinder } from "../path_finder.ts";
 import { CommandError, NotFoundOnPathError } from "../errors.ts";
 
 interface NodeCommonOutput {

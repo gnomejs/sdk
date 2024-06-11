@@ -2,8 +2,8 @@
 import {} from "./node/shim.ts";
 import { assertEquals, assertRejects, assertThrows } from "@std/assert";
 import * as path from "@std/path";
-import { ensureDir, ensureDirSync } from "./ensure-dir.ts";
-import { ensureFile, ensureFileSync } from "./ensure-file.ts";
+import { ensureDir, ensureDirSync } from "./ensure_dir.ts";
+import { ensureFile, ensureFileSync } from "./ensure_file.ts";
 import { lstat, lstatSync, makeDir, makeDirSync, remove, removeSync, stat, statSync } from "./base.ts";
 
 const moduleDir = path.dirname(path.fromFileUrl(import.meta.url));

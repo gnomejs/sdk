@@ -332,7 +332,11 @@ export class PathFinder {
             if (options.windows && options.windows.length) {
                 for (const path of options.windows) {
                     let next = path;
-                    next = env.expand(next);
+                    try {
+                        next = env.expand(next);
+                    } catch {
+                        continue;
+                    }
 
                     if (isFileSync(next)) {
                         options.cached = next;
@@ -348,7 +352,12 @@ export class PathFinder {
             if (options.darwin && options.darwin.length) {
                 for (const path of options.darwin) {
                     let next = path;
-                    next = env.expand(next);
+                    try {
+                        next = env.expand(next);
+                    } catch {
+                        // todo: get trace/debug writer to handle
+                        continue;
+                    }
 
                     if (isFileSync(next)) {
                         options.cached = next;
@@ -364,7 +373,11 @@ export class PathFinder {
         if (options.linux && options.linux.length) {
             for (const path of options.linux) {
                 let next = path;
-                next = env.expand(next);
+                try {
+                    next = env.expand(next);
+                } catch {
+                    continue;
+                }
 
                 if (isFileSync(next)) {
                     options.cached = next;

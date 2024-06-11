@@ -18,11 +18,3 @@ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
 WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-## Other Licenses
-
-- [infections](./inflections.ts) is from code in
-  [dreamerslab/node.inflection][inflect] is under the [MIT license][inflect-license]
-
-[inflect]: https://github.com/dreamerslab/node.inflection/blob/master/src/inflection.ts
-[inflect-license]: https://github.com/dreamerslab/node.inflection/blob/master/LICENSE

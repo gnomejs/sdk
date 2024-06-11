@@ -1,5 +1,5 @@
 import { WINDOWS } from "@gnome/os-constants";
-import { StringBuilder } from "./string-builder.ts";
+import { StringBuilder } from "./string_builder.ts";
 import { assertEquals as equals } from "@std/assert";
 import { toCharCodeArray } from "./utils.ts";
 

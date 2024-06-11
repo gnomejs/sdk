@@ -1,4 +1,4 @@
-import { emptyDirSync } from "../empty-dir.ts";
+import { emptyDirSync } from "../empty_dir.ts";
 
 try {
     emptyDirSync("fs/testdata/testfolder");

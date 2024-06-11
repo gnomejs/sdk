@@ -2,7 +2,7 @@
 // TODO(axetroy): Add test for Windows once symlink is implemented for Windows.
 import { assertEquals, assertRejects, assertThrows } from "@std/assert";
 import * as path from "@std/path";
-import { ensureLink, ensureLinkSync } from "./ensure-link.ts";
+import { ensureLink, ensureLinkSync } from "./ensure_link.ts";
 import {
     lstat,
     lstatSync,

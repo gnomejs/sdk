@@ -1,13 +1,16 @@
 import fs from "node:fs";
 import fsa from "node:fs/promises";
 import process from "node:process";
-import { basename, join } from "node:path";
-
+import { basename, join } from "@std/path";
+import { File } from "./file.ts";
 import type {
     CreateDirectoryOptions,
     DirectoryInfo,
     FileInfo,
+    FsFile,
+    FsSupports,
     MakeTempOptions,
+    OpenOptions,
     ReadOptions,
     RemoveOptions,
     SymlinkOptions,
@@ -362,6 +365,69 @@ export function statSync(path: string | URL): FileInfo {
         isSocket: stat.isSocket(),
         isFifo: stat.isFIFO(),
     };
+}
+
+export function open(path: string | URL, options: OpenOptions): Promise<FsFile> {
+    let flags = "r";
+    const supports: FsSupports[] = [];
+    if (options.read) {
+        if (options.write) {
+            flags = "w";
+            supports.push("write");
+        } else if (!options.append) {
+            flags = "a";
+            supports.push("write");
+        } else {
+            flags = "r";
+            supports.push("read");
+        }
+    }
+
+    if (options.createNew && (options.write || options.append)) {
+        flags += "x+";
+    } else if ((options.create || options.truncate) && (options.write || options.append)) {
+        flags += "+";
+        supports.push("truncate");
+    }
+
+    return new Promise<FsFile>((resolve, reject) => {
+        fs.open(path, flags, options.mode, (err, fd) => {
+            if (err) {
+                reject(err);
+                return;
+            }
+            const p = path instanceof URL ? path.toString() : path;
+            resolve(new File(fd, p, supports));
+        });
+    });
+}
+
+export function openSync(path: string | URL, options: OpenOptions): FsFile {
+    let flags = "r";
+    const supports: FsSupports[] = [];
+    if (options.read) {
+        if (options.write) {
+            flags = "w";
+            supports.push("write");
+        } else if (!options.append) {
+            flags = "a";
+            supports.push("write");
+        } else {
+            flags = "r";
+            supports.push("read");
+        }
+    }
+
+    if (options.createNew && (options.write || options.append)) {
+        flags += "x+";
+    } else if ((options.create || options.truncate) && (options.write || options.append)) {
+        flags += "+";
+        supports.push("truncate");
+    }
+
+    const fd = fs.openSync(path, flags, options.mode);
+    const p = path instanceof URL ? path.toString() : path;
+    return new File(fd, p, supports);
 }
 
 export function readDir(

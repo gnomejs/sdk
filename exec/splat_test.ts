@@ -119,3 +119,34 @@ Deno.test("splat with appended arguments", () => {
     equals(args[1], "baz");
     equals(args[2], "bar");
 });
+
+Deno.test("splat: noFlags", () => {
+    const args = splat({
+        "force": true,
+        "other": true,
+        splat: {
+            noFlags: ["force"],
+        } as SplatOptions,
+    });
+
+    equals(args.length, 3);
+    equals(args[0], "--force");
+    equals(args[1], "true");
+    equals(args[2], "--other");
+});
+
+Deno.test("splat: noFlagsValues", () => {
+    const args = splat({
+        "force": false,
+        "other": true,
+        splat: {
+            noFlags: ["force"],
+            noFlagValues: { t: "1", f: "2" },
+        } as SplatOptions,
+    });
+
+    equals(args.length, 3);
+    equals(args[0], "--force");
+    equals(args[1], "2");
+    equals(args[2], "--other");
+});

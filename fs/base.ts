@@ -13,6 +13,8 @@ if (g.process && g.process.versions && g.process.versions.node) {
     throw new Error(`Unsupported runtime ${RUNTIME}`);
 }
 
+// destructuring can not handled by deno/jsr's fast check
+// https://jsr.io/docs/about-slow-types#no-destructuring-in-exports
 export const copyFile = fs.copyFile;
 export const copyFileSync = fs.copyFileSync;
 export const cwd = fs.cwd;
@@ -36,6 +38,8 @@ export const chmod = fs.chmod;
 export const chmodSync = fs.chmodSync;
 export const chown = fs.chown;
 export const chownSync = fs.chownSync;
+export const open = fs.open;
+export const openSync = fs.openSync;
 export const readDir = fs.readDir;
 export const readDirSync = fs.readDirSync;
 export const readFile = fs.readFile;

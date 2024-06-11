@@ -1,62 +1,38 @@
 {
     "name": "@gnome/exec",
-    "version": "0.4.4",
+    "version": "0.5.0",
     "exports": {
         ".": "./mod.ts",
         "./deno": "./deno/mod.ts",
         "./node": "./node/mod.ts",
         "./command": "./base.ts",
         "./command-base": "./command.ts",
-        "./command-args": "./command-args.ts",
-        "./path-finder": "./path-finder.ts",
+        "./command-args": "./command_args.ts",
+        "./path-finder": "./path_finder.ts",
         "./splat": "./splat.ts",
-        "./split-arguments": "./split-arguments.ts",
+        "./split-arguments": "./split_arguments.ts",
         "./which": "./which.ts",
         "./types": "./types.d.ts",
         "./errors": "./errors.ts"
-    },
-    "compilerOptions": {
-        "lib": ["deno.window"]
-    },
-    "fmt": {
-        "indentWidth": 4,
-        "useTabs": false,
-        "lineWidth": 120,
-        "exclude": ["**/*.md"]
-    },
-
-    "tasks": {
-        "test": "deno test -A",
-        "coverage": "deno test --coverage=.artifacts/code-coverage -A",
-        "lcov": "deno coverage .artifacts/code-coverage --lcov > .artifacts/code-coverage.lcov"
     },
 
     "publish": {
         "include": [
             "mod.ts",
             "command.ts",
-            "command-args.ts",
+            "command_args.ts",
             "deno/mod.ts",
             "node/mod.ts",
             "errors.ts",
             "base.ts",
-            "path-finder.ts",
+            "path_finder.ts",
             "splat.ts",
-            "split-arguments.ts",
+            "split_arguments.ts",
             "which.ts",
             "types.d.ts",
             "README.md",
             "LICENSE.md",
             "deno.json"
         ]
-    },
-    "imports": {
-        "@gnome/char": "jsr:@gnome/char@^0.0.0",
-        "@gnome/env": "jsr:@gnome/env@^0.1.0",
-        "@gnome/errors": "jsr:@gnome/errors@^0.0.0",
-        "@gnome/fs": "jsr:@gnome/fs@^0.0.0",
-        "@gnome/os-constants": "jsr:@gnome/os-constants@^0.0.0",
-        "@gnome/strings": "jsr:@gnome/strings@^0.1.0",
-        "@std/path": "jsr:@std/path@^0.224.0"
     }
 }

@@ -3,7 +3,7 @@
 import {} from "./node/shim.ts";
 import { assertEquals, assertRejects, assertThrows } from "@std/assert";
 import * as path from "@std/path";
-import { ensureSymlink, ensureSymlinkSync } from "./ensure-symlink.ts";
+import { ensureSymlink, ensureSymlinkSync } from "./ensure_symlink.ts";
 import {
     lstat,
     lstatSync,

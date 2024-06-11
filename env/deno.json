@@ -1,6 +1,6 @@
 {
     "name": "@gnome/env",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "exports": {
         ".": "./mod.ts",
         "./deno": "./deno/mod.ts",
@@ -8,25 +8,11 @@
         "./browser": "./browser/mod.ts",
         "./constants": "./constants.ts"
     },
-    "compilerOptions": {
-        "lib": ["deno.ns", "deno.unstable", "dom"]
-    },
-    "fmt": {
-        "indentWidth": 4,
-        "useTabs": false,
-        "lineWidth": 120,
-        "exclude": ["**/*.md"]
-    },
-
-    "tasks": {
-        "test": "deno test -A",
-        "coverage": "deno test --coverage=.artifacts/code-coverage -A",
-        "lcov": "deno coverage .artifacts/code-coverage --lcov > .artifacts/code-coverage.lcov"
-    },
 
     "publish": {
         "include": [
             "mod.ts",
+            "base/mod.ts",
             "deno/mod.ts",
             "node/mod.ts",
             "browser/mod.ts",
@@ -37,10 +23,5 @@
             "LICENSE.md",
             "deno.json"
         ]
-    },
-    "imports": {
-        "@gnome/char": "jsr:@gnome/char@^0.0.0",
-        "@gnome/os-constants": "jsr:@gnome/os-constants@^0.0.0",
-        "@gnome/strings": "jsr:@gnome/strings@^0.1.0"
     }
 }

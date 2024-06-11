@@ -1,5 +1,5 @@
 import { env } from "./mod.ts";
-import { assert as ok, assertEquals as equals, assertFalse as no, assertThrows } from "jsr:@std/assert@^0.224.0";
+import { assert as ok, assertEquals as equals, assertFalse as no, assertThrows } from "@std/assert";
 
 Deno.test("browser env.get", () => {
     env.set("TEST", "value");
@@ -63,6 +63,7 @@ Deno.test("browser env.set", () => {
 
 Deno.test("browser env.path.append", () => {
     env.path.append("/test");
+    console.log(env.path.get());
     ok(env.path.has("/test"));
     const paths = env.path.split();
     equals(paths[paths.length - 1], "/test");
@@ -138,4 +139,73 @@ Deno.test("browser env.join", () => {
     const joined = env.joinPath(paths);
     ok(joined.includes("/test20"));
     ok(joined.includes("/test21"));
+});
+
+Deno.test("browser env.getBool", () => {
+    env.set("TEST_BOOL", "1");
+    env.set("NON_BOOL", "bool");
+
+    ok(env.getBool("TEST_BOOL"));
+    ok(!env.getBool("NON_BOOL"));
+    ok(env.getBool("NO_EXIST") === undefined);
+});
+
+Deno.test("browser env.getInt", () => {
+    env.set("TEST_INT", "1");
+    env.set("NON_INT", "int");
+
+    equals(env.getInt("TEST_INT"), 1);
+    ok(env.getInt("NON_INT") === undefined);
+    ok(env.getInt("NO_EXIST") === undefined);
+});
+
+Deno.test("browser env.getNumber", () => {
+    env.set("TEST_FLOAT", "1.1");
+    env.set("NON_FLOAT", "float");
+
+    equals(env.getNumber("TEST_FLOAT"), 1.1);
+    ok(env.getNumber("NON_FLOAT") === undefined);
+    ok(env.getNumber("NO_EXIST") === undefined);
+});
+
+Deno.test("browser env.getArray", () => {
+    env.set("TEST_ARRAY", "1,2,3");
+    env.set("NON_ARRAY", "array");
+
+    equals(env.getArray("TEST_ARRAY"), ["1", "2", "3"]);
+    equals(env.getArray("NON_ARRAY"), ["array"]);
+    ok(env.getArray("NO_EXIST") === undefined);
+
+    env.set("TEST_ARRAY", "1;2;3");
+    equals(env.getArray("TEST_ARRAY", ";"), ["1", "2", "3"], "Delimiter is not correctly set");
+});
+
+Deno.test("browser env.getDate", () => {
+    env.set("TEST_DATE", "2021-01-01");
+    env.set("NON_DATE", "date");
+
+    equals(env.getDate("TEST_DATE"), new Date("2021-01-01"), "Date is not set or does not match");
+    ok(env.getDate("NON_DATE") === undefined, "Non-date value is not undefined");
+    ok(env.getDate("NO_EXIST") === undefined);
+});
+
+Deno.test("browser env.getJson", () => {
+    env.set("TEST_JSON", '{"key": "value"}');
+    env.set("NON_JSON", "json");
+
+    equals(env.getJson("TEST_JSON"), { key: "value" });
+    ok(env.getJson("NON_JSON") === undefined);
+    ok(env.getJson("NO_EXIST") === undefined);
+});
+
+Deno.test("browser env.getBinary", () => {
+    env.set("TEST_BINARY", "SGVsbG8gV29ybGQ=");
+    env.set("NON_BINARY", "binary");
+
+    equals(
+        env.getBinary("TEST_BINARY"),
+        new TextEncoder().encode("Hello World"),
+        "Binary value is not set or does not match",
+    );
+    ok(env.getBinary("NO_EXIST") === undefined);
 });

@@ -1,6 +1,4 @@
-import { PATH_SEP, WINDOWS } from "@gnome/os-constants";
-
-export { PATH_SEP, WINDOWS };
+import { WINDOWS } from "@gnome/os-constants";
 
 /**
  * Represents the environment PATH variable name.

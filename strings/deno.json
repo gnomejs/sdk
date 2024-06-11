@@ -1,10 +1,10 @@
 {
     "name": "@gnome/strings",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "exports": {
         ".": "./mod.ts",
-        "./string-builder": "./string-builder.ts",
-        "./utf8-string-builder": "./utf8-string-builder.ts",
+        "./string-builder": "./string_builder.ts",
+        "./utf8-string-builder": "./utf8_string_builder.ts",
         "./inflections": "./inflections.ts",
         "./transform": "./transform.ts",
         "./utils": "./utils.ts"
@@ -13,8 +13,8 @@
     "publish": {
         "include": [
             "mod.ts",
-            "string-builder.ts",
-            "utf8-string-builder.ts",
+            "string_builder.ts",
+            "utf8_string_builder.ts",
             "inflections.ts",
             "transform.ts",
             "utils.ts",

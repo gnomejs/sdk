@@ -1,6 +1,6 @@
 // Copyright 2018-2024 the Deno authors. All rights reserved. MIT license.
 import { dirname } from "@std/path";
-import { ensureDir, ensureDirSync } from "./ensure-dir.ts";
+import { ensureDir, ensureDirSync } from "./ensure_dir.ts";
 import { toPathString } from "./utils.ts";
 import { link, linkSync } from "./base.ts";
 

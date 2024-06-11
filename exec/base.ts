@@ -1,4 +1,4 @@
-import type { CommandArgs } from "./command-args.ts";
+import type { CommandArgs } from "./command_args.ts";
 import { Command as CommandType, ShellCommand as ShellCommandType, type ShellCommandOptions } from "./command.ts";
 import type { ChildProcess, CommandOptions, Output } from "./types.d.ts";
 // deno-lint-ignore no-explicit-any
