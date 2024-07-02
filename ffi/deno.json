@@ -1,0 +1,27 @@
+{
+    "name": "@gnome/ffi",
+    "version": "0.0.0-beta-001",
+    "exports": {
+        ".": "./mod.ts",
+        "./utils": "./utils.ts",
+        "./bun": "./bun/mod.ts",
+        "./bun/ffi": "./bun/ffi.d.ts",
+        "./deno": "./deno/mod.ts"
+    },
+
+    "publish": {
+        "include": [
+            "mod.ts",
+            "utils.ts",
+            "errors.ts",
+            "bun/ffi.d.ts",
+            "bun/mod.ts",
+            "deno/mod.ts",
+            "intptr.ts",
+            "intptr-runtimes.ts",
+            "README.md",
+            "LICENSE.md",
+            "deno.json"
+        ]
+    }
+}
