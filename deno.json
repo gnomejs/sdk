@@ -13,6 +13,20 @@
         "docs"
     ],
 
+    "lint": {
+        "rules": {
+            "exclude": [
+                ""
+            ]
+        }
+    },
+
+    "test": {
+        "exclude": [
+            "runtimes/**"
+        ]
+    },
+
     "fmt": {
         "exclude": ["**/*.md"],
         "lineWidth": 120,
