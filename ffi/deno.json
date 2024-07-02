@@ -3,7 +3,9 @@
     "version": "0.0.0-beta-001",
     "exports": {
         ".": "./mod.ts",
+        "./intptr": "./intptr-runtimes.ts",
         "./utils": "./utils.ts",
+        "./errors": "./errors.ts",
         "./bun": "./bun/mod.ts",
         "./bun/ffi": "./bun/ffi.d.ts",
         "./deno": "./deno/mod.ts"

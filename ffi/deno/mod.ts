@@ -1,3 +1,9 @@
+/**
+ * Provides a Deno implementation of the `IntPtr` class.
+ * 
+ * @module
+ */
+
 import { IntPtr } from "../intptr.ts";
 
 export const nullPtr: Deno.PointerValue = Deno.UnsafePointer.of(new Uint8Array([0x0]));

@@ -1,4 +1,4 @@
-# @gnome/os-constants
+# @gnome/ffi
 
 <div height=30" vertical-align="top">
 <image src="https://raw.githubusercontent.com/gnomejs/gnomejs/main/assets/icon.png"
@@ -8,21 +8,22 @@
 
 ## Overview
 
-@gnome/os-constants provides constant values for basic os information
-such as `PLATFORM`, `ARCH`, `WINDOWS`, `DARWIN`, `PATH_SEP`, `DEV_NULL`.
+@gnome/ffi provides some shared utils for working with foreign function
+interfaces in Deno and Bun and a shim for bun.
+
+Given the current limitations in deno around specifiers like `bun:test` and `bun:ffi`
+the @gnome/ffi/bun module provides the imports with type declarations for
+`bun:ffi` and performs a dynamic import to work around the current limitations.
 
 ## Basic Usage
 
 ```typescript
-import * as os from "@gnome/os-constants";
+import * as ffi from "@gnome/ffi";
 
-console.log(os.PLATFORM);
-console.log(os.ARCH);
-console.log("windows", os.WINDOWS);
-console.log("darwin", os.DARWIN);
-console.log("linux", os.LINUX);
-console.log("eol", os.EOL);
-console.log("path separator", os.PATH_SEP);
+const buf = new Uint8Array([0x0])
+
+const ptr = ffi.createPointer(buf);
+console.log(ptr);
 ```
 
 [MIT License](./LICENSE.md)

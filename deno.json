@@ -13,14 +13,6 @@
         "docs"
     ],
 
-    "lint": {
-        "rules": {
-            "exclude": [
-                ""
-            ]
-        }
-    },
-
     "test": {
         "exclude": [
             "runtimes/**"
