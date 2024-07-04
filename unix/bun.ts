@@ -65,7 +65,7 @@ export class BunLibc implements LibcLibrary {
     #lib: LibcMethods;
 
     constructor() {
-        this.#lib = dlopen(process.platform === "darwin" ? "libSystem" : "libc.so.6", {
+        this.#lib = dlopen(process.platform === "darwin" ? "libSystem.dylib" : "libc.so.6", {
             getpwuid_r: {
                 args: ["u32", "pointer", "pointer", "u32", "pointer"],
                 returns: "i32",
