@@ -1,4 +1,4 @@
-import { SystemError  } from "@gnome/errors";
+import { SystemError } from "@gnome/errors";
 
 /**
  * Represents an error that occurs when a symbol is missing in a library.

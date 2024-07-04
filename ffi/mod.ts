@@ -20,7 +20,7 @@
  * ```
  * 
  * [MIT License](./LICENSE.md)
- *  @module
+ * 
  */
 export * from "./utils.ts";
 export * from "./intptr-runtimes.ts";

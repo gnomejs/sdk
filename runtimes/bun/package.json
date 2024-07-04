@@ -7,5 +7,12 @@
     },
     "peerDependencies": {
         "typescript": "^5.0.0"
+    },
+    "dependencies": {
+        "@gnome/errors": "npm:@jsr/gnome__errors",
+        "@gnome/ffi": "npm:@jsr/gnome__ffi",
+        "@gnome/optional": "npm:@jsr/gnome__optional",
+        "@gnome/os-constants": "npm:@jsr/gnome__os-constants",
+        "jsr": "^0.12.4"
     }
 }

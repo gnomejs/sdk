@@ -26,11 +26,12 @@
     },
 
     "tasks": {
-        "test": "deno test -A",
+        "test": "deno test -A --unstable-ffi",
         "coverage": "deno test --coverage=.artifacts/code-coverage -A",
         "lcov": "deno coverage .artifacts/code-coverage --lcov > .artifacts/code-coverage.lcov",
         "prep": "deno fmt && deno lint",
-        "publish:test": "deno publish --dry-run --allow-dirty"
+        "publish:test": "deno publish --dry-run --allow-dirty",
+        "doc:mods": "deno run -A ./.tasks/document_mods.ts"
     },
 
     "imports": {
@@ -41,7 +42,7 @@
         "@gnome/exec": "jsr:@gnome/exec@^0.4.4",
         "@gnome/ffi": "jsr:@gnome/ffi@^0.0.0-beta-001",
         "@gnome/fs": "jsr:@gnome/fs@^0.2.0",
-        "@gnome/optional": "jsr:@gnome/optional@^0.0.0",
+        "@gnome/optional": "jsr:@gnome/optional@^0.1.0",
         "@gnome/os-constants": "jsr:@gnome/os-constants@^0.1.0",
         "@gnome/random": "jsr:@gnome/random@^0.0.0",
         "@gnome/runtime-constants": "jsr:@gnome/runtime-constants@^0.1.0",
@@ -70,6 +71,7 @@
         "./random",
         "./runtime-constants",
         "./secrets",
-        "./strings"
+        "./strings",
+        "./unix"
     ]
 }

@@ -6,7 +6,6 @@
       "jsr:@gnome/char@^0.0.0": "jsr:@gnome/char@0.0.0",
       "jsr:@gnome/env@^0.1.0": "jsr:@gnome/env@0.1.0",
       "jsr:@gnome/errors@^0.0.0": "jsr:@gnome/errors@0.0.0",
-      "jsr:@gnome/optional@^0.0.0": "jsr:@gnome/optional@0.0.0",
       "jsr:@gnome/os-constants@^0.0.0": "jsr:@gnome/os-constants@0.0.0",
       "jsr:@gnome/random@^0.0.0": "jsr:@gnome/random@0.0.0",
       "jsr:@gnome/runtime-info@^0.0.0": "jsr:@gnome/runtime-info@0.0.0",
@@ -49,12 +48,6 @@
       },
       "@gnome/errors@0.0.0": {
         "integrity": "d288a695ea6f368082435382245d69366a26ebae707a78fc573eb6996c55185e"
-      },
-      "@gnome/optional@0.0.0": {
-        "integrity": "0172e5dabacaec2ab17930799dcb724cdfc32e73af900b105596b966fb69ca1f",
-        "dependencies": [
-          "jsr:@gnome/errors@^0.0.0"
-        ]
       },
       "@gnome/os-constants@0.0.0": {
         "integrity": "46f1ac1ddaef0d55fc03d256ec6ee6441918910b0c65c97afaf9ec8ced0f8087",
@@ -163,8 +156,9 @@
       "jsr:@gnome/env@^0.2.0",
       "jsr:@gnome/errors@^0.1.0",
       "jsr:@gnome/exec@^0.4.4",
+      "jsr:@gnome/ffi@^0.0.0-beta-001",
       "jsr:@gnome/fs@^0.2.0",
-      "jsr:@gnome/optional@^0.0.0",
+      "jsr:@gnome/optional@^0.1.0",
       "jsr:@gnome/os-constants@^0.1.0",
       "jsr:@gnome/random@^0.0.0",
       "jsr:@gnome/runtime-constants@^0.1.0",
@@ -192,7 +186,8 @@
       "@gnome/random": {},
       "@gnome/runtime-constants": {},
       "@gnome/secrets": {},
-      "@gnome/strings": {}
+      "@gnome/strings": {},
+      "@gnome/unix": {}
     }
   }
 }

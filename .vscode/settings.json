@@ -1,6 +1,12 @@
 {
     "deno.enable": true,
+    "deno.testing.args": [
+        "--allow-all",
+        "--no-check",
+        "--unstable-ffi"
+    ],
     "deno.disablePaths": [
-        "./runtimes/bun/ffi_test.ts"
+        "./runtimes/bun/ffi_test.ts",
+        "./runtimes/bun/unix"
     ]
 }
