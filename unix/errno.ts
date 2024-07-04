@@ -1,4 +1,4 @@
-import { SystemError } from "../errors/system_error.ts";
+import { SystemError } from "@gnome/errors/system-error";
 
 export const ENONE = 0;
 export const EPERM = 1;
