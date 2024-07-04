@@ -27,7 +27,7 @@
 
     "tasks": {
         "test": "deno test -A --unstable-ffi",
-        "coverage": "deno test --coverage=.artifacts/code-coverage -A",
+        "coverage": "deno test --coverage=.artifacts/code-coverage -A --unstable-ffi",
         "lcov": "deno coverage .artifacts/code-coverage --lcov > .artifacts/code-coverage.lcov",
         "prep": "deno fmt && deno lint",
         "publish:test": "deno publish --dry-run --allow-dirty",
