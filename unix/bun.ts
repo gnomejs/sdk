@@ -390,7 +390,7 @@ export class BunLibc implements LibcLibrary {
                 const uid = read.u32(pwdBufPtr, 16);
                 const gid = read.u32(pwdBufPtr, 20);
                 const gecosPtr = read.ptr(pwdBufPtr, 24) as number;
-                const gecos = new CString(gecosPtr as Pointer).toString();
+                const gecos =  gecosPtr === null || gecosPtr === 0 ? "" : new CString(gecosPtr as Pointer).toString();
                 const dirPtr = read.ptr(pwdBufPtr, 32);
                 const dir = new CString(dirPtr as Pointer).toString();
                 const shellPtr = read.ptr(pwdBufPtr, 40) as number;

@@ -419,7 +419,7 @@ export class DenoLibc implements LibcLibrary {
                 const gid = v.getInt32(20);
                 const gecosId = v.getBigInt64(24);
                 const gecosPtr = Deno.UnsafePointer.create(gecosId);
-                const gecos = Deno.UnsafePointerView.getCString(gecosPtr as Deno.PointerObject);
+                const gecos = gecosPtr === null ? "" : Deno.UnsafePointerView.getCString(gecosPtr as Deno.PointerObject);
                 const dirId = v.getBigInt64(32);
                 const dirPtr = Deno.UnsafePointer.create(dirId);
                 const dir = Deno.UnsafePointerView.getCString(dirPtr as Deno.PointerObject);
