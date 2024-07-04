@@ -3,6 +3,18 @@ const { openLibc } = await import("./deno.ts");
 
 const WINDOWS = Deno.build.os === "windows";
 
+Deno.test("unix: openlbic", { ignore: WINDOWS }, () => {
+    const r = openLibc();
+    if (r.isError) {
+        const e = r.unwrapError();
+        console.error(e);
+        fail(e.message);
+    }
+
+    using libc = r.expect("Failed to open libc");
+    console.log(libc);
+});
+
 Deno.test("getUserId", { ignore: WINDOWS }, () => {
     using libc = openLibc().expect("Failed to open libc");
     const userId = libc.getUserId().expect("Failed to get user id");
