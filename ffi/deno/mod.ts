@@ -1,6 +1,6 @@
 /**
  * Provides a Deno implementation of the `IntPtr` class.
- * 
+ *
  * @module
  */
 

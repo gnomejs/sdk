@@ -1,0 +1,25 @@
+{
+    "name": "@gnome/unix",
+    "version": "0.0.0",
+    "exports": {
+        ".": "./mod.ts",
+        "./errno": "./errno.ts",
+        "./types": "./types.ts",
+        "./bun": "./bun.ts",
+        "./deno": "./deno.ts"
+    },
+
+    "publish": {
+        "include": [
+            "_utils.ts",
+            "bun.ts",
+            "deno.ts",
+            "errno.ts",
+            "mod.ts",
+            "types.ts",
+            "README.md",
+            "LICENSE.md",
+            "deno.json"
+        ]
+    }
+}

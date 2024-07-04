@@ -2,9 +2,9 @@
  * Enables the bun ffi module to be imported within modules
  * that use the deno language server to providing cross runtime
  * modules that ship to jsr.io
- * 
+ *
  * The module provides the Bun implementation of the IntPtr class.
- * 
+ *
  * @module
  */
 

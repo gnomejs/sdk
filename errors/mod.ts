@@ -1,7 +1,11 @@
 /**
+ * ## Overview
+ * 
+ * All errors in @gnome will inherit from `SystemError`
+ * 
  * The errors module extends the built-in Error class to provide
  * additional functionality such as:
- *
+ * 
  * - `toObject()` method to convert an error to JSON
  *    object.
  * - `set()` method to set multiple properties of the error.
@@ -9,14 +13,30 @@
  * - `code` property to get or set the error code.
  * - `target` property to get or set the target of the error
  *    such as the name of the method that threw the error.
- *
+ * 
  * The module also provides a number of error classes that extend
  * and utility functions to work with errors:
- * - `collectErrors()` function to collect all the errors from an error object.
- * - `walkError()` function to walk through an error and its inner errors.
+ * 
+ * - `collect()` function to collect all the errors from an error object.
+ * - `walk()` function to walk through an error and its inner errors.
  * - `printError()` function to print an error to the console.
- *
- * @module
+ * 
+ * ## Basic Usage
+ * 
+ * ```typescript
+ * import { SystemError } from '@gnome/errors'
+ * 
+ * try {
+ *    throw new SystemError("message");
+ * } catch (e) {
+ *    console.log(e.stackTrace)
+ *    console.log(e.code)
+ * }
+ * 
+ * ```
+ * 
+ * [MIT License](./LICENSE.md)
+ * 
  */
 export * from "./system_error.ts";
 export * from "./argument_error.ts";

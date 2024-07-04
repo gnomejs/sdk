@@ -1,12 +1,15 @@
 /**
- * JavaScript runtime detection which is useful for writing
- * compatability layers in modules for different runtimes.
- *
+ * ## Overview
+ * 
+ * The runtime-constants module is helpful for JavaScript runtime detection
+ * which is useful for writing compatability layers in modules for
+ * different runtimes.
+ * 
  * ## Basic Usage
- *
+ * 
  * ```typescript
- * import { RUNTIME, BUN, DENO, NODE, BROWSER } from "@gnome/runtime-constants";
- *
+ * import { RUNTIME, BUN, DENO, NODE, BROWSER, CLOUDFLARE } from "@gnome/runtime-constants";
+ * 
  * console.log(RUNTIME);
  * console.log("bun", BUN);
  * console.log("deno", DENO);
@@ -14,8 +17,9 @@
  * console.log("browser", BROWSER);
  * console.log("cloudflare", CLOUDFLARE);
  * ```
- *
- * @module
+ * 
+ * [MIT License](./LICENSE.md)
+ * 
  */
 
 // deno-lint-ignore no-explicit-any
