@@ -74,7 +74,7 @@ export class DenoLibc implements LibcLibrary {
     #lib: LibcMethods;
 
     constructor() {
-        this.#lib = Deno.dlopen("libc.so.6", {
+        this.#lib = Deno.dlopen(Deno.build.os === "darwin" ? "libSystem" : "libc.so.6", {
             getpwuid_r: {
                 parameters: ["u32", "pointer", "pointer", "u32", "pointer"],
                 result: "i32",
