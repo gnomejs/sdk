@@ -14,6 +14,12 @@ if (typeof g.Bun === "undefined") {
     throw new NotSupportedError("@gnome/unix/bun is not supported in the current JavaScript runtime.");
 }
 
+let process = g.process;
+
+if (typeof g.process === "undefined") {
+    process = {}
+}
+
 type LibcMethods = Library<{
     getpwuid_r: {
         args: ["u32", "pointer", "pointer", "u32", "pointer"];
