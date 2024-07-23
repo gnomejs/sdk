@@ -14,7 +14,7 @@ Deno.test("setLogger", { ignore: !hasExe }, async () => {
     });
     try {
         await cmd("echo", ["test"]);
-        ok(fileName.endsWith("echo"));
+        ok(fileName.endsWith("echo") || fileName.endsWith("echo.exe"));
         equal(args2, ["test"]);
     } finally {
         setLogger(undefined);
