@@ -1,11 +1,11 @@
 import type { Library } from "@gnome/ffi/bun/ffi";
-import { CString, dlopen, Pointer, ptr, read } from "@gnome/ffi/bun";
+import { CString, dlopen, type Pointer, ptr, read } from "@gnome/ffi/bun";
 import { MissingSymbolError } from "@gnome/ffi/errors";
 import { NotSupportedError } from "@gnome/errors/not-supported-error";
 import { WINDOWS } from "@gnome/os-constants";
-import { GrEnt, LibcLibrary, PwEnt } from "./types.ts";
+import type { GrEnt, LibcLibrary, PwEnt } from "./types.ts";
 import { ENAMETOOLONG, ERANGE, UnixError } from "./errno.ts";
-import { err, ok, Result } from "@gnome/optional";
+import { err, ok, type Result } from "@gnome/optional";
 import { toCString } from "./_utils.ts";
 
 // deno-lint-ignore no-explicit-any
@@ -17,7 +17,7 @@ if (typeof g.Bun === "undefined") {
 let process = g.process;
 
 if (typeof g.process === "undefined") {
-    process = {}
+    process = {};
 }
 
 type LibcMethods = Library<{
@@ -396,7 +396,7 @@ export class BunLibc implements LibcLibrary {
                 const uid = read.u32(pwdBufPtr, 16);
                 const gid = read.u32(pwdBufPtr, 20);
                 const gecosPtr = read.ptr(pwdBufPtr, 24) as number;
-                const gecos =  gecosPtr === null || gecosPtr === 0 ? "" : new CString(gecosPtr as Pointer).toString();
+                const gecos = gecosPtr === null || gecosPtr === 0 ? "" : new CString(gecosPtr as Pointer).toString();
                 const dirPtr = read.ptr(pwdBufPtr, 32);
                 const dir = new CString(dirPtr as Pointer).toString();
                 const shellPtr = read.ptr(pwdBufPtr, 40) as number;

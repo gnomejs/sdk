@@ -1,4 +1,4 @@
-import type { ChildProcess, CommandStatus, Output, Signal } from "../types.d.ts";
+import type { ChildProcess, CommandOptions, CommandStatus, Output, Signal } from "../types.d.ts";
 import { type ChildProcess as Node2ChildProcess, type IOType, spawn, spawnSync } from "node:child_process";
 import { type CommandArgs, convertCommandArgs } from "../command_args.ts";
 import { Command, ShellCommand, type ShellCommandOptions } from "../command.ts";
@@ -309,7 +309,7 @@ class NodeChildProcess implements ChildProcess {
 }
 
 export class NodeCommand extends Command {
-    constructor(exe: string, args: CommandArgs, options: ShellCommandOptions) {
+    constructor(exe: string, args: CommandArgs, options: CommandOptions) {
         super(exe, args, options);
     }
 

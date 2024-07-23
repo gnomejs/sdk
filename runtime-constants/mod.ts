@@ -1,15 +1,15 @@
 /**
  * ## Overview
- * 
+ *
  * The runtime-constants module is helpful for JavaScript runtime detection
  * which is useful for writing compatability layers in modules for
  * different runtimes.
- * 
+ *
  * ## Basic Usage
- * 
+ *
  * ```typescript
  * import { RUNTIME, BUN, DENO, NODE, BROWSER, CLOUDFLARE } from "@gnome/runtime-constants";
- * 
+ *
  * console.log(RUNTIME);
  * console.log("bun", BUN);
  * console.log("deno", DENO);
@@ -17,9 +17,8 @@
  * console.log("browser", BROWSER);
  * console.log("cloudflare", CLOUDFLARE);
  * ```
- * 
+ *
  * [MIT License](./LICENSE.md)
- * 
  */
 
 // deno-lint-ignore no-explicit-any
@@ -45,8 +44,8 @@ export const NODE = !BUN && NODELIKE;
 /**
  * Returns `true` if the runtime is `cloudflare`, otherwise, `false`.
  */
-export const CLOUDFLARE: boolean = g.navigator && g.navigator.userAgent &&
-    g.navigator.userAgent.includes("Cloudflare-Workers");
+export const CLOUDFLARE: boolean = (g.navigator && g.navigator.userAgent &&
+    g.navigator.userAgent.includes("Cloudflare-Workers")) || false;
 
 /**
  * Returns `true` if the runtime is a  `browser`, otherwise, `false`.

@@ -1,6 +1,6 @@
 {
     "name": "@gnome/ffi",
-    "version": "0.0.0-beta-001",
+    "version": "0.0.0-beta-002",
     "exports": {
         ".": "./mod.ts",
         "./intptr": "./intptr-runtimes.ts",

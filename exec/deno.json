@@ -1,6 +1,6 @@
 {
     "name": "@gnome/exec",
-    "version": "0.5.0",
+    "version": "0.5.1",
     "exports": {
         ".": "./mod.ts",
         "./deno": "./deno/mod.ts",
@@ -10,6 +10,7 @@
         "./command-args": "./command_args.ts",
         "./path-finder": "./path_finder.ts",
         "./splat": "./splat.ts",
+        "./set-logger": "./set_logger.ts",
         "./split-arguments": "./split_arguments.ts",
         "./which": "./which.ts",
         "./types": "./types.d.ts",
@@ -26,6 +27,7 @@
             "errors.ts",
             "base.ts",
             "path_finder.ts",
+            "set_logger.ts",
             "splat.ts",
             "split_arguments.ts",
             "which.ts",

@@ -1,5 +1,6 @@
 import { type CommandArgs, convertCommandArgs } from "./command_args.ts";
 import type { ChildProcess, CommandOptions, Output } from "./types.d.ts";
+import { getLogger } from "./set_logger.ts";
 
 /**
  * Represents a command that can be executed.
@@ -21,6 +22,7 @@ export class Command {
         this.file = file;
         this.args = args;
         this.options = options ?? {};
+        this.options.log ??= getLogger();
     }
 
     toArgs(): string[] {

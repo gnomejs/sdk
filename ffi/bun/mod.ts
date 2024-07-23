@@ -9,7 +9,7 @@
  */
 
 import { IntPtr } from "../intptr.ts";
-import * as bunFFI from "./ffi.d.ts";
+import type * as bunFFI from "./ffi.d.ts";
 import type { Pointer } from "./ffi.d.ts";
 
 // deno-lint-ignore no-explicit-any

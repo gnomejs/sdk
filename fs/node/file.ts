@@ -1,5 +1,5 @@
 import { basename } from "@std/path";
-import { FileInfo, FsFile, FsSupports, SeekMode } from "../types.ts";
+import type { FileInfo, FsFile, FsSupports, SeekMode } from "../types.ts";
 import fs from "node:fs";
 import { BUN, DENO } from "@gnome/runtime-constants";
 

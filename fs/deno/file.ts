@@ -1,5 +1,5 @@
 import { basename } from "@std/path";
-import { FileInfo, FsFile, FsSupports, SeekMode } from "../types.ts";
+import type { FileInfo, FsFile, FsSupports, SeekMode } from "../types.ts";
 
 function translate(whence?: SeekMode): Deno.SeekMode {
     whence ??= "current";

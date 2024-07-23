@@ -1,6 +1,6 @@
 import { equalsIgnoreCase } from "@gnome/strings";
 import { expand } from "../expand.ts";
-import { Env, EnvPath, SubstitutionOptions } from "../types.d.ts";
+import type { Env, EnvPath, SubstitutionOptions } from "../types.d.ts";
 import { BUN, DENO, NODE } from "@gnome/runtime-constants";
 import { PATH_SEP, WINDOWS } from "@gnome/os-constants";
 import { decodeBase64 } from "@std/encoding";
