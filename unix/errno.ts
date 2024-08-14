@@ -1,4 +1,4 @@
-import { SystemError } from "@gnome/errors/system-error";
+
 
 export const ENONE = 0;
 export const EPERM = 1;
@@ -32,7 +32,7 @@ export const EDOM = 33;
 export const EDEADLK = 36;
 export const ENAMETOOLONG = 38;
 
-export class UnixError extends SystemError {
+export class UnixError extends Error {
     constructor(errno: number, message: string) {
         super(message ?? `Unix error ${errno}`);
         this.errno = errno;

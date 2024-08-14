@@ -42,4 +42,23 @@ try {
 
 ```
 
+## Errors
+
+- `AbortError` an error for aborting an operation.
+- `ArgumentEmptyError` an error for when a strings and collections.
+   For strings, it is null, empty, or whitespace or for empty collections.
+- `ArgumentError` thrown when a argument vailes validation.]
+- `ArgumentNullError` thrown when an argument is `null` or `undefined`.
+- `ArgumentRangeError` thrown when an argument is out of range.
+- `FormatError` thrown when a value can not be formatted such as conversions to strings.
+- `InvalidCastError` thrown when a value can not be converted into the desired value.
+- `InvalidOperationError` thrown when an operation can not be or should not be executed.
+- `NotImplementedError` thrown when a method or function is not implemented.
+- `NotSupportedError` thrown when a use case is not supproted such as a function
+   that only works on linux.
+- `NullReferenceError` thrown when value is unexpectedly `null` or `undefined`
+- `ObjectDisposedError` thrown when an object is already disposed and a member
+   is accessed.
+- `TimeoutError` thrown when a operation times out.
+
 [MIT License](./LICENSE.md)
