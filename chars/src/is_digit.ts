@@ -11,7 +11,7 @@ import type { Char } from "./types.ts";
  *
  * @example
  * ```typescript
- * import { isDigit } from '@gnome/char';
+ * import { isDigit } from '@gnome/chars';
  *
  * console.log(isDigit('5'.charCodeAt(0))); // Output: true
  * console.log(isDigit('a'.charCodeAt(0))); // Output: false
@@ -38,6 +38,21 @@ export function isDigit(char: number): boolean {
      return false;
 }
 
+/**
+ * Determines whether the given character is a digit.
+ * 
+ * @param char The character to check.
+ * @returns `true` if the character is a digit; otherwise, `false`.
+ * 
+ * @example
+ * ```ts
+ * import { isDigitUnsafe } from "@gnome/chars";
+ * 
+ * console.log(isDigitUnsafe(0x10FFFF)); // Output: false
+ * console.log(isDigitUnsafe(0.32)); // Output: false
+ * console.log(isDigitUnsafe(10)); // Output: true
+ * ```
+ */
 export function isDigitUnsafe(char: Char): boolean {
      if (char < 256) {
         return (latin1[char] & pN) !== 0;
@@ -64,7 +79,7 @@ export function isDigitUnsafe(char: Char): boolean {
  * @returns `true` if the character at the specified index is a digit, `false` otherwise.
  * @example
  * ```typescript
- * import { isDigitAt } from "@gnome/char";
+ * import { isDigitAt } from "@gnome/chars";
  *
  * const str = "Hello, world!";
  * const index = 4;

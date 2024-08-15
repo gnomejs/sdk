@@ -1,6 +1,6 @@
 import type { Char } from "./types.ts";
 import { isLetter, isLetterUnsafe,} from "./is-letter.ts";
-import { isDigit,  isDigitUnsafe } from "./is-digit.ts";
+import { isDigit,  isDigitUnsafe } from "./is_digit.ts";
 
 
 export function isLetterOrDigit(char: Char): boolean {

@@ -1,7 +1,6 @@
-
 /**
  * Determines whether the given value is a valid Unicode character.
- * @param value The value to check.
+ * @param char The value to check.
  * @returns `true` if the value is a valid Unicode character; otherwise, `false`.
  * @example
  * ```ts
@@ -13,7 +12,7 @@
  * console.log(isChar(0.32)); // Output: false
  * ```
  */
-export function isChar(value: number): boolean {
-    return Number.isInteger(value) && value >= 0 && value <= 0x10FFFF;
+export function isChar(char: number): boolean {
+    return  Number.isInteger(char) && char >= 0 && char <= 0x10FFFF;
 }
 

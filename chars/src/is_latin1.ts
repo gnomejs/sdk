@@ -8,7 +8,7 @@
  *
  * @example
  * ```typescript
- * import { isLatin1 } from '@gnome/char';
+ * import { isLatin1 } from '@gnome/chars';
  *
  * console.log(isLatin1("Ď".charCodeAt(0))); // Output: false
  * console.log(isLatin1(65)); // Output: true
@@ -16,6 +16,9 @@
  * ```
  */
 export function isLatin1(value: number): boolean {
+    if (!Number.isInteger(value) || value < 0)
+        return false;
+
     return value < 256
 }
 
@@ -30,7 +33,7 @@ export function isLatin1(value: number): boolean {
  *
  * @example
  * ```typescript
- * import { isLatin1At } from "@gnome/char";
+ * import { isLatin1At } from "@gnome/chars";
  *
  * const str = "Hello, world!";
  * const index = 4;
@@ -40,5 +43,5 @@ export function isLatin1(value: number): boolean {
  */
 export function isLatin1At(value: string, index: number): boolean {
     const code = value.codePointAt(index);
-    return code !== undefined && code < 256;
+    return code !== undefined && code > -1 && code < 256;
 }

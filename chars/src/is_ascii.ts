@@ -14,6 +14,9 @@
  * ```
  */
 export function isAscii(value: number): boolean {
+    if (!Number.isInteger(value) || value < 0) 
+        return false;
+
     return value < 128;
 }
 
@@ -35,5 +38,5 @@ export function isAscii(value: number): boolean {
  */
 export function isAsciiAt(value: string, index: number): boolean {
     const code = value.codePointAt(index);
-    return code !== undefined && code < 128;
+    return code !== undefined && code > -1 && code < 128;
 }
