@@ -8,12 +8,31 @@
 
 ## Overview
 
-In JavaScript, characters are represented as codes or code points returned
-by the string `charCodeAt` and `codePointAt` functions.
+The chars module contains character related functions commonly
+found in other standard libraries or frameworks such as `isSpace`,
+`isLetter`, `isUpper`, `isDigit`, etc.
 
-The char module provides functions to evaluate characters (integers)
-such as `isLetter`, `isLetterAt`, `isDigit`, `isWhitespace`,
-`isUpper`, `isLower`.
+The module will handle characters outside latin and ascii such as
+Cyrillic or Greek characters.
+
+The char module provides functions common character functions:
+
+- `equalFold`
+- `isAscii`
+- `isChar`
+- `isControl`
+- `isDigit`
+- `isLatin`
+- `isLetterOrDigit`
+- `isLetter`
+- `isLower`
+- `isPunc`
+- `isSpace`
+- `isSymbol`
+- `isUpper`
+- `simpleFold`
+- `toLower`
+- `toUpper`
 
 ## Basic Usage
 
@@ -24,7 +43,8 @@ import {
     isDigit, 
     isAscii, 
     isLatin1, 
-    isSpaceAt
+    isSpaceAt,
+    equalFold
 } from "@gnome/chars";
 
 const str = "Hello, World 123";
@@ -34,22 +54,25 @@ console.log(isLowerAt(str, 1)); // false
 console.log(isDigit(str, 1)); // false 
 console.log(isDigit(str, 14)); // true
 
+const left = "Ꙏ".codePointAt(0)
+const right = "ꙏ".codePointAt(0)
+console.log(equalFold(left, right)); // true
+
 console.log(isAsciiAt("⇼", 0)); // false
+console.log(isAsciiAt(str, 0)); // true
 console.log(isLatin1At("⇼", 0)); // false
 
-const str2 = " \n\r\t"
-console.log(isWhitespaceAt(str2, 0)); // true
-console.log(isWhitespaceAt(str2, 1)); // true
-console.log(isWhitespaceAt(str2, 2)); // true
-console.log(isWhitespaceAt(str2, 3)); // true
+const str2 = " \n\r\t\f"
+console.log(isSpaceAt(str2, 0)); // true
+console.log(isSpaceAt(str2, 1)); // true
+console.log(isSpaceAt(str2, 2)); // true
+console.log(isSpaceAt(str2, 3)); // true
 ```
 
 ## Notes
 
 The overall goal for the char module to enable inspecting
 characters and avoid string allocations where possible.
-
-
 
 ## License
 

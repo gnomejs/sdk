@@ -23,5 +23,3 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SO
 
 Various parts of this module was adapted from go's unicode module
 <https://go.dev/LICENSE>
-
-

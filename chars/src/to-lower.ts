@@ -24,7 +24,7 @@ import { MAX_RUNE } from "./constants.ts";
  * console.log(toLower(48)); // Output: 48
  * ```
  */
-export function toLower(char: Char): number {
+export function toLower(char: Char): Char {
     
     if (char < 128) {
         if (char >= 65 && char <= 90) {

@@ -18,7 +18,7 @@ import { MAX_RUNE } from "./constants.ts";
  * console.log(toUpper(48)); // Output: 48
  * ```
  */
-export function toUpper(char: Char): number {
+export function toUpper(char: Char): Char {
     if (!Number.isInteger(char) || (char < 1 || char > 0x10FFFF)) 
         return char;    
 
