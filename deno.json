@@ -61,6 +61,7 @@
         "./ansi",
         "./assert",
         "./char",
+        "./chars",
         "./ci-pipelines",
         "./env",
         "./errors",
