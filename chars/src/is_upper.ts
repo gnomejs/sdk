@@ -10,7 +10,7 @@ export function isUpper(char: Char) : boolean {
     if (char < 256) 
         return (latin1[char] & pLu) !== 0;
 
-    const hi = Lu.R16[Lu.R32.length - 1][1];
+    const hi = Lu.R16[Lu.R16.length - 1][1];
     if (char  <= hi) {
        return is16(Lu.R16, char);
     }
@@ -27,7 +27,7 @@ export function isUpperUnsafe(char: Char) : boolean {
     if (char < 256) 
         return (latin1[char] & pLu) !== 0;
 
-    const hi = Lu.R16[Lu.R32.length - 1][1];
+    const hi = Lu.R16[Lu.R16.length - 1][1];
     if (char  <= hi) {
        return is16(Lu.R16, char);
     }

@@ -176,5 +176,3 @@ export const Ll = {
     R32,
     LatinOffset,
 }
-
-console.log(R16.length);

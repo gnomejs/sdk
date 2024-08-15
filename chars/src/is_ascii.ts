@@ -7,7 +7,7 @@
  *
  * @example
  * ```typescript
- * import { isAscii } from '@gnome/chars';
+ * import { isAscii } from '@gnome/chars/is-ascii';
  *
  * const result = isAscii(65);
  * // result: true
@@ -29,7 +29,7 @@ export function isAscii(value: number): boolean {
  *
  * @example
  * ```typescript
- * import { isAsciiAt } from "@gnome/chars";
+ * import { isAsciiAt } from "@gnome/chars/is-ascii";
  * const str = "Hello, world!";
  * const index = 4;
  * const isAscii = isAsciiAt(str, index);

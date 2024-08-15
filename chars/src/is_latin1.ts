@@ -8,7 +8,7 @@
  *
  * @example
  * ```typescript
- * import { isLatin1 } from '@gnome/chars';
+ * import { isLatin1 } from '@gnome/chars/is-latin1';
  *
  * console.log(isLatin1("Ď".charCodeAt(0))); // Output: false
  * console.log(isLatin1(65)); // Output: true
@@ -33,7 +33,7 @@ export function isLatin1(value: number): boolean {
  *
  * @example
  * ```typescript
- * import { isLatin1At } from "@gnome/chars";
+ * import { isLatin1At } from "@gnome/chars/is";
  *
  * const str = "Hello, world!";
  * const index = 4;

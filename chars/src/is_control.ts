@@ -8,7 +8,7 @@ import type { Char } from "./types.ts";
  * 
  * @example
  * ```ts
- * import { IsControl } from "@gnome/chars";
+ * import { IsControl } from "@gnome/chars/is-control";
  * 
  * console.log(isControl(0x10FFFF)); // Output: false
  * console.log(isControl(0.32)); // Output: false
@@ -35,7 +35,7 @@ export function isControl(char: Char): boolean {
  * 
  * @example
  * ```ts
- * import { IsControl } from "@gnome/chars";
+ * import { IsControl } from "@gnome/chars/is-control";
  * 
  * console.log(isControl(0x10FFFF)); // Output: false
  * console.log(isControl(0.32)); // Output: false
@@ -54,7 +54,7 @@ export function isControlUnsafe(char: Char): boolean {
  * 
  * @example
  * ```ts
- * import { isControlAt } from "@gnome/chars";
+ * import { isControlAt } from "@gnome/chars/is-control";
  * 
  * const str = "Hello, world!";
  * const index = 4;

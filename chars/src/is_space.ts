@@ -1,4 +1,4 @@
-import { Char } from "./types.ts";
+import type { Char } from "./types.ts";
 import { is16 } from "./tables/latin1.ts";
 
 const R16 = [

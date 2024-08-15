@@ -1,6 +1,6 @@
 import type { Char } from "./types.ts"
-import { toLower } from "./to-lower.ts"
-import { toUpper } from "./to-upper.ts"
+import { toLower } from "./to_lower.ts"
+import { toUpper } from "./to_upper.ts"
 import { CaseOrbit, AsciiFold } from "./tables/case.ts"
 
 export function simpleFold(char: Char) : Char {

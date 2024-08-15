@@ -10,7 +10,7 @@ import { L } from "./tables/l.ts";
  *
  * @example
  * ```typescript
- * import { isLetter } from '@gnome/chars';
+ * import { isLetter } from '@gnome/chars/is-letter';
  *
  * console.log(isLetter(65)); // char 'A' Output: true
  * console.log(isLetter(48)); // char '0'  Output: false
@@ -49,7 +49,7 @@ export function isLetter(char: Char): boolean {
  *
  * @example
  * ```typescript
- * import { isLetterUnsafe } from '@gnome/chars';
+ * import { isLetterUnsafe } from '@gnome/chars/is-letter';
  *
  * console.log(isLetterUnsafe(65)); // char 'A' Output: true
  * console.log(isLetterUnsafe(48)); // char '0'  Output: false
@@ -83,7 +83,7 @@ export function isLetterUnsafe(char: Char): boolean {
  *
  * @example
  * ```typescript
- * import { isLetterAt } from "@gnome/chars";
+ * import { isLetterAt } from "@gnome/chars/is-letter";
  *
  * const str = "Hello, world!";
  * const index = 4;
