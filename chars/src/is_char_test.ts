@@ -1,4 +1,4 @@
-import { ok } from "@gnome/assert"
+import { ok } from "@gnome/assert";
 import { isChar } from "./is_char.ts";
 
 Deno.test("chars::isChar", () => {
@@ -11,4 +11,3 @@ Deno.test("chars::isChar", () => {
     ok(!isChar(0.0000000000001));
     ok(isChar(1.0));
 });
-

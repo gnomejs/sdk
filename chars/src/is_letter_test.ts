@@ -1,6 +1,5 @@
-import { ok } from "@gnome/assert"
+import { ok } from "@gnome/assert";
 import { isLetter, isLetterAt } from "./is_letter.ts";
-
 
 Deno.test("chars::isLetter", () => {
     ok(!isLetter(0x10FFFF));

@@ -2,7 +2,6 @@ import type { Char } from "./types.ts";
 import { CaseRanges } from "./tables/case.ts";
 import { MAX_RUNE } from "./constants.ts";
 
-
 /**
  * Converts the given Unicode code point to its lowercase equivalent.
  * If the code point is already lowercase or non-letter, it returns the same value.
@@ -25,7 +24,6 @@ import { MAX_RUNE } from "./constants.ts";
  * ```
  */
 export function toLower(char: Char): Char {
-    
     if (char < 128) {
         if (char >= 65 && char <= 90) {
             return char + 32;
@@ -34,7 +32,7 @@ export function toLower(char: Char): Char {
     }
     let lo = 0;
     let hi = CaseRanges.length;
-    while(lo < hi) {
+    while (lo < hi) {
         const mid = lo + hi >>> 1;
         const range = CaseRanges[mid];
         const l = range[0] as number;
@@ -43,7 +41,7 @@ export function toLower(char: Char): Char {
         if ((l as number) <= char && char <= (h as number)) {
             const delta = (d as number[])[1];
             if (delta > MAX_RUNE) {
-                return l + (char - l)&~1 | 1&1;
+                return l + (char - l) & ~1 | 1 & 1;
             }
             return char + delta;
         }

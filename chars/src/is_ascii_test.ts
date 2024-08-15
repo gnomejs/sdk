@@ -1,8 +1,8 @@
-import { ok, } from "@gnome/assert"
+import { ok } from "@gnome/assert";
 import { isAscii, isAsciiAt } from "./is_ascii.ts";
 
 Deno.test("chars::isAscii", () => {
-    console.log("isAscii 65", isAscii(65)); 
+    console.log("isAscii 65", isAscii(65));
     ok(isAscii(65));
     ok(isAscii(0));
     ok(isAscii(127));
@@ -41,14 +41,13 @@ Deno.test("chars::isAscii", () => {
 });
 
 Deno.test("chars::isAsciiAt", () => {
-
     const str = "Holy 💩";
     const index = 4;
-    console.log("isAsciiAt", isAsciiAt(str, index)); 
+    console.log("isAsciiAt", isAsciiAt(str, index));
     ok(isAsciiAt(str, 0));
     ok(isAsciiAt(str, 1));
     ok(isAsciiAt(str, 2));
     ok(isAsciiAt(str, 3));
     ok(isAsciiAt(str, 4));
     ok(!isAsciiAt(str, 5));
-})
+});

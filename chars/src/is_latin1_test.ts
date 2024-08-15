@@ -1,5 +1,5 @@
-import { ok } from "@gnome/assert"
-import { isLatin1, isLatin1At } from "./is_latin1.ts"
+import { ok } from "@gnome/assert";
+import { isLatin1, isLatin1At } from "./is_latin1.ts";
 
 Deno.test("chars::isLatin1", () => {
     ok(isLatin1(65));
@@ -39,9 +39,7 @@ Deno.test("chars::isLatin1", () => {
     ok(isLatin1(-0.0000000000000));
 });
 
-
 Deno.test("chars::isLatin1At", () => {
-
     const str = "Holy 💩";
     ok(isLatin1At(str, 0));
     ok(isLatin1At(str, 1));
@@ -49,4 +47,4 @@ Deno.test("chars::isLatin1At", () => {
     ok(isLatin1At(str, 3));
     ok(isLatin1At(str, 4));
     ok(!isLatin1At(str, 5));
-})
+});

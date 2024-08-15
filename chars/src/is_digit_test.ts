@@ -1,6 +1,5 @@
-import { ok } from "@gnome/assert"
+import { ok } from "@gnome/assert";
 import { isDigit, isDigitAt } from "./is_digit.ts";
-
 
 Deno.test("chars::isDigit", () => {
     ok(isDigit(48)); // 0
@@ -14,9 +13,7 @@ Deno.test("chars::isDigit", () => {
     ok(isDigit(0x0e52)); // ๒
 });
 
-
 Deno.test("chars::isDigitAt", () => {
-
     const str = "Hello 123!";
     ok(!isDigitAt(str, 0));
     ok(!isDigitAt(str, 1));
@@ -27,4 +24,4 @@ Deno.test("chars::isDigitAt", () => {
     ok(!isDigitAt(str2, 1));
     ok(isDigitAt(str2, 2));
     ok(isDigitAt(str2, 4));
-})
+});

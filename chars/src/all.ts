@@ -1,4 +1,3 @@
-
 import { isAscii, isAsciiAt } from "./is_ascii.ts";
 import { isChar } from "./is_char.ts";
 import { isControl, isControlAt, isControlUnsafe } from "./is_control.ts";
@@ -11,8 +10,8 @@ import { isPunc, isPuncAt, isPuncUnsafe } from "./is_punc.ts";
 import { isSpace, isSpaceAt, isSpaceUnsafe } from "./is_space.ts";
 import { isSymbol, isSymbolAt, isSymbolUnsafe } from "./is_symbol.ts";
 import { isUpper, isUpperAt, isUpperUnsafe } from "./is_upper.ts";
-import { simpleFold, equalFold } from "./simple_fold.ts";
-import { toLower } from "./to_lower.ts"
+import { equalFold, simpleFold } from "./simple_fold.ts";
+import { toLower } from "./to_lower.ts";
 import { toUpper } from "./to_upper.ts";
 
 export {
@@ -51,5 +50,5 @@ export {
     isUpperUnsafe,
     simpleFold,
     toLower,
-    toUpper
-}
+    toUpper,
+};

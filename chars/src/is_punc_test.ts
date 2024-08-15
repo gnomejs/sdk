@@ -1,8 +1,7 @@
-import { ok } from "@gnome/assert"
-import { isPunc, isPuncAt } from "./is_punc.ts"
+import { ok } from "@gnome/assert";
+import { isPunc, isPuncAt } from "./is_punc.ts";
 
 Deno.test("chars::isPunc", () => {
-
     ok(isPunc(33)); // !
     ok(isPunc(34)); // "
     ok(isPunc(35)); // #
@@ -56,7 +55,6 @@ Deno.test("chars::isPunc", () => {
 });
 
 Deno.test("chars::isPuncAt", () => {
-
     const str = "Holy 💩!?";
     ok(!isPuncAt(str, 0));
     ok(!isPuncAt(str, 1));

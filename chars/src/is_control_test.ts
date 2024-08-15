@@ -1,6 +1,5 @@
-import { ok } from "@gnome/assert"
+import { ok } from "@gnome/assert";
 import { isControl, isControlAt, isControlUnsafe } from "./is_control.ts";
-
 
 Deno.test("chars::isControl", () => {
     ok(!isControl(0x10FFFF));
@@ -43,7 +42,6 @@ Deno.test("chars::isControl", () => {
     ok(isControl(-0.0000000000000));
 });
 
-
 Deno.test("chars::isControlUnsafe", () => {
     ok(!isControlUnsafe(0x10FFFF));
     ok(!isControlUnsafe(0.32));
@@ -85,9 +83,7 @@ Deno.test("chars::isControlUnsafe", () => {
     ok(isControlUnsafe(-0.0000000000000));
 });
 
-
 Deno.test("chars::isControlAt", () => {
-
     const str = "Holy 💩\n\t";
     ok(!isControlAt(str, 0));
     ok(!isControlAt(str, 1));
@@ -98,4 +94,4 @@ Deno.test("chars::isControlAt", () => {
     ok(!isControlAt(str, 6)); // 💩
     ok(isControlAt(str, 7));
     ok(isControlAt(str, 8));
-})
+});

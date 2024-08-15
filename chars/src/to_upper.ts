@@ -19,8 +19,9 @@ import { MAX_RUNE } from "./constants.ts";
  * ```
  */
 export function toUpper(char: Char): Char {
-    if (!Number.isInteger(char) || (char < 1 || char > 0x10FFFF)) 
-        return char;    
+    if (!Number.isInteger(char) || (char < 1 || char > 0x10FFFF)) {
+        return char;
+    }
 
     if (char < 128) {
         if (char >= 97 && char <= 122) {
@@ -31,7 +32,7 @@ export function toUpper(char: Char): Char {
 
     let lo = 0;
     let hi = CaseRanges.length;
-    while(lo < hi) {
+    while (lo < hi) {
         const mid = lo + hi >>> 1;
         const range = CaseRanges[mid];
         const l = range[0] as number;
@@ -40,7 +41,7 @@ export function toUpper(char: Char): Char {
         if ((l as number) <= char && char <= (h as number)) {
             const delta = (d as number[])[0];
             if (delta > MAX_RUNE) {
-                return l + (char - l)&~1 | 1&1;
+                return l + (char - l) & ~1 | 1 & 1;
             }
             return char + delta;
         }

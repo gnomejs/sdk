@@ -1,5 +1,5 @@
-import { ok } from "@gnome/assert"
-import { isSymbol, isSymbolAt } from "./is_symbol.ts"
+import { ok } from "@gnome/assert";
+import { isSymbol, isSymbolAt } from "./is_symbol.ts";
 
 Deno.test("chars::isSymbol", () => {
     ok(isSymbol(0x0024));
@@ -13,9 +13,7 @@ Deno.test("chars::isSymbol", () => {
     ok(!isSymbol(1.0));
 });
 
-
 Deno.test("chars::isSymbolAt", () => {
-
     const str = "$22.50";
     ok(isSymbolAt(str, 0));
     ok(!isSymbolAt(str, 1));

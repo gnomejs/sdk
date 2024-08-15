@@ -1,7 +1,6 @@
 import { Nd } from "./tables/nd.ts";
-import { latin1, pN, is16, is32 } from "./tables/latin1.ts";
+import { is16, is32, latin1, pN } from "./tables/latin1.ts";
 import type { Char } from "./types.ts";
-
 
 /**
  * Checks if the given value is a digit.
@@ -18,57 +17,58 @@ import type { Char } from "./types.ts";
  * ```
  */
 export function isDigit(char: number): boolean {
-     if (Number.isInteger(char) === false || char < 0 || char > 0x10FFFF)
+    if (Number.isInteger(char) === false || char < 0 || char > 0x10FFFF) {
         return false;
-     
-     if (char < 256) {
+    }
+
+    if (char < 256) {
         return (latin1[char] & pN) !== 0;
-     }
+    }
 
-     const hi = Nd.R16[Nd.R32.length - 1][1];
-     if (char  <= hi) {
+    const hi = Nd.R16[Nd.R32.length - 1][1];
+    if (char <= hi) {
         return is16(Nd.R16, char);
-     }
+    }
 
-     const lo = Nd.R32[0][0];
-     if (char >= lo) {
+    const lo = Nd.R32[0][0];
+    if (char >= lo) {
         return is32(Nd.R32, char);
-     }
+    }
 
-     return false;
+    return false;
 }
 
 /**
  * Determines whether the given character is a digit.
- * 
+ *
  * @param char The character to check.
  * @returns `true` if the character is a digit; otherwise, `false`.
- * 
+ *
  * @example
  * ```ts
  * import { isDigitUnsafe } from "@gnome/chars/is-digit";
- * 
+ *
  * console.log(isDigitUnsafe(0x10FFFF)); // Output: false
  * console.log(isDigitUnsafe(0.32)); // Output: false
  * console.log(isDigitUnsafe(10)); // Output: true
  * ```
  */
 export function isDigitUnsafe(char: Char): boolean {
-     if (char < 256) {
+    if (char < 256) {
         return (latin1[char] & pN) !== 0;
-     }
+    }
 
-     const hi = Nd.R16[Nd.R32.length - 1][1];
-     if (char  <= hi) {
+    const hi = Nd.R16[Nd.R32.length - 1][1];
+    if (char <= hi) {
         return is16(Nd.R16, char);
-     }
+    }
 
-     const lo = Nd.R32[0][0];
-     if (char >= lo) {
+    const lo = Nd.R32[0][0];
+    if (char >= lo) {
         return is32(Nd.R32, char);
-     }
+    }
 
-     return false;
+    return false;
 }
 
 /**

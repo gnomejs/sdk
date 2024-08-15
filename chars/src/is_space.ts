@@ -11,7 +11,6 @@ const R16 = [
     [0x3000, 0x3000, 1],
 ];
 
-
 /**
  * Checks if the given character is a whitespace character.
  *
@@ -19,17 +18,18 @@ const R16 = [
  * @returns `true` if the character is a whitespace character, `false` otherwise.
  */
 export function isSpace(char: Char): boolean {
-    if (!Number.isInteger(char) || (char < 1 || char > 0x10FFFF)) 
+    if (!Number.isInteger(char) || (char < 1 || char > 0x10FFFF)) {
         return false;
+    }
 
     if (char < 256) {
-        return char === 0x20 || 
-            char === 0x09 || 
-            char === 0x0B || 
-            char === 0x0C || 
-            char === 0x0A || 
-            char === 0x0D || 
-            char === 0x85 || 
+        return char === 0x20 ||
+            char === 0x09 ||
+            char === 0x0B ||
+            char === 0x0C ||
+            char === 0x0A ||
+            char === 0x0D ||
+            char === 0x85 ||
             char === 0xA0;
     }
 
@@ -48,13 +48,13 @@ export function isSpace(char: Char): boolean {
  */
 export function isSpaceUnsafe(char: Char): boolean {
     if (char < 256) {
-        return char === 0x20 || 
-            char === 0x09 || 
-            char === 0x0B || 
-            char === 0x0C || 
-            char === 0x0A || 
-            char === 0x0D || 
-            char === 0x85 || 
+        return char === 0x20 ||
+            char === 0x09 ||
+            char === 0x0B ||
+            char === 0x0C ||
+            char === 0x0A ||
+            char === 0x0D ||
+            char === 0x85 ||
             char === 0xA0;
     }
 
@@ -65,7 +65,6 @@ export function isSpaceUnsafe(char: Char): boolean {
 
     return false;
 }
-
 
 /**
  * Checks if the character at the specified index in the given string is a whitespace character.

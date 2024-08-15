@@ -1,5 +1,3 @@
-
-
 export const ENONE = 0;
 export const EPERM = 1;
 export const ENOENT = 2;

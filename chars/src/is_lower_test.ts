@@ -1,8 +1,7 @@
-import { ok } from "@gnome/assert"
-import { isLower, isLowerAt } from "./is_lower.ts"
+import { ok } from "@gnome/assert";
+import { isLower, isLowerAt } from "./is_lower.ts";
 
 Deno.test("chars::isLower", () => {
-
     ok(isLower(97)); // a
     ok(isLower(98)); // b
     ok(isLower(99)); // c
@@ -18,7 +17,6 @@ Deno.test("chars::isLower", () => {
 });
 
 Deno.test("chars::isLowerAt", () => {
-
     const str = "Holy 💩ꙏ";
     ok(!isLowerAt(str, 0));
     ok(isLowerAt(str, 1));
@@ -28,4 +26,4 @@ Deno.test("chars::isLowerAt", () => {
     ok(!isLowerAt(str, 5));
     ok(!isLowerAt(str, 6));
     ok(isLowerAt(str, 7));
-})
+});

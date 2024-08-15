@@ -1,4 +1,3 @@
-
 /**
  * Checks if the given value is an ASCII character.
  *
@@ -14,8 +13,9 @@
  * ```
  */
 export function isAscii(value: number): boolean {
-    if (!Number.isInteger(value) || value < 0) 
+    if (!Number.isInteger(value) || value < 0) {
         return false;
+    }
 
     return value < 128;
 }

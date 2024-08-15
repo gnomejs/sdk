@@ -1,5 +1,3 @@
-
-
 /**
  * Checks if the given value is a Latin-1 character.
  *
@@ -16,12 +14,12 @@
  * ```
  */
 export function isLatin1(value: number): boolean {
-    if (!Number.isInteger(value) || value < 0)
+    if (!Number.isInteger(value) || value < 0) {
         return false;
+    }
 
-    return value < 256
+    return value < 256;
 }
-
 
 /**
  * Checks if the character at the specified index in the given string is a Latin-1 character.

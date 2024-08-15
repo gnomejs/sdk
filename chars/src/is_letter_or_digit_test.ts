@@ -1,4 +1,4 @@
-import { ok } from "@gnome/assert"
+import { ok } from "@gnome/assert";
 import { isLetterOrDigit, isLetterOrDigitAt } from "./is_letter_or_digit.ts";
 
 Deno.test("chars::isLetterOrDigit", () => {

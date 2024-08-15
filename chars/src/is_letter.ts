@@ -1,5 +1,5 @@
 import type { Char } from "./types.ts";
-import { pLmask, latin1, is16, is32 } from "./tables/latin1.ts";
+import { is16, is32, latin1, pLmask } from "./tables/latin1.ts";
 import { L } from "./tables/l.ts";
 
 /**
@@ -17,8 +17,9 @@ import { L } from "./tables/l.ts";
  * ```
  */
 export function isLetter(char: Char): boolean {
-    if (!Number.isInteger(char) || (char < 1 || char > 0x10FFFF)) 
+    if (!Number.isInteger(char) || (char < 1 || char > 0x10FFFF)) {
         return false;
+    }
 
     if (char < 256) {
         return (latin1[char] & pLmask) !== 0;
@@ -37,13 +38,12 @@ export function isLetter(char: Char): boolean {
     return false;
 }
 
-
 /**
  * Checks if the given value represents a letter.
  *
  * @description
  * The function skips the type check and the range check for a small performance boost.
- * 
+ *
  * @param char - The numeric value to check.
  * @returns `true` if the value represents a letter, `false` otherwise.
  *
@@ -72,7 +72,6 @@ export function isLetterUnsafe(char: Char): boolean {
 
     return false;
 }
-
 
 /**
  * Checks if the character at the specified index in the given string is a letter.

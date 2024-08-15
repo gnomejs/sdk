@@ -1,8 +1,7 @@
-import { ok } from "@gnome/assert"
+import { ok } from "@gnome/assert";
 import { isUpper, isUpperAt } from "./is_upper.ts";
 
 Deno.test("chars::isUpper", () => {
-
     ok(!isUpper(97)); // a
     ok(!isUpper(98)); // b
     ok(!isUpper(99)); // c
@@ -18,7 +17,6 @@ Deno.test("chars::isUpper", () => {
 });
 
 Deno.test("chars::isUpperAt", () => {
-
     const str = "Holy 💩Ꙏ";
     ok(isUpperAt(str, 0));
     ok(!isUpperAt(str, 1));
@@ -28,4 +26,4 @@ Deno.test("chars::isUpperAt", () => {
     ok(!isUpperAt(str, 5));
     ok(!isUpperAt(str, 6));
     ok(isUpperAt(str, 7));
-})
+});

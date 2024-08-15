@@ -1,5 +1,5 @@
-import { ok } from "@gnome/assert"
-import { isSpace, isSpaceAt } from "./is_space.ts"
+import { ok } from "@gnome/assert";
+import { isSpace, isSpaceAt } from "./is_space.ts";
 
 Deno.test("chars::isSpace", () => {
     ok(isSpace(32));
@@ -60,7 +60,6 @@ Deno.test("chars::isSpace", () => {
 });
 
 Deno.test("chars::isSpaceAt", () => {
-
     const str = "Holy 💩\n\t\f\r";
     ok(!isSpaceAt(str, 0));
     ok(!isSpaceAt(str, 1));
@@ -72,4 +71,4 @@ Deno.test("chars::isSpaceAt", () => {
     ok(isSpaceAt(str, 8));
     ok(isSpaceAt(str, 9));
     ok(isSpaceAt(str, 10));
-})
+});

@@ -1,4 +1,3 @@
-
 export const R16 = [
     [0x0061, 0x007a, 1],
     [0x00b5, 0x00df, 42],
@@ -170,9 +169,8 @@ export const R32 = [
 
 export const LatinOffset = 4;
 
-
 export const Ll = {
     R16,
     R32,
     LatinOffset,
-}
+};

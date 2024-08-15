@@ -1,7 +1,6 @@
 import type { Char } from "./types.ts";
-import { latin1, pP, is16, is32 } from "./tables/latin1.ts";
+import { is16, is32, latin1, pP } from "./tables/latin1.ts";
 import { P } from "./tables/p.ts";
-
 
 /**
  * Checks if the given character is a punctuation character.
@@ -11,26 +10,28 @@ import { P } from "./tables/p.ts";
  * @example
  * ```ts
  * import { isPunc } from "@gnome/chars/is-punc";
- * 
+ *
  * console.log(isPunc(0x21)); // Output: true
  * console.log(isPunc(0x20)); // Output: false
  * ```
  */
-export function isPunc(char: Char) : boolean {
-    if (Number.isInteger(char) === false || char < 0 || char > 255)
+export function isPunc(char: Char): boolean {
+    if (Number.isInteger(char) === false || char < 0 || char > 255) {
         return false;
+    }
 
-    if (char < 256) 
+    if (char < 256) {
         return (latin1[char] & pP) !== 0;
+    }
 
     const hi = P.R16[P.R32.length - 1][1];
-    if (char  <= hi) {
-       return is16(P.R16, char);
+    if (char <= hi) {
+        return is16(P.R16, char);
     }
 
     const lo = P.R32[0][0];
     if (char >= lo) {
-       return is32(P.R32, char);
+        return is32(P.R32, char);
     }
 
     return false;
@@ -38,33 +39,34 @@ export function isPunc(char: Char) : boolean {
 
 /**
  * Determines whether the given character is a punctuation character.
- * 
- * @description 
+ *
+ * @description
  * The function skips the type check and the range check for a small performance boost.
- * 
+ *
  * @param char The character to check.
  * @returns `true` if the character is a punctuation character; otherwise, `false`.
- * 
+ *
  * @example
  * ```ts
  * import { isPuncUnsafe } from "@gnome/chars/is-punc";
- * 
+ *
  * console.log(isPuncUnsafe(0x21)); // Output: true
  * console.log(isPuncUnsafe(0x20)); // Output: false
  * ```
  */
-export function isPuncUnsafe(char: Char) : boolean {
-    if (char < 256) 
+export function isPuncUnsafe(char: Char): boolean {
+    if (char < 256) {
         return (latin1[char] & pP) !== 0;
+    }
 
     const hi = P.R16[P.R32.length - 1][1];
-    if (char  <= hi) {
-       return is16(P.R16, char);
+    if (char <= hi) {
+        return is16(P.R16, char);
     }
 
     const lo = P.R32[0][0];
     if (char >= lo) {
-       return is32(P.R32, char);
+        return is32(P.R32, char);
     }
 
     return false;
@@ -78,7 +80,7 @@ export function isPuncUnsafe(char: Char) : boolean {
  * @example
  * ```ts
  * import { isPuncAt } from "@gnome/chars/is-punc";
- * 
+ *
  * const str = "Hello!";
  * const index = 4;
  * const isPunc = isPuncAt(str, index);
@@ -86,7 +88,7 @@ export function isPuncUnsafe(char: Char) : boolean {
  * console.log(isPuncAt(str, 5)); // Output: true
  * ```
  */
-export function isPuncAt(str: string, index: number) : boolean {
+export function isPuncAt(str: string, index: number): boolean {
     const code = str.codePointAt(index) ?? 0;
     return isPunc(code);
 }

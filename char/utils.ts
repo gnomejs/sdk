@@ -111,8 +111,6 @@ export function isBetween(value: number, start: number, end: number): boolean {
     return value >= start && value <= end;
 }
 
-
-
 /**
  * Checks if the character at the specified index in the given string is a digit.
  *
@@ -142,8 +140,6 @@ export function isDigitUtf16At(value: string, index: number): boolean {
     }
     return code >= latinZero && code <= latinNine;
 }
-
-
 
 /**
  * Checks if the given value represents a letter.
@@ -399,7 +395,6 @@ export function isLetterOrDigitUtf16At(value: string, index: number): boolean {
 
     return isDigit(code) || isLetter(code);
 }
-
 
 /**
  * Checks if the given UTF-16 value represents an uppercase character.

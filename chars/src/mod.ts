@@ -1,4 +1,3 @@
-
 import { isAscii } from "./is_ascii.ts";
 import { isChar } from "./is_char.ts";
 import { isControl } from "./is_control.ts";
@@ -11,8 +10,8 @@ import { isPunc } from "./is_punc.ts";
 import { isSpace } from "./is_space.ts";
 import { isSymbol } from "./is_symbol.ts";
 import { isUpper } from "./is_upper.ts";
-import { simpleFold, equalFold } from "./simple_fold.ts";
-import { toLower } from "./to_lower.ts"
+import { equalFold, simpleFold } from "./simple_fold.ts";
+import { toLower } from "./to_lower.ts";
 import { toUpper } from "./to_upper.ts";
 
 export {
@@ -31,8 +30,8 @@ export {
     isUpper,
     simpleFold,
     toLower,
-    toUpper
-}
+    toUpper,
+};
 
 export default {
     equalFold,
@@ -50,4 +49,4 @@ export default {
     simpleFold,
     toLower,
     toUpper,
-}
+};
