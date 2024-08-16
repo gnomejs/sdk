@@ -1,0 +1,26 @@
+{
+    "name": "@gnome/slices",
+    "version": "0.0.0",
+    "exports": {
+        "." : "./src/mod.ts",
+        "./camelize": "./src/camelize.ts",
+        "./char-array-builder": "./src/char_array_builder.ts",
+        "./char-slice": "./src/char-slice.ts",
+        "./dasherize": "./src/dasherize.ts",
+        "./ends-with-fold": "./src/ends_with_fold.ts",
+        "./equal-fold": "./src/equal_fold.ts",
+        "./index-of-fold": "./src/index_of_fold.ts",
+        "./ordinalize": "./src/ordinalize.ts",
+        "./pascalize": "./src/pascalize.ts",
+        "./slice": "./src/slice.ts",
+        "./starts-with-fold": "./src/starts_with_fold.ts",
+        "./titleize": "./src/titleize.ts",
+        "./to-char-array": "./src/to_char_array.ts",
+        "./tokens": "./src/tokens.ts",
+        "./trim-end": "./src/trim_end.ts",
+        "./trim-start": "./src/trim_start.ts",
+        "./trim": "./src/trim.ts",
+        "./types": "./src/types.ts",
+        "./underscore": "./src/underscore.ts"
+    }
+}

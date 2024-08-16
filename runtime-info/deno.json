@@ -1,0 +1,9 @@
+{
+    "name": "@gnome/runtime-info",
+    "version": "0.1.0",
+    "exports": {
+        ".": "./src/mod.ts",
+        "./os": "./src/os.ts",
+        "./js": "./src/js.ts"
+    }
+}
