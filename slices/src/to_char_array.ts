@@ -11,9 +11,9 @@ export function toCharArray(s: string): Uint32Array {
 
 export function toCharSliceLike(s: string): CharSliceLike {
     return {
-        at(i: number) : number | undefined {
+        at(i: number): number | undefined {
             return s.codePointAt(i);
         },
-        length: s.length
-    }
+        length: s.length,
+    };
 }

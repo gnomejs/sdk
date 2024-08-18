@@ -1,5 +1,7 @@
 # @gnome/os-constants
 
+DEPRECATED. 969
+
 <div height=30" vertical-align="top">
 <image src="https://raw.githubusercontent.com/gnomejs/gnomejs/main/assets/icon.png"
     alt="logo" width="60" valign="middle" />

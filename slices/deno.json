@@ -2,10 +2,10 @@
     "name": "@gnome/slices",
     "version": "0.0.0",
     "exports": {
-        "." : "./src/mod.ts",
+        ".": "./src/mod.ts",
         "./camelize": "./src/camelize.ts",
         "./char-array-builder": "./src/char_array_builder.ts",
-        "./char-slice": "./src/char-slice.ts",
+        "./char-slice": "./src/char_slice.ts",
         "./dasherize": "./src/dasherize.ts",
         "./ends-with-fold": "./src/ends_with_fold.ts",
         "./equal-fold": "./src/equal_fold.ts",

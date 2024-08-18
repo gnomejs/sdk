@@ -1,4 +1,3 @@
-
 export interface CharacterSlice {
     at(index: number): number;
     set(index: number, value: number): void;
@@ -6,6 +5,6 @@ export interface CharacterSlice {
 }
 
 export interface CharSliceLike {
-    at(index: number): number  | undefined;
+    at(index: number): number | undefined;
     length: number;
 }

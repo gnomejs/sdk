@@ -1,6 +1,6 @@
 import { CharArrayBuilder } from "./char_array_builder.ts";
-import { CHAR_UNDERSCORE, CHAR_HYPHEN_MINUS } from "@gnome/chars/constants";
-import { isLetter, isLower, isUpper, toLower, isDigit, toUpper, isSpace } from "@gnome/chars";
+import { CHAR_HYPHEN_MINUS, CHAR_UNDERSCORE } from "@gnome/chars/constants";
+import { isDigit, isLetter, isLower, isSpace, isUpper, toLower, toUpper } from "@gnome/chars";
 import { toCharSliceLike } from "./to_char_array.ts";
 import type { CharSliceLike } from "./types.ts";
 
@@ -13,20 +13,21 @@ export function underscore(str: CharSliceLike | string, options?: UnderScoreOpti
     if (typeof str === "string") {
         str = toCharSliceLike(str);
     }
-    
+
     const sb = new CharArrayBuilder();
     let last = 0;
     options ??= {};
-    for(let i = 0; i < str.length; i++) {
+    for (let i = 0; i < str.length; i++) {
         const c = str.at(i) ?? -1;
-        if (c === -1)
+        if (c === -1) {
             continue;
+        }
 
         if (isLetter(c)) {
             if (isUpper(c)) {
                 if (isLetter(last) && isLower(last)) {
                     sb.appendChar(CHAR_UNDERSCORE);
-                
+
                     if (options.preserveCase || options.screaming) {
                         sb.appendChar(c);
                         last = c;

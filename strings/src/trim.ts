@@ -1,13 +1,13 @@
-import { trimChar as ogChar, trimSlice as ogSlice } from "@gnome/slices/trim"
+import { trimChar as ogChar, trimSlice as ogSlice } from "@gnome/slices/trim";
 import { toCharSliceLike } from "@gnome/slices/to-char-array";
 import type { CharSliceLike } from "@gnome/slices/types";
 
-export function trimChar(s: string, c: number) : string {
+export function trimChar(s: string, c: number): string {
     const r = ogChar(toCharSliceLike(s), c);
     return String.fromCodePoint(...r);
 }
 
-export function trimSlice(s: string, t: string | CharSliceLike) : string {
+export function trimSlice(s: string, t: string | CharSliceLike): string {
     if (typeof t === "string") {
         t = toCharSliceLike(t);
     }
@@ -16,9 +16,10 @@ export function trimSlice(s: string, t: string | CharSliceLike) : string {
     return String.fromCodePoint(...r);
 }
 
-export function trim(s: string, t?: string | CharSliceLike) : string {
-    if (t === undefined)
+export function trim(s: string, t?: string | CharSliceLike): string {
+    if (t === undefined) {
         return s.trim();
+    }
 
     if (t.length === 1) {
         if (typeof t === "string") {

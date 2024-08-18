@@ -1,51 +1,68 @@
-import { simpleFold } from '@gnome/chars/simple-fold';
+import { simpleFold } from "@gnome/chars/simple-fold";
 import type { CharSliceLike } from "./types.ts";
+import { toCharSliceLike } from "./to_char_array.ts";
 
+export function equalFold(value: CharSliceLike | string, test: CharSliceLike | string): boolean {
+    let s = value as CharSliceLike;
+    if (typeof value === "string") {
+        s = toCharSliceLike(value);
+    }
+    let t = test as CharSliceLike;
+    if (typeof test === "string") {
+        t = toCharSliceLike(test);
+    }
 
-
-export function equalFold(s: CharSliceLike, t: CharSliceLike): boolean {
-    if (s.length !== t.length) 
+    if (s.length !== t.length) {
         return false;
-    
-    let i = 0;
+    }
 
+    let i = 0;
 
     for (; i < s.length; i++) {
         let sr = s.at(i) ?? -1;
         let tr = t.at(i) ?? -1;
-        if (sr === -1 || tr === -1) 
+        if (sr === -1 || tr === -1) {
             return false;
-        
+        }
+
         if ((sr | tr) >= 0x80) {
             {
                 let j = i;
-               
-                for(; j < s.length; j++) {
+
+                for (; j < s.length; j++) {
                     let sr = s.at(j) ?? -1;
                     let tr = t.at(j) ?? -1;
-                    if (sr === -1 || tr === -1) return false;
-                    
+                    if (sr === -1 || tr === -1) {
+                        return false;
+                    }
+
+                    if (tr === sr) {
+                        continue;
+                    }
+
                     if (tr < sr) {
                         const tmp = tr;
                         tr = sr;
-                        sr = tmp; 
+                        sr = tmp;
                     }
 
                     // short circuit if tr is ASCII
                     if (tr < 0x80) {
-                        if (65 <= sr && sr <= 90 && tr == sr+97-65) 
+                        if (65 <= sr && sr <= 90 && tr === sr + 32) {
                             continue;
+                        }
 
-                        return false
+                        return false;
                     }
 
                     let r = simpleFold(sr);
-                    while(r != sr && r < tr) {
+                    while (r !== sr && r < tr) {
                         r = simpleFold(r);
                     }
 
-                    if (r == tr) 
+                    if (r === tr) {
                         continue;
+                    }
 
                     return false;
                 }
@@ -54,20 +71,21 @@ export function equalFold(s: CharSliceLike, t: CharSliceLike): boolean {
             }
         }
 
-        if (tr === sr) 
+        if (tr === sr) {
             continue;
+        }
 
-         
         if (tr < sr) {
             const tmp = tr;
             tr = sr;
-            sr = tmp; 
+            sr = tmp;
         }
 
-        if (65 <= sr && sr <= 90 && tr == sr+32) 
-            continue 
+        if (65 <= sr && sr <= 90 && tr === sr + 32) {
+            continue;
+        }
 
-        return false
+        return false;
     }
 
     return true;

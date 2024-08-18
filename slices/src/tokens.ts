@@ -2,28 +2,28 @@ import { toCharArray } from "./to_char_array.ts";
 import { equalFold } from "./equal_fold.ts";
 
 export class Tokens implements Iterable<Uint32Array> {
-    #set: Array<Uint32Array>
+    #set: Array<Uint32Array>;
 
     constructor() {
         this.#set = new Array<Uint32Array>();
     }
 
-    [Symbol.iterator]() : Iterator<Uint32Array> {
+    [Symbol.iterator](): Iterator<Uint32Array> {
         return this.#set[Symbol.iterator]();
     }
 
-    get length() {
+    get length() : number {
         return this.#set.length;
     }
 
-    addString(word: string) : this {
+    addString(word: string): this {
         this.add(toCharArray(word));
         return this;
     }
 
-    indexOf(word: Uint32Array) {
-        for(let i = 0; i < this.#set.length; i++) {
-            if (equalFold(word, this.#set[i] )) {
+    indexOf(word: Uint32Array) : number {
+        for (let i = 0; i < this.#set.length; i++) {
+            if (equalFold(word, this.#set[i])) {
                 return i;
             }
         }
@@ -31,11 +31,11 @@ export class Tokens implements Iterable<Uint32Array> {
         return -1;
     }
 
-    add(word: Uint32Array) : this {
+    add(word: Uint32Array): this {
         if (this.indexOf(word) === -1) {
             this.#set.push(word);
         }
-     
+
         return this;
     }
 }

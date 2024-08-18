@@ -1,4 +1,3 @@
-
 export class CharSlice {
     #set: Uint32Array;
     #offset: number;
@@ -75,7 +74,7 @@ export class CharSlice {
 
     indexOf(other: CharSlice | Uint32Array | string, fromIndex = 0): number {
         if (typeof other === "string") {
-            for(let i = fromIndex; i < this.#length; i++) {
+            for (let i = fromIndex; i < this.#length; i++) {
                 if (this.#set[this.#offset + i] === other.codePointAt(0)) {
                     let j = 1;
                     while (j < other.length && this.#set[this.#offset + i + j] === other.codePointAt(j)) {
@@ -123,7 +122,6 @@ export class CharSlice {
 
         return -1;
     }
-
 
     equals(other: CharSlice | Uint32Array): boolean {
         if (other instanceof Uint32Array) {

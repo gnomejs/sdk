@@ -1,11 +1,10 @@
 import type { CharSliceLike } from "./types.ts";
 import { isSpace } from "@gnome/chars/is-space";
 
-
-export function trimStartSpace(s: CharSliceLike) : Uint32Array {
+export function trimStartSpace(s: CharSliceLike): Uint32Array {
     let size = s.length;
 
-    for(let i = 0; i < s.length; i++) {
+    for (let i = 0; i < s.length; i++) {
         if (isSpace(s.at(i) ?? -1)) {
             size--;
         } else {
@@ -23,20 +22,21 @@ export function trimStartSpace(s: CharSliceLike) : Uint32Array {
         return buffer;
     }
 
-    for(let i = 0; i < size; i++) {
+    for (let i = 0; i < size; i++) {
         buffer[i] = s.at(i) ?? 0;
     }
 
     return buffer;
 }
 
-export function trimStartChar(s: CharSliceLike, c: number) {
-    if (!Number.isInteger(c) || c < 0 || c > 0x10FFFF)
+export function trimStartChar(s: CharSliceLike, c: number) : Uint32Array {
+    if (!Number.isInteger(c) || c < 0 || c > 0x10FFFF) {
         throw new RangeError("Invalid code point");
+    }
 
     let size = s.length;
 
-    for(let i = 0; i < s.length; i++) {
+    for (let i = 0; i < s.length; i++) {
         if (s.at(i) === c) {
             size--;
         } else {
@@ -54,21 +54,21 @@ export function trimStartChar(s: CharSliceLike, c: number) {
         return buffer;
     }
 
-    for(let i = 0; i < size; i++) {
+    for (let i = 0; i < size; i++) {
         buffer[i] = s.at(i) ?? 0;
     }
 
     return buffer;
 }
 
-export function trimStartSlice(s: CharSliceLike, t: CharSliceLike) {
+export function trimStartSlice(s: CharSliceLike, t: CharSliceLike) : Uint32Array {
     let size = s.length;
     let j = 0;
-    
+
     for (j = 0; j < s.length; j++) {
         let match = false;
         const c = s.at(j) ?? -1;
-        for(let i = 0; i < t.length; i++) {
+        for (let i = 0; i < t.length; i++) {
             if (c === t.at(i)) {
                 size--;
                 match = true;
@@ -91,14 +91,14 @@ export function trimStartSlice(s: CharSliceLike, t: CharSliceLike) {
         return buffer;
     }
 
-    for(let i = 0; i < size; i++) {
+    for (let i = 0; i < size; i++) {
         buffer[i] = s.at(i + j) ?? 0;
     }
 
     return buffer;
 }
 
-export function trimStart(s: CharSliceLike, t?: CharSliceLike) : Uint32Array {
+export function trimStart(s: CharSliceLike, t?: CharSliceLike): Uint32Array {
     if (t === undefined) {
         return trimStartSpace(s);
     }

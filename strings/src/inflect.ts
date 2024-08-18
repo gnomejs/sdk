@@ -551,34 +551,6 @@ const singularRules: [RegExp, string?][] = [
     [regex.plural.s, ""],
 ];
 
-/**
- * @description This is a list of words that should not be capitalized for title case.
- */
-const nonTitlecasedWords = [
-    "and",
-    "or",
-    "nor",
-    "a",
-    "an",
-    "the",
-    "so",
-    "but",
-    "to",
-    "of",
-    "at",
-    "by",
-    "from",
-    "into",
-    "on",
-    "onto",
-    "off",
-    "out",
-    "in",
-    "over",
-    "with",
-    "for",
-];
-
 
 /**
  * A helper method that applies rules based replacement to a String.

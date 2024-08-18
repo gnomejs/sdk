@@ -5,15 +5,16 @@ import type { CharSliceLike } from "./types.ts";
 
 export function ordinalize(str: CharSliceLike | string): Uint32Array {
     if (typeof str === "string") {
-       str = toCharSliceLike(str);
+        str = toCharSliceLike(str);
     }
 
     const sb = new CharArrayBuilder();
     const token = new CharArrayBuilder();
-    for(let i = 0; i < str.length; i++) {
+    for (let i = 0; i < str.length; i++) {
         const c = str.at(i) ?? -1;
-        if (c === -1)
+        if (c === -1) {
             continue;
+        }
 
         if (c >= 48 && c <= 57) {
             token.appendChar(c);
@@ -25,7 +26,7 @@ export function ordinalize(str: CharSliceLike | string): Uint32Array {
                     const set = token.toArray();
                     const last = set[set.length - 1];
                     const last2 = set[set.length - 2];
-                    let suffix = "th"
+                    let suffix = "th";
                     if (last2 === 49 && last > 48 && last < 52) {
                         suffix = "th";
                     } else {

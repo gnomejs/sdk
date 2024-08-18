@@ -1,5 +1,5 @@
 import { CHAR_SPACE, CHAR_UNDERSCORE } from "@gnome/chars/constants";
-import { isLetterOrDigit, isSpace, toUpper, isUpper, isLetter, isLower, toLower } from "@gnome/chars";
+import { isLetter, isLetterOrDigit, isLower, isSpace, isUpper, toLower, toUpper } from "@gnome/chars";
 import { CharArrayBuilder } from "./char_array_builder.ts";
 import { equalFold } from "./equal_fold.ts";
 import { Tokens } from "./tokens.ts";
@@ -9,7 +9,7 @@ import { toCharSliceLike } from "./to_char_array.ts";
 /**
  * @description This is a list of words that should not be capitalized for title case.
  */
-export const NoCapitalizeWords = new Tokens();
+export const NoCapitalizeWords : Tokens = new Tokens();
 [
     "and",
     "or",
@@ -33,27 +33,26 @@ export const NoCapitalizeWords = new Tokens();
     "over",
     "with",
     "for",
-].forEach(o => NoCapitalizeWords.addString(o));
+].forEach((o) => NoCapitalizeWords.addString(o));
 
-
-export function titleize(s: CharSliceLike | string) : Uint32Array {
+export function titleize(s: CharSliceLike | string): Uint32Array {
     if (typeof s === "string") {
         s = toCharSliceLike(s);
     }
 
     const sb = new CharArrayBuilder();
     let last = 0;
-    const tokens = new Array<Uint32Array>()
+    const tokens = new Array<Uint32Array>();
 
-    for(let i = 0; i < s.length; i++) {
+    for (let i = 0; i < s.length; i++) {
         const c = s.at(i) ?? -1;
-        if (c === -1)
+        if (c === -1) {
             continue;
+        }
 
         if (isLetterOrDigit(c)) {
             if (isUpper(c)) {
                 if (isLetter(last) && isLower(last)) {
-                
                     tokens.push(sb.toArray());
                     sb.clear();
 
@@ -79,7 +78,7 @@ export function titleize(s: CharSliceLike | string) : Uint32Array {
 
             tokens.push(sb.toArray());
             sb.clear();
-            
+
             last = c;
             continue;
         }
@@ -90,10 +89,10 @@ export function titleize(s: CharSliceLike | string) : Uint32Array {
         sb.clear();
     }
 
-    for(const token of tokens) {
+    for (const token of tokens) {
         let skip = false;
-        for(const title of NoCapitalizeWords) {
-            if(equalFold(title, token)) {
+        for (const title of NoCapitalizeWords) {
+            if (equalFold(title, token)) {
                 if (sb.length > 0) {
                     sb.appendChar(CHAR_SPACE);
                 }
@@ -104,8 +103,9 @@ export function titleize(s: CharSliceLike | string) : Uint32Array {
             }
         }
 
-        if (skip)
+        if (skip) {
             continue;
+        }
 
         const first = toUpper(token[0]);
         token[0] = first;
@@ -121,4 +121,3 @@ export function titleize(s: CharSliceLike | string) : Uint32Array {
     sb.clear();
     return v;
 }
-

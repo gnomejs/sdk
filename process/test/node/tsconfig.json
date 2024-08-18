@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+        "lib": ["dom", "dom.iterable", "es2019"],
+        "isolatedModules": true,
+        "esModuleInterop": true,
+        "jsx": "react-jsx",
+        "module": "Node16",
+        "moduleResolution": "node16",
+        "resolveJsonModule": true,
+        "target": "es2019",
+        "strict": true,
+        "allowJs": true,
+        "baseUrl": "."
+    }
+}

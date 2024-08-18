@@ -1,4 +1,4 @@
-import { equal } from "@gnome/assert"
+import { equal } from "@gnome/assert";
 import { underscore } from "./underscore.ts";
 
 Deno.test("strings::underscore", () => {

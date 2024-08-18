@@ -1,6 +1,6 @@
 import { isSpaceAt } from "@gnome/chars/is-space";
 
-export function isNull(s: string | null): s is null{
+export function isNull(s: string | null): s is null {
     return s === null;
 }
 
@@ -15,7 +15,6 @@ export function isEmpty(s: string): s is "" {
 export function isNullOrEmpty(s: string | null): s is null {
     return s === null || s.length === 0;
 }
-
 
 export function isNullOrWhiteSpace(s: string | null): s is null {
     if (s === null || s.length === 0) {

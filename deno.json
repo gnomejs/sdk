@@ -10,7 +10,8 @@
     "exclude": [
         ".git",
         "cov",
-        "docs"
+        "docs",
+        "./process/test/node/package.json"
     ],
 
     "test": {
@@ -20,7 +21,10 @@
     },
 
     "fmt": {
-        "exclude": ["**/*.md"],
+        "exclude": [
+            "**/*.md",
+            "./process/test/node"
+        ],
         "lineWidth": 120,
         "indentWidth": 4
     },
@@ -63,12 +67,15 @@
         "./char",
         "./chars",
         "./ci-pipelines",
+        "./debug",
         "./env",
         "./errors",
         "./exec",
         "./ffi",
+        "./fmt",
         "./fs",
         "./optional",
+        "./process",
         "./os-constants",
         "./random",
         "./runtime-info",

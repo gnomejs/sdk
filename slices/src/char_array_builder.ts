@@ -1,13 +1,13 @@
 import { ArgumentRangeError } from "@gnome/errors/argument-range-error";
-import { WINDOWS  } from "@gnome/runtime-info/os";
+import { WINDOWS } from "@gnome/runtime-info/os";
 import { CharSlice } from "./char_slice.ts";
-import { toCharArray } from "./to_char_array.ts"
+import { toCharArray } from "./to_char_array.ts";
 import { sprintf } from "@std/fmt/printf";
 import { ArgumentError } from "../../errors/src/argument_error.ts";
 
 export class CharArrayBuilder {
-    #buffer: Uint32Array
-    #length: number 
+    #buffer: Uint32Array;
+    #length: number;
 
     /**
      * Creates a new instance of the StringBuilder class.
@@ -18,17 +18,16 @@ export class CharArrayBuilder {
         this.#buffer = new Uint32Array(capacity);
     }
 
-    get length() {
+    get length() : number {
         return this.#length;
     }
 
-    appendFormat(template: string, ...args: unknown[]) : this {
-        this.appendString(sprintf(template, ...args))
+    appendFormat(template: string, ...args: unknown[]): this {
+        this.appendString(sprintf(template, ...args));
         return this;
     }
 
-    append(value: string | CharSlice | Uint32Array) : this {
-        
+    append(value: string | CharSlice | Uint32Array): this {
         if (value instanceof CharSlice) {
             this.appendSlice(value);
         } else if (value instanceof Uint32Array) {
@@ -40,19 +39,21 @@ export class CharArrayBuilder {
         return this;
     }
 
-    appendChar(value: number) : this {
-        if (!Number.isInteger(value) === false || (value < 0 || value > 0x10FFFF))
+    appendChar(value: number): this {
+        if (!Number.isInteger(value) || (value < 0 || value > 0x10FFFF)) {
             throw new ArgumentError({ name: "value", message: "Argument 'value' must be a valid Unicode character." });
+        }
 
         this.grow(this.#length + 1);
         this.#buffer[this.#length] = value;
+        this.#length++;
         return this;
     }
 
-    appendSlice(value: CharSlice) : this {
+    appendSlice(value: CharSlice): this {
         this.grow(this.#length + value.length);
         const l = this.length;
-        for(let i = 0; i < value.length; i++) {
+        for (let i = 0; i < value.length; i++) {
             this.#buffer[l + i] = value.at(i);
         }
 
@@ -61,13 +62,12 @@ export class CharArrayBuilder {
     }
 
     appendString(value: string) {
-        
         this.appendCharArray(toCharArray(value));
     }
 
     appendCharArray(value: Uint32Array) {
         this.grow(this.#length + value.length);
-        this.#buffer.set(value,  this.#length);
+        this.#buffer.set(value, this.#length);
         this.#length += value.length;
     }
 
@@ -129,7 +129,7 @@ export class CharArrayBuilder {
     }
 
     toString(): string {
-        return String.fromCharCode(...this.#buffer.slice(0, this.#length));
+        return String.fromCodePoint(...this.#buffer.slice(0, this.#length));
     }
 
     /**

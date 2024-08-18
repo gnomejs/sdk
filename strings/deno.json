@@ -2,25 +2,6 @@
     "name": "@gnome/strings",
     "version": "0.3.0",
     "exports": {
-        ".": "./mod.ts",
-        "./string-builder": "./string_builder.ts",
-        "./utf8-string-builder": "./utf8_string_builder.ts",
-        "./inflections": "./inflections.ts",
-        "./transform": "./transform.ts",
-        "./utils": "./utils.ts"
-    },
-
-    "publish": {
-        "include": [
-            "mod.ts",
-            "string_builder.ts",
-            "utf8_string_builder.ts",
-            "inflections.ts",
-            "transform.ts",
-            "utils.ts",
-            "README.md",
-            "LICENSE.md",
-            "deno.json"
-        ]
+        ".": "./src/mod.ts"
     }
 }

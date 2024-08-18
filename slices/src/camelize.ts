@@ -1,21 +1,59 @@
 import { CharArrayBuilder } from "./char_array_builder.ts";
-import { CHAR_UNDERSCORE, CHAR_HYPHEN_MINUS } from "@gnome/chars/constants";
-import { isLetter, isDigit, toUpper, isSpace, toLower } from "@gnome/chars";
+import { CHAR_HYPHEN_MINUS, CHAR_UNDERSCORE } from "@gnome/chars/constants";
+import { isDigit, isLetter, isSpace, toLower, toUpper } from "@gnome/chars";
 import type { CharSliceLike } from "./types.ts";
 import { toCharSliceLike } from "./to_char_array.ts";
 
-export function camelize(str: CharSliceLike | string)  : Uint32Array{
-    if (typeof str === "string") {
-        str = toCharSliceLike(str);
+/**
+ * Options for the `camelize` function.
+ */
+export interface CamelizeOptions {
+    /**
+     * Preserve the case of the characters that are not
+     * the first character or after a `_`, `-`, or ` `.
+     */
+    preserveCase?: boolean;
+}
+
+/**
+ * Camelize converts a string to camel case, removing any `_`, `-`, or ` ` characters
+ * and capitalizing the first letter of each word.
+ *
+ * @description
+ * This function is
+ * primary for converting snake_case, kebab-case, or space separated
+ * symbols to camel case.
+ *
+ * To avoid allocations, the function returns a Uint32Array that represents
+ * the camel case string.  To convert the Uint32Array to a string, use
+ * `String.fromCharCode(...camel)`.
+ *
+ * @param value  The string to convert to camel case.
+ * @param options The options for the function.
+ * @returns The camel case string as a Uint32Array.
+ *
+ * @example
+ * ```typescript
+ * import { camelize } from '@gnome/slices';
+ *
+ * const camel = camelize("hello_world");
+ * console.log(String.fromCharCode(...camel)); // Output: "HelloWorld"
+ * ```
+ */
+export function camelize(value: CharSliceLike | string, options?: CamelizeOptions): Uint32Array {
+    options ??= {};
+    if (typeof value === "string") {
+        value = toCharSliceLike(value);
     }
-    
+
     const sb = new CharArrayBuilder();
 
     let last = 0;
-    for(let i = 0; i < str.length; i++) {
-        const c = str.at(i) ?? -1;
-        if (c === -1)
+    for (let i = 0; i < value.length; i++) {
+        const c = value.at(i) ?? -1;
+        if (c === -1) {
             continue;
+        }
 
         if (i === 0 && isLetter(c)) {
             sb.appendChar(toUpper(c));
@@ -30,6 +68,11 @@ export function camelize(str: CharSliceLike | string)  : Uint32Array{
                 continue;
             }
 
+            if (options.preserveCase) {
+                sb.appendChar(c);
+                last = c;
+                continue;
+            }
             sb.appendChar(toLower(c));
             last = c;
             continue;

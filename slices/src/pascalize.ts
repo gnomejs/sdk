@@ -1,21 +1,22 @@
 import { CharArrayBuilder } from "./char_array_builder.ts";
-import { CHAR_UNDERSCORE, CHAR_HYPHEN_MINUS } from "@gnome/chars/constants";
-import { isLetter, isDigit, toLower, toUpper, isSpace } from "@gnome/chars";
+import { CHAR_HYPHEN_MINUS, CHAR_UNDERSCORE } from "@gnome/chars/constants";
+import { isDigit, isLetter, isSpace, toLower, toUpper } from "@gnome/chars";
 import type { CharSliceLike } from "./types.ts";
 import { toCharSliceLike } from "./to_char_array.ts";
 
-export function pascalize(str: CharSliceLike | string)  : Uint32Array{
+export function pascalize(str: CharSliceLike | string): Uint32Array {
     if (typeof str === "string") {
         str = toCharSliceLike(str);
     }
-    
+
     const sb = new CharArrayBuilder();
 
     let last = 0;
-    for(let i = 0; i < str.length; i++) {
+    for (let i = 0; i < str.length; i++) {
         const c = str.at(i) ?? -1;
-        if (c === -1)
+        if (c === -1) {
             continue;
+        }
 
         if (i === 0 && isLetter(c)) {
             sb.appendChar(toLower(c));
