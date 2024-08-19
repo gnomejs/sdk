@@ -1,11 +1,11 @@
 import { ArgumentRangeError } from "@gnome/errors/argument-range-error";
 import { isSpace, toLower, toUpper } from "@gnome/chars";
-import { equalFold } from "./equal_fold.ts";
-import { toCharSliceLike } from "./to_char_array.ts";
-import type { CharSliceLike } from "./types.ts";
-import { endsWithFold } from "./ends_with_fold.ts";
-import { startsWithFold } from "./starts_with_fold.ts";
-import { indexOfFold } from "./index_of_fold.ts";
+import { equalFold, equal } from "./equal.ts";
+import { type CharBuffer,type CharSequence, toCharSliceLike, type CharSliceLike } from "./utils.ts";
+import { endsWithFold, endsWith } from "./ends_with.ts";
+import { startsWithFold, startsWith } from "./starts_with.ts";
+import { indexOfFold, indexOf } from "./index_of.ts";
+import { lastIndexOf, lastIndexOfFold } from "./last_index_of.ts";
 
 /** */
 export class ReadOnlyCharSlice {
@@ -66,128 +66,52 @@ export class ReadOnlyCharSlice {
         return new ReadOnlyCharSlice(buffer);
     }
 
-    includes(value: number | string | CharSliceLike, index = 0) : boolean {
+    includes(value: CharBuffer, index = 0) : boolean {
         return this.indexOf(value, index) !== -1;
     }
 
-    includesFold(value: CharSliceLike | string, index = 0) : boolean {
+    includesFold(value: CharBuffer, index = 0) : boolean {
         return this.indexOfFold(value, index) !== -1;
     }
 
-    indexOf(value: number | string | CharSliceLike, index = 0) : number {
-        if (index < 0 || index >= this.length) {
-            throw new ArgumentRangeError("index", index);
-        }
-
+    indexOf(value: CharBuffer | number, index = 0) : number {
         if (typeof value === "number") {
-            if (!Number.isInteger(value) && value < 0 && value > 0x10FFFF) {
-                throw new RangeError("Invalid code point");
-            }
-
-            for (let i = index; i < this.length; i++) {
-                if (this.#buffer[this.#start + i] === value) {
-                    return i;
-                }
-            }
-
-            return -1;
+            value = new Uint32Array([value]);
         }
 
-        if (typeof value === "string") {
-            value = toCharSliceLike(value);
-        }
-
-        let f = 0;
-        let i = index;
-        for (; i < this.length; i++) {
-            if (this.#buffer[this.#start + i] === value.at(f)) {
-                f++;
-                if (f === value.length) {
-                    return i - f + 1;
-                }
-            } else {
-                f = 0;
-            }
-        }
-
-        return -1;
+        return indexOf(this, value, index);
     }
 
-    indexOfFold(value: CharSliceLike | string, index = 0) : number {
-        if (index < 0 || index >= this.length) {
-            throw new ArgumentRangeError("index", index);
-        }
-
-        if (typeof value === "string") {
-            value = toCharSliceLike(value);
+    indexOfFold(value: CharBuffer | number, index = 0) : number {
+        if (typeof value === "number") {
+            value = new Uint32Array([value]);
         }
 
         return indexOfFold(this, value, index);
     }
 
-    equals(other: CharSlice | Uint32Array | string) : boolean {
-        let get: (index: number) => number;
+    equals(other: CharBuffer) : boolean {
         if (this.length !== other.length) {
             return false;
         }
 
-        if (other instanceof CharSlice) {
-            get = other.at.bind(other);
-        } else if (other instanceof Uint32Array) {
-            get = (index: number) => other[index];
-        } else {
-            get = (index: number) => other.codePointAt(index) ?? -1;
-        }
-
-        for (let i = 0; i < this.length; i++) {
-            if (this.#buffer[this.#start + i] !== get(i)) {
-                return false;
-            }
-        }
-
-        return true;
+        return equal(this, other);
     }
 
-    equalsFold(other: CharSliceLike | string) : boolean {
+    equalsFold(other: CharBuffer) : boolean {
         if (this.length !== other.length) {
             return false;
         }
 
-        if (typeof other === "string") {
-            other === toCharSliceLike(other);
-        }
-
-        return equalFold(this, other as CharSliceLike);
+        return equalFold(this, other);
     }
 
-    endsWith(suffix: CharSliceLike | string): boolean {
-        if (this.length < suffix.length) {
-            return false;
-        }
-
-        if (typeof suffix === "string") {
-            suffix = toCharSliceLike(suffix);
-        }
-
-        for (let i = 0; i < suffix.length; i++) {
-            if (this.#buffer[this.#start + this.length - suffix.length + i] !== suffix.at(i)) {
-                return false;
-            }
-        }
-
-        return true;
+    endsWith(suffix: CharBuffer): boolean {
+        return endsWith(this, suffix);
     }
 
-    endsWithFold(suffix: CharSliceLike | string): boolean {
-        if (this.length < suffix.length) {
-            return false;
-        }
-
-        if (typeof suffix === "string") {
-            suffix = toCharSliceLike(suffix);
-        }
-
-        return endsWithFold(this, suffix as CharSliceLike);
+    endsWithFold(suffix: CharBuffer): boolean {
+        return endsWithFold(this, suffix);
     }
 
     slice(start = 0, end = this.length): ReadOnlyCharSlice {
@@ -202,34 +126,12 @@ export class ReadOnlyCharSlice {
         return new ReadOnlyCharSlice(this.#buffer, this.#start + start, this.#start + end);
     }
 
-    startsWith(prefix: CharSliceLike | string): boolean {
-        if (this.length < prefix.length) {
-            return false;
-        }
-
-        if (typeof prefix === "string") {
-            prefix = toCharSliceLike(prefix);
-        }
-
-        for (let i = 0; i < prefix.length; i++) {
-            if (this.#buffer[this.#start + i] !== prefix.at(i)) {
-                return false;
-            }
-        }
-
-        return true;
+    startsWith(prefix: CharBuffer): boolean {
+        return startsWith(this, prefix);
     }
 
-    startsWithFold(prefix: CharSliceLike | string): boolean {
-        if (this.length < prefix.length) {
-            return false;
-        }
-
-        if (typeof prefix === "string") {
-            prefix = toCharSliceLike(prefix);
-        }
-
-        return startsWithFold(this, prefix as CharSliceLike);
+    startsWithFold(prefix: CharBuffer): boolean {
+        return startsWithFold(this, prefix);
     }
 
     /**
@@ -445,7 +347,7 @@ export class ReadOnlyCharSlice {
     }
 }
 
-export class CharSlice {
+export class CharSlice implements CharSequence {
     #buffer: Uint32Array;
     #start: number;
     #end: number;
@@ -541,167 +443,44 @@ export class CharSlice {
         return -1;
     }
 
-    includes(value: number | string | CharSliceLike, index = 0) : boolean {
+    includes(value: CharBuffer, index = 0) : boolean {
         return this.indexOf(value, index) !== -1;
     }
 
-    includesFold(value: CharSliceLike | string, index = 0) : boolean {
+    includesFold(value: CharBuffer, index = 0) : boolean {
         return this.indexOfFold(value, index) !== -1;
     }
 
-    indexOf(value: number | string | CharSliceLike, index = 0) : number {
-        if (index < 0 || index >= this.length) {
-            throw new ArgumentRangeError("index", index);
-        }
-
-        if (typeof value === "number") {
-            if (!Number.isInteger(value) && value < 0 && value > 0x10FFFF) {
-                throw new RangeError("Invalid code point");
-            }
-
-            for (let i = index; i < this.length; i++) {
-                if (this.#buffer[this.#start + i] === value) {
-                    return i;
-                }
-            }
-
-            return -1;
-        }
-
-        if (typeof value === "string") {
-            value = toCharSliceLike(value);
-        }
-
-        let f = 0;
-        let i = index;
-        for (; i < this.length; i++) {
-            if (this.#buffer[this.#start + i] === value.at(f)) {
-                f++;
-                if (f === value.length) {
-                    return i - f + 1;
-                }
-            } else {
-                f = 0;
-            }
-        }
-
-        return -1;
+    indexOf(value: CharBuffer, index = 0) : number {
+         return indexOf(this, value, index);
     }
 
-    indexOfFold(value: CharSliceLike | string, index = 0) : number {
-        if (index < 0 || index >= this.length) {
-            throw new ArgumentRangeError("index", index);
-        }
-
-        if (typeof value === "string") {
-            value = toCharSliceLike(value);
-        }
-
+    indexOfFold(value: CharBuffer, index = 0) : number {
         return indexOfFold(this, value, index);
     }
 
-    lastIndexOf(value: number | string | CharSliceLike, index = 0) : number {
-        if (index < 0 || index >= this.length) {
-            throw new ArgumentRangeError("index", index);
-        }
-
-        if (typeof value === "number") {
-            if (!Number.isInteger(value) && value < 0 && value > 0x10FFFF) {
-                throw new RangeError("Invalid code point");
-            }
-
-            for (let i = this.length - 1; i >= index; i--) {
-                if (this.#buffer[this.#start + i] === value) {
-                    return i;
-                }
-            }
-
-            return -1;
-        }
-
-        if (typeof value === "string") {
-            value = toCharSliceLike(value);
-        }
-
-        let f = 0;
-        let i = this.length - 1;
-        for (; i >= index; i--) {
-            if (this.#buffer[this.#start + i] === value.at(f)) {
-                f++;
-                if (f === value.length) {
-                    return i - f + 1;
-                }
-            } else {
-                f = 0;
-            }
-        }
-
-        return -1;
+    lastIndexOf(value: CharBuffer, index = 0) : number {
+         return lastIndexOf(this, value, index);
     }
 
-    equals(other: CharSlice | Uint32Array | string) : boolean {
-        let get: (index: number) => number;
-        if (this.length !== other.length) {
-            return false;
-        }
-
-        if (other instanceof CharSlice) {
-            get = other.at.bind(other);
-        } else if (other instanceof Uint32Array) {
-            get = (index: number) => other[index];
-        } else {
-            get = (index: number) => other.codePointAt(index) ?? -1;
-        }
-
-        for (let i = 0; i < this.length; i++) {
-            if (this.#buffer[this.#start + i] !== get(i)) {
-                return false;
-            }
-        }
-
-        return true;
+    lastIndexOfFold(value: CharBuffer, index = 0) : number {
+        return lastIndexOfFold(this, value, index);
     }
 
-    equalsFold(other: CharSliceLike | string) : boolean {
-        if (this.length !== other.length) {
-            return false;
-        }
-
-        if (typeof other === "string") {
-            other === toCharSliceLike(other);
-        }
-
-        return equalFold(this, other as CharSliceLike);
+    equals(other: CharBuffer) : boolean {
+        return equal(this, other);
     }
 
-    endsWith(suffix: CharSliceLike | string): boolean {
-        if (this.length < suffix.length) {
-            return false;
-        }
-
-        if (typeof suffix === "string") {
-            suffix = toCharSliceLike(suffix);
-        }
-
-        for (let i = 0; i < suffix.length; i++) {
-            if (this.#buffer[this.#start + this.length - suffix.length + i] !== suffix.at(i)) {
-                return false;
-            }
-        }
-
-        return true;
+    equalsFold(other: CharBuffer) : boolean {
+        return equalFold(this, other);
     }
 
-    endsWithFold(suffix: CharSliceLike | string): boolean {
-        if (this.length < suffix.length) {
-            return false;
-        }
+    endsWith(suffix: CharBuffer): boolean {
+        return endsWith(this, suffix);
+    }
 
-        if (typeof suffix === "string") {
-            suffix = toCharSliceLike(suffix);
-        }
-
-        return endsWithFold(this, suffix as CharSliceLike);
+    endsWithFold(suffix: CharBuffer): boolean {
+        return endsWithFold(this, suffix);
     }
 
     slice(start = 0, end = this.length): CharSlice {
@@ -716,34 +495,16 @@ export class CharSlice {
         return new CharSlice(this.#buffer, this.#start + start, this.#start + end);
     }
 
-    startsWith(prefix: CharSliceLike | string): boolean {
-        if (this.length < prefix.length) {
-            return false;
-        }
-
-        if (typeof prefix === "string") {
-            prefix = toCharSliceLike(prefix);
-        }
-
-        for (let i = 0; i < prefix.length; i++) {
-            if (this.#buffer[this.#start + i] !== prefix.at(i)) {
-                return false;
-            }
-        }
-
-        return true;
+    sliceSequence(start: number, end?: number): CharSlice {
+        return this.slice(start, end);
     }
 
-    startsWithFold(prefix: CharSliceLike | string): boolean {
-        if (this.length < prefix.length) {
-            return false;
-        }
+    startsWith(prefix: CharBuffer): boolean {
+        return startsWith(this, prefix);
+    }
 
-        if (typeof prefix === "string") {
-            prefix = toCharSliceLike(prefix);
-        }
-
-        return startsWithFold(this, prefix as CharSliceLike);
+    startsWithFold(prefix: CharBuffer): boolean {
+        return startsWithFold(this, prefix);
     }
 
     toArray(): Uint32Array {

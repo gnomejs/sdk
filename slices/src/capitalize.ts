@@ -1,7 +1,9 @@
-import { toCharSliceLike } from "./to_char_array.ts";
-import type { CharSliceLike } from "./types.ts";
+import { type CharBuffer, toCharSliceLike } from "./utils.ts";
 import { toLower, toUpper } from "@gnome/chars";
 
+/**
+ * Options for the capitalize function.
+ */
 export interface CapitalizeOptions {
     /**
      * Preserve the case of the characters that are not
@@ -22,23 +24,28 @@ export interface CapitalizeOptions {
  * @param value The string to capitalize.
  * @param options The options for the function.
  * @returns The capitalized string as a Uint32Array.
+ * @example
+ * ```typescript
+ * import { capitalize } from '@gnome/slices/capitalize';
+ * 
+ * const capitalized = capitalize("hello world");
+ * console.log(String.fromCodePoint(...capitalized)); // Output: "Hello world"
+ * ```
  */
-export function capitalize(value: CharSliceLike | string, options?: CapitalizeOptions): Uint32Array {
-    if (typeof value === "string") {
-        value = toCharSliceLike(value);
-    }
+export function capitalize(value: CharBuffer, options?: CapitalizeOptions): Uint32Array {
+    const v = toCharSliceLike(value);
 
     options ??= {};
 
-    const buffer = new Uint32Array(value.length);
-    if (value instanceof Uint32Array) {
-        buffer.set(value);
+    const buffer = new Uint32Array(v.length);
+    if (v instanceof Uint32Array) {
+        buffer.set(v);
         buffer[0] = toUpper(buffer[0]);
         return buffer;
     }
 
     for (let i = 0; i < value.length; i++) {
-        const r = value.at(i);
+        const r = v.at(i);
         if (r === undefined) {
             buffer[i] = 0;
             continue;

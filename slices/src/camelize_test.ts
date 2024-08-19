@@ -1,6 +1,5 @@
 import { equal } from "@gnome/assert";
 import { camelize } from "./camelize.ts";
-import { toCharSliceLike } from "./to_char_array.ts";
 
 Deno.test("slices::camelize", () => {
     const tests = [
@@ -13,7 +12,7 @@ Deno.test("slices::camelize", () => {
     ];
 
     for (const [input, expected] of tests) {
-        const actual = String.fromCodePoint(...camelize(toCharSliceLike(input)));
+        const actual = String.fromCodePoint(...camelize(input));
         equal(actual, expected);
     }
 
@@ -27,7 +26,7 @@ Deno.test("slices::camelize", () => {
     ];
 
     for (const [input, expected] of test2) {
-        const actual = String.fromCodePoint(...camelize(toCharSliceLike(input), { preserveCase: true }));
+        const actual = String.fromCodePoint(...camelize(input, { preserveCase: true }));
         equal(actual, expected);
     }
 });

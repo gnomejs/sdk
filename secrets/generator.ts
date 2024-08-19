@@ -1,5 +1,5 @@
-import { InvalidOperationError } from "@gnome/errors";
-import { isDigit, isLetter, isUpper } from "@gnome/char";
+import { InvalidOperationError } from "@gnome/errors/invalid-operation-error";
+import { isDigit, isLetter, isUpper } from "@gnome/chars";
 import { randomBytes } from "@gnome/random";
 
 /**

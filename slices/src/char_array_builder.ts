@@ -1,44 +1,90 @@
 import { ArgumentRangeError } from "@gnome/errors/argument-range-error";
 import { WINDOWS } from "@gnome/runtime-info/os";
-import { CharSlice } from "./char_slice.ts";
-import { toCharArray } from "./to_char_array.ts";
-import { sprintf } from "@std/fmt/printf";
+import { type CharBuffer, toCharSliceLike } from "./utils.ts";
+import { toCharArray } from "./utils.ts";
+import { sprintf } from "@gnome/fmt/printf";
 import { ArgumentError } from "../../errors/src/argument_error.ts";
 
+/**
+ * Represents a mutable string of characters that are stored
+ * as code points in a Uint32Array.
+ */
 export class CharArrayBuilder {
     #buffer: Uint32Array;
     #length: number;
 
     /**
      * Creates a new instance of the StringBuilder class.
-     * @param capacity The initial capacity of the string builder. Default is 16.
+     * @param capacity The initial capacity of the char builder. Default is 16.
      */
     constructor(capacity = 16) {
         this.#length = 0;
         this.#buffer = new Uint32Array(capacity);
     }
 
+    /**
+     * Gets the length of the char or string builder.
+     */
     get length() : number {
         return this.#length;
     }
 
+    /**
+     * Appends a formatted string to the string builder.
+     * @param template The template string to append.
+     * @param args The arguments to format the template with.
+     * @returns The updated `StringBuilder` or `CharArrayBuilder` instance.
+     */
     appendFormat(template: string, ...args: unknown[]): this {
         this.appendString(sprintf(template, ...args));
         return this;
     }
 
-    append(value: string | CharSlice | Uint32Array): this {
-        if (value instanceof CharSlice) {
-            this.appendSlice(value);
-        } else if (value instanceof Uint32Array) {
-            this.appendCharArray(value);
+    /**
+     * Appends a value to the string builder.
+     * @param value The value to append to the string builder.
+     * @returns The updated `StringBuilder` or `CharArrayBuilder` instance.
+     */
+    append(value: CharBuffer | number | Date | boolean | bigint): this {
+        // deno-lint-ignore no-explicit-any
+        const v = value as any;
+        if (v.length !== undefined && v.at !== undefined) {
+            this.appendSlice(v);
         } else {
-            this.appendString(value);
+            const type = typeof value;
+            switch (type) {
+                case "string":
+                    this.appendString(v as string);
+                    break;
+                case "bigint":
+                    this.appendString(v.toString());
+                    break;
+                case "number":
+                    this.appendString(v.toString());
+                    break;
+                case "boolean":
+                    this.appendString(v.toString());
+                    break;
+                case "object":
+                    if (v instanceof Date) {
+                        this.appendString(v.toString());
+                    } else {
+                        throw new ArgumentError({ name: "value", message: "Argument 'value' is not a valid type." });
+                    }
+                    break;
+                default:
+                    throw new ArgumentError({ name: "value", message: "Argument 'value' is not a valid type." });
+            }
         }
 
         return this;
     }
 
+    /**
+     * Appends a Unicode character to the string builder.
+     * @param value The Unicode character (codepoint) to append.
+     * @returns The update `StringBuilder` or `CharArrayBuilder` instance.
+     */
     appendChar(value: number): this {
         if (!Number.isInteger(value) || (value < 0 || value > 0x10FFFF)) {
             throw new ArgumentError({ name: "value", message: "Argument 'value' must be a valid Unicode character." });
@@ -50,11 +96,19 @@ export class CharArrayBuilder {
         return this;
     }
 
-    appendSlice(value: CharSlice): this {
+    /**
+     * Appends a char slice to the string builder.
+     * @param value The slice to append.
+     * @returns The updated string builder.
+     */
+    appendSlice(value: CharBuffer): this {
         this.grow(this.#length + value.length);
+        const v = toCharSliceLike(value);
+
         const l = this.length;
         for (let i = 0; i < value.length; i++) {
-            this.#buffer[l + i] = value.at(i);
+            const rune = v.at(i) ?? 0;
+            this.#buffer[l + i] = rune;
         }
 
         this.#length += value.length;
@@ -76,9 +130,10 @@ export class CharArrayBuilder {
      * @param value The string to append.
      * @returns The updated string builder.
      */
-    appendLine(value?: string | Uint32Array | CharSlice): this {
+    appendLine(value?: CharBuffer): this {
+       
         if (value !== undefined && value.length > 0) {
-            this.append(value);
+            this.appendSlice(value);
         }
 
         if (WINDOWS) {

@@ -1,5 +1,5 @@
-import { toCharArray } from "./to_char_array.ts";
-import { equalFold } from "./equal_fold.ts";
+import { toCharArray } from "./utils.ts";
+import { equalFold } from "./equal.ts";
 
 export class Tokens implements Iterable<Uint32Array> {
     #set: Array<Uint32Array>;

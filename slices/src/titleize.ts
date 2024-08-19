@@ -1,10 +1,9 @@
 import { CHAR_SPACE, CHAR_UNDERSCORE } from "@gnome/chars/constants";
 import { isLetter, isLetterOrDigit, isLower, isSpace, isUpper, toLower, toUpper } from "@gnome/chars";
 import { CharArrayBuilder } from "./char_array_builder.ts";
-import { equalFold } from "./equal_fold.ts";
+import { equalFold } from "./equal.ts";
 import { Tokens } from "./tokens.ts";
-import type { CharSliceLike } from "./types.ts";
-import { toCharSliceLike } from "./to_char_array.ts";
+import { toCharSliceLike, type CharSliceLike } from "./utils.ts";
 
 /**
  * @description This is a list of words that should not be capitalized for title case.

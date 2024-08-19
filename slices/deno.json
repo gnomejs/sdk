@@ -4,23 +4,23 @@
     "exports": {
         ".": "./src/mod.ts",
         "./camelize": "./src/camelize.ts",
+        "./capitalize": "./src/capitalize.ts",
         "./char-array-builder": "./src/char_array_builder.ts",
         "./char-slice": "./src/char_slice.ts",
         "./dasherize": "./src/dasherize.ts",
-        "./ends-with-fold": "./src/ends_with_fold.ts",
-        "./equal-fold": "./src/equal_fold.ts",
-        "./index-of-fold": "./src/index_of_fold.ts",
+        "./ends-with": "./src/ends_with.ts",
+        "./equal": "./src/equal.ts",
+        "./index-of": "./src/index_of.ts",
+        "./last-index-of": "./src/last_index_of.ts",
         "./ordinalize": "./src/ordinalize.ts",
         "./pascalize": "./src/pascalize.ts",
         "./slice": "./src/slice.ts",
-        "./starts-with-fold": "./src/starts_with_fold.ts",
+        "./starts-with": "./src/starts_with.ts",
         "./titleize": "./src/titleize.ts",
         "./to-char-array": "./src/to_char_array.ts",
         "./tokens": "./src/tokens.ts",
-        "./trim-end": "./src/trim_end.ts",
-        "./trim-start": "./src/trim_start.ts",
         "./trim": "./src/trim.ts",
-        "./types": "./src/types.ts",
-        "./underscore": "./src/underscore.ts"
+        "./underscore": "./src/underscore.ts",
+        "./utils": "./src/utils.ts"
     }
 }

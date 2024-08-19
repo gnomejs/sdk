@@ -1,17 +1,14 @@
 import { isSpace } from "@gnome/chars/is-space";
 import { CharArrayBuilder } from "./char_array_builder.ts";
-import { toCharSliceLike } from "./to_char_array.ts";
-import type { CharSliceLike } from "./types.ts";
+import { type CharBuffer, toCharSliceLike } from "./utils.ts";
 
-export function ordinalize(str: CharSliceLike | string): Uint32Array {
-    if (typeof str === "string") {
-        str = toCharSliceLike(str);
-    }
+export function ordinalize(value: CharBuffer): Uint32Array {
+    const v = toCharSliceLike(value);
 
     const sb = new CharArrayBuilder();
     const token = new CharArrayBuilder();
-    for (let i = 0; i < str.length; i++) {
-        const c = str.at(i) ?? -1;
+    for (let i = 0; i < v.length; i++) {
+        const c = v.at(i) ?? -1;
         if (c === -1) {
             continue;
         }

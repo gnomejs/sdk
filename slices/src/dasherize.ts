@@ -1,7 +1,7 @@
 import { CharArrayBuilder } from "./char_array_builder.ts";
 import { CHAR_HYPHEN_MINUS, CHAR_UNDERSCORE } from "@gnome/chars/constants";
 import { isDigit, isLetter, isLower, isSpace, isUpper, toLower, toUpper } from "@gnome/chars";
-import type { CharSlice } from "./char_slice.ts";
+import { type CharBuffer, toCharSliceLike } from "./utils.ts";
 
 interface DasherizeOptions {
     screaming?: boolean;
@@ -9,18 +9,20 @@ interface DasherizeOptions {
 }
 
 /**
- * Dasherize converts a string to dasherized case, removing any `_`, `-`, or ` ` characters
- * and converting the string to lowercase.
+ * Dasherize converts a string to dasherized case, converting any `_`, `-`, or ` ` characters]
+ * to `-` and converting the string to lowercase unless the preserveCase option is set to true.
  * @param value The string to convert to dasherized case.
  * @param options The options for the function.
  * @returns The dasherized string as a Uint32Array.
  */
-export function dasherize(value: CharSlice, options?: DasherizeOptions): Uint32Array {
+export function dasherize(value: CharBuffer, options?: DasherizeOptions): Uint32Array {
+    const v = toCharSliceLike(value);
+
     const sb = new CharArrayBuilder();
     let last = 0;
     options ??= {};
     for (let i = 0; i < value.length; i++) {
-        const c = value.at(i) ?? -1;
+        const c = v.at(i) ?? -1;
         if (c === -1) {
             continue;
         }

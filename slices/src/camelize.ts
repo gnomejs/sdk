@@ -1,8 +1,7 @@
 import { CharArrayBuilder } from "./char_array_builder.ts";
 import { CHAR_HYPHEN_MINUS, CHAR_UNDERSCORE } from "@gnome/chars/constants";
 import { isDigit, isLetter, isSpace, toLower, toUpper } from "@gnome/chars";
-import type { CharSliceLike } from "./types.ts";
-import { toCharSliceLike } from "./to_char_array.ts";
+import { toCharSliceLike, type CharBuffer } from "./utils.ts";
 
 /**
  * Options for the `camelize` function.
@@ -34,23 +33,21 @@ export interface CamelizeOptions {
  *
  * @example
  * ```typescript
- * import { camelize } from '@gnome/slices';
+ * import { camelize } from '@gnome/slices/camelize';
  *
  * const camel = camelize("hello_world");
  * console.log(String.fromCharCode(...camel)); // Output: "HelloWorld"
  * ```
  */
-export function camelize(value: CharSliceLike | string, options?: CamelizeOptions): Uint32Array {
+export function camelize(value: CharBuffer | string, options?: CamelizeOptions): Uint32Array {
     options ??= {};
-    if (typeof value === "string") {
-        value = toCharSliceLike(value);
-    }
+    const v = toCharSliceLike(value);
 
     const sb = new CharArrayBuilder();
 
     let last = 0;
     for (let i = 0; i < value.length; i++) {
-        const c = value.at(i) ?? -1;
+        const c = v.at(i) ?? -1;
         if (c === -1) {
             continue;
         }

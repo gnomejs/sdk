@@ -1,5 +1,5 @@
 import { equal } from "@gnome/assert";
-import { indexOfFold } from "./index_of_fold.ts";
+import { indexOfFold } from "./index_of.ts";
 
 Deno.test("strings::indexOfFold", () => {
     equal(0, indexOfFold("Hello sdf", "hello"));

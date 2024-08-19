@@ -1,19 +1,16 @@
 import { CharArrayBuilder } from "./char_array_builder.ts";
 import { CHAR_HYPHEN_MINUS, CHAR_UNDERSCORE } from "@gnome/chars/constants";
 import { isDigit, isLetter, isSpace, toLower, toUpper } from "@gnome/chars";
-import type { CharSliceLike } from "./types.ts";
-import { toCharSliceLike } from "./to_char_array.ts";
+import { type CharBuffer, toCharSliceLike } from "./utils.ts";
 
-export function pascalize(str: CharSliceLike | string): Uint32Array {
-    if (typeof str === "string") {
-        str = toCharSliceLike(str);
-    }
+export function pascalize(str: CharBuffer): Uint32Array {
+    const v = toCharSliceLike(str);
 
     const sb = new CharArrayBuilder();
 
     let last = 0;
-    for (let i = 0; i < str.length; i++) {
-        const c = str.at(i) ?? -1;
+    for (let i = 0; i < v.length; i++) {
+        const c = v.at(i) ?? -1;
         if (c === -1) {
             continue;
         }
