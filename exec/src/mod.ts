@@ -65,7 +65,7 @@
  * @module
  */
 
-export * from "./types.d.ts";
+export * from "./types.ts";
 export * from "./command_args.ts";
 export * from "./splat.ts";
 export * from "./split_arguments.ts";

@@ -1,4 +1,4 @@
-import type { ChildProcess, CommandOptions, CommandStatus, Output, Signal } from "../types.d.ts";
+import type { ChildProcess, CommandOptions, CommandStatus, Output, Signal } from "../types.ts";
 import { type ChildProcess as Node2ChildProcess, type IOType, spawn, spawnSync } from "node:child_process";
 import { type CommandArgs, convertCommandArgs } from "../command_args.ts";
 import { Command, ShellCommand, type ShellCommandOptions } from "../command.ts";
@@ -45,11 +45,18 @@ export class NodeOutput implements Output {
         fn ??= (code: number) => code === 0;
 
         if (!fn(this.code)) {
-            throw new CommandError(this.#file, this.code);
+            throw new CommandError({
+                fileName: this.#file,
+                exitCode: this.code,
+            });
         }
 
         if (failOnStderr && this.stderr.length > 0) {
-            throw new CommandError(this.#file, this.code, `Command failed with stderr: ${this.errorText()}`);
+            throw new CommandError({
+                fileName: this.#file,
+                exitCode: this.code,
+                message: `Command failed with stderr: ${this.errorText()}`,
+            });
         }
 
         return this;

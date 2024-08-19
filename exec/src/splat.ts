@@ -1,4 +1,4 @@
-import { dasherize, underscore } from "@gnome/strings/inflections";
+import { dasherize } from "@gnome/strings/dasherize";
 
 const match = (array: unknown[], value: string) =>
     array.some((
@@ -147,7 +147,7 @@ export function splat(
 
     const makeArguments = (key: string, value?: unknown) => {
         const prefix = options?.shortFlag && key.length === 1 ? "-" : options?.prefix;
-        const theKey = options?.preserveCase ? key : dasherize(underscore(key));
+        const theKey = options?.preserveCase ? key : dasherize(key);
 
         key = prefix + theKey;
 

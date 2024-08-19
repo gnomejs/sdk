@@ -1,5 +1,5 @@
 import { type CommandArgs, convertCommandArgs } from "./command_args.ts";
-import type { ChildProcess, CommandOptions, Output } from "./types.d.ts";
+import type { ChildProcess, CommandOptions, Output } from "./types.ts";
 import { getLogger } from "./set_logger.ts";
 
 /**

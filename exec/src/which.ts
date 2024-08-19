@@ -2,8 +2,8 @@ import { env } from "@gnome/env";
 import { basename, extname, isAbsolute, join, resolve } from "@std/path";
 import { isDir, isDirSync, isFile, isFileSync, readDir, readDirSync } from "@gnome/fs";
 import { WINDOWS } from "@gnome/os-constants";
-import { isNullOrEmpty, isNullOrWhiteSpace } from "@gnome/strings";
-import { ArgumentWhiteSpaceError } from "@gnome/errors";
+import { isNullOrEmpty, isNullOrSpace } from "@gnome/strings/is-null";
+import { ArgumentEmptyError } from "@gnome/errors/argument-empty-error";
 
 const executableCache: { [key: string]: string | undefined } = {};
 
@@ -29,8 +29,8 @@ export function whichSync(
     prependPath?: string[],
     useCache = true,
 ): string | undefined {
-    if (isNullOrWhiteSpace(fileName)) {
-        throw new ArgumentWhiteSpaceError("fileName");
+    if (isNullOrSpace(fileName)) {
+        throw new ArgumentEmptyError("fileName");
     }
 
     const rootName = basename(fileName, extname(fileName));
@@ -69,12 +69,12 @@ export function whichSync(
 
     if (WINDOWS) {
         const pe = env.get("PATHEXT") || "";
-        const pathExtensions = !isNullOrWhiteSpace(pe)
+        const pathExtensions = !isNullOrSpace(pe)
             ? pe?.toLowerCase()
             : ".com;.exe;.bat;.cmd;.vbs;.vbe;.js;.jse;.wsf;.wsh";
 
         pathExtSegments = pathExtensions.split(";")
-            .filter((segment) => !isNullOrWhiteSpace(segment));
+            .filter((segment) => !isNullOrSpace(segment));
     }
 
     for (const pathSegment of pathSegments) {
@@ -185,8 +185,8 @@ export async function which(
     prependPath?: string[],
     useCache = true,
 ): Promise<string | undefined> {
-    if (isNullOrWhiteSpace(fileName)) {
-        throw new ArgumentWhiteSpaceError("fileName");
+    if (isNullOrSpace(fileName)) {
+        throw new ArgumentEmptyError("fileName");
     }
 
     const rootName = basename(fileName, extname(fileName));
@@ -225,12 +225,12 @@ export async function which(
 
     if (WINDOWS) {
         const pe = env.get("PATHEXT") || "";
-        const pathExtensions = !isNullOrWhiteSpace(pe)
+        const pathExtensions = !isNullOrSpace(pe)
             ? pe?.toLowerCase()
             : ".com;.exe;.bat;.cmd;.vbs;.vbe;.js;.jse;.wsf;.wsh";
 
         pathExtSegments = pathExtensions.split(";")
-            .filter((segment) => !isNullOrWhiteSpace(segment));
+            .filter((segment) => !isNullOrSpace(segment));
     }
 
     for (const pathSegment of pathSegments) {

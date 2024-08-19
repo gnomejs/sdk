@@ -1,6 +1,6 @@
-import { equalsIgnoreCase } from "@gnome/strings";
+import { equalFold } from "@gnome/strings/equal";
 import { env } from "@gnome/env";
-import { underscore } from "jsr:@gnome/strings@^0.1.0/inflections";
+import { underscore } from "@gnome/strings/underscore";
 import { which, whichSync } from "./which.ts";
 import { isFile, isFileSync } from "@gnome/fs";
 import { DARWIN, WINDOWS } from "@gnome/os-constants";
@@ -184,7 +184,7 @@ export class PathFinder {
                 return value;
             }
 
-            if (equalsIgnoreCase(key, name)) {
+            if (equalFold(key, name)) {
                 return value;
             }
         }

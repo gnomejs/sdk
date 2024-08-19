@@ -1,10 +1,11 @@
-import { EMPTY } from "@gnome/strings";
-import type { ChildProcess, CommandOptions, CommandStatus, Output, Signal } from "../types.d.ts";
+import type { ChildProcess, CommandOptions, CommandStatus, Output, Signal } from "../types.ts";
 import { type CommandArgs, convertCommandArgs } from "../command_args.ts";
 import { Command, ShellCommand } from "../command.ts";
 import { remove, removeSync } from "@gnome/fs";
 import { CommandError, NotFoundOnPathError } from "../errors.ts";
 import { pathFinder } from "../path_finder.ts";
+
+const EMPTY = "";
 
 class DenoChildProcess implements ChildProcess {
     #childProcess: Deno.ChildProcess;
@@ -98,11 +99,15 @@ class DenoOutput implements Output {
     validate(fn?: ((code: number) => boolean) | undefined, failOnStderr?: true | undefined): this {
         fn ??= (code: number) => code === 0;
         if (!fn(this.code)) {
-            throw new CommandError(this.#file, this.code);
+            throw new CommandError({ fileName: this.#file, exitCode: this.code });
         }
 
         if (failOnStderr && this.stderr.length > 0) {
-            throw new CommandError(this.#file, this.code, `${this.#file} failed with stderr: ${this.errorText()}`);
+            throw new CommandError({
+                fileName: this.#file,
+                exitCode: this.code,
+                message: `${this.#file} failed with stderr: ${this.errorText()}`,
+            });
         }
 
         return this;

@@ -1,4 +1,4 @@
-import {} from "./node/shim.ts";
+import {} from "../../.tasks/node_shim.ts";
 import {
     assert as ok,
     assertEquals as equals,
