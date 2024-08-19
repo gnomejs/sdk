@@ -73,7 +73,7 @@
  * [MIT License](./LICENSE.md)
  * @module
  */
-import type { Env, EnvPath } from "./types.d.ts";
+import type { Env, EnvPath } from "./types.ts";
 // deno-lint-ignore no-explicit-any
 const g = globalThis as any;
 let env: Env;

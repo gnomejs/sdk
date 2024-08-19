@@ -1,5 +1,5 @@
 import process from "node:process";
-import type { Env } from "../types.d.ts";
+import type { Env } from "../types.ts";
 import { DefaultEnvPath, EnvBase } from "../base/mod.ts";
 const proc = process;
 

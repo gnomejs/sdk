@@ -16,7 +16,7 @@ import { MAX_RUNE } from "./constants.ts";
  *
  * @example
  * ```typescript
- * import { toLower } from '@gnome/char';
+ * import { toLower } from '@gnome/chars';
  *
  * console.log(toLower(65)); // Output: 97
  * console.log(toLower(97)); // Output: 97

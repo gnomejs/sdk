@@ -3,7 +3,7 @@ import { open, remove } from "../src/fs.ts";
 import { ensureDir } from "../src/ensure_dir.ts";
 import { dirname, fromFileUrl, join, resolve } from "@std/path";
 
-const _dir = resolve(join(dirname(fromFileUrl(import.meta.url)), ".."));
+const _dir = resolve(join(dirname(fromFileUrl(import.meta.url))));
 
 Deno.test("fs: open and read", async () => {
     await ensureDir(join(_dir, "testdata"));

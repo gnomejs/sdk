@@ -1,4 +1,4 @@
-import type { Env } from "../types.d.ts";
+import type { Env } from "../types.ts";
 import { EnvBase } from "../base/mod.ts";
 
 /**

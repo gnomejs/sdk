@@ -1,77 +1,95 @@
 import { Lazy } from "./_lazy.ts";
 import { detectMode } from "./detector.ts";
 import { AnsiMode } from "./enums.ts";
+import { stderr, stdout } from "@gnome/process";
 
 let settings = new Lazy<AnsiSettings>(() => new AnsiSettings(detectMode()));
 
-// deno-lint-ignore no-explicit-any
-const g = globalThis as any;
-
 export function isStdoutTerminal(): boolean {
-    if (typeof g.Deno !== "undefined") {
-        return Deno.stdout.isTerminal();
-    } else if (typeof g.process !== "undefined") {
-        return g.process.stdout.isTTY;
-    }
-
-    return true;
+    return stdout.isTerm();
 }
 
+/*
 export function isStderrTerminal(): boolean {
-    if (typeof g.Deno !== "undefined") {
-        return Deno.stderr.isTerminal();
-    } else if (typeof g.process !== "undefined") {
-        return g.process.stderr.isTTY;
-    }
-
-    return true;
+    return stderr.isTerm();
 }
 
+/**
+ * The ANSI settings.
+ */
 export class AnsiSettings {
     #mode: AnsiMode;
     #links: boolean;
 
+    /**
+     * Creates a new ANSI settings.
+     * @param mode The ANSI mode.
+     */
     constructor(mode: AnsiMode) {
         this.#mode = mode;
         this.#links = this.#mode === AnsiMode.TwentyFourBit;
     }
 
+    /**
+     * The current ANSI settings.
+     */
     static get current(): AnsiSettings {
         return settings.value;
     }
 
+    /**
+     * Sets the current ANSI settings.
+     */
     static set current(value: AnsiSettings) {
         settings = new Lazy<AnsiSettings>(() => value);
     }
 
+    /**
+     * Determines if the standard output is a terminal.
+     */
     get stdout(): boolean {
         if (this.#mode > 0) {
-            return !isStdoutTerminal();
+            return stdout.isTerm();
         }
 
         return false;
     }
 
+    /**
+     * Determines if the standard error is a terminal.
+     */
     get stderr(): boolean {
         if (this.#mode > 0) {
-            return !isStderrTerminal();
+            return stderr.isTerm();
         }
 
         return false;
     }
 
+    /**
+     * The ANSI mode.
+     */
     get mode(): AnsiMode {
         return this.#mode;
     }
 
+    /**
+     * Sets the ANSI mode.
+     */
     set mode(value: AnsiMode) {
         this.#mode = value;
     }
 
+    /**
+     * Determines if the terminal supports links.
+     */
     get links(): boolean {
         return this.#links;
     }
 
+    /**
+     * Sets if the terminal supports links.
+     */
     set links(value: boolean) {
         this.#links = value;
     }

@@ -1,4 +1,4 @@
-import { normalizeKey, type SecretRecord, type Vault } from "./vault_utils.ts";
+import { normalizeKey, type SecretRecord, type Vault } from "./vault.ts";
 import { decodeBase64, encodeBase64 } from "@std/encoding";
 
 // deno-lint-ignore no-explicit-any

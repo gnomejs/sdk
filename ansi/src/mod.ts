@@ -26,5 +26,5 @@
  */
 export * from "./ansi.ts";
 export * from "./enums.ts";
-export { type AnsiWriter, ansiWriter } from "./writer.ts";
+export { type AnsiWriter, writer } from "./writer.ts";
 export * from "./settings.ts";

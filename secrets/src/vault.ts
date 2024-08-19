@@ -1,3 +1,40 @@
+import { StringBuilder } from "@gnome/strings";
+import { isDigit, isLetter } from "@gnome/chars";
+import { CHAR_BACKWARD_SLASH, CHAR_FORWARD_SLASH, CHAR_HYPHEN_MINUS, CHAR_SEMICOLON } from "@gnome/chars/constants";
+
+const sb = new StringBuilder();
+
+/**
+ * Normalizes a key by replacing special characters with a delimiter or hyphen-minus.
+ * @param key - The key to be normalized.
+ * @param delimiter - The delimiter to be used for replacing special characters. Defaults to CHAR_FORWARD_SLASH.
+ * @returns The normalized key.
+ */
+export function normalizeKey(key: string, delmiter?: number): string {
+    delmiter = delmiter || CHAR_FORWARD_SLASH;
+    for (let i = 0; i < key.length; i++) {
+        const c = key.charCodeAt(i);
+        if (c === CHAR_BACKWARD_SLASH || c === CHAR_SEMICOLON || c === CHAR_FORWARD_SLASH) {
+            sb.appendChar(delmiter);
+            continue;
+        }
+
+        if (!isLetter(c) && !isDigit(c)) {
+            sb.appendChar(CHAR_HYPHEN_MINUS);
+            continue;
+        }
+
+        sb.appendChar(c);
+    }
+
+    const result = sb.toString();
+    sb.clear();
+    return result;
+}
+
+/**
+ * Represents a secret record.
+ */
 /**
  * Represents a secret record.
  */
@@ -52,14 +89,14 @@ export interface Vault {
     createSecret(name: string, value: string, tags?: Record<string, string>): Promise<SecretRecord>;
 
     /**
-     * Retrieves a secret from the vault by its name.
+     * Retrieves a secret from the vault.
      * @param name - The name of the secret.
      * @returns A promise that resolves to the secret record, or undefined if the secret does not exist.
      */
     getSecret(name: string): Promise<SecretRecord | undefined>;
 
     /**
-     * Retrieves the value of a secret from the vault by its name.
+     * Retrieves the value of a secret from the vault.
      * @param name - The name of the secret.
      * @returns A promise that resolves to the value of the secret, or undefined if the secret does not exist.
      */
@@ -73,10 +110,10 @@ export interface Vault {
     setSecret(record: SecretRecord): Promise<void>;
 
     /**
-     * Sets the value of a secret in the vault by its name.
+     * Sets the value of a secret in the vault.
      * @param name - The name of the secret.
-     * @param value - The new value of the secret.
-     * @returns A promise that resolves when the secret value is set.
+     * @param value - The value of the secret.
+     * @returns A promise that resolves when the secret is set.
      */
     setSecretValue(name: string, value: string): Promise<void>;
 
@@ -95,13 +132,13 @@ export interface Vault {
     deleteSecret(record: SecretRecord): Promise<void>;
 
     /**
-     * Retrieves a list of all secrets in the vault.
+     * Lists all secrets in the vault.
      * @returns A promise that resolves to an array of secret records.
      */
     listSecrets(): Promise<SecretRecord[]>;
 
     /**
-     * Retrieves a list of names of all secrets in the vault.
+     * Lists the names of all secrets in the vault.
      * @returns A promise that resolves to an array of secret names.
      */
     listSecretNames(): Promise<string[]>;

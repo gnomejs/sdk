@@ -121,6 +121,15 @@ export async function exists(
         }
         return true;
     } catch (error) {
+        if (g.process) {
+            if (error.code === "ENOENT") {
+                return false;
+            }
+            if (error.code === "EPERM" || error.code === "EACCES") {
+                return !options?.isReadable;
+            }
+        }
+
         if (g.Deno) {
             if (error instanceof g.Deno.errors.NotFound) {
                 return false;
@@ -252,6 +261,14 @@ export function existsSync(
         }
         return true;
     } catch (error) {
+        if (g.process) {
+            if (error.code === "ENOENT") {
+                return false;
+            }
+            if (error.code === "EPERM" || error.code === "EACCES") {
+                return !options?.isReadable;
+            }
+        }
         if (g.Deno) {
             if (error instanceof Deno.errors.NotFound) {
                 return false;

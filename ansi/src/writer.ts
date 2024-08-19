@@ -1,17 +1,10 @@
 import { env } from "@gnome/env";
-import { AnsiSettings } from "./settings.ts";
-import { blue, cyan, gray, green, magenta, red, yellow } from "./ansi.ts";
-import { sprintf } from "@std/fmt/printf";
-import { AnsiLogLevel } from "./enums.ts";
-import { isStdoutTerminal } from "./settings.ts";
+import { AnsiSettings } from "../src/settings.ts";
+import { blue, cyan, gray, green, magenta, red, yellow } from "../src/ansi.ts";
+import { sprintf } from "@gnome/fmt/printf";
+import { AnsiLogLevel } from "../src/enums.ts";
+import { isStdoutTerminal } from "../src/settings.ts";
 import type { SecretMasker } from "@gnome/secrets";
-
-export { AnsiLogLevel, AnsiSettings };
-
-export interface ISecretMasker {
-    mask(value: string): string;
-    add(value: string): ISecretMasker;
-}
 
 // deno-lint-ignore no-explicit-any
 const g = globalThis as any;
@@ -93,55 +86,173 @@ export function handleArguments(args: IArguments): { msg: string | undefined; st
 }
 
 export interface AnsiWriter {
+    /**
+     * Determines if the writer is interactive.
+     */
     readonly interactive: boolean;
 
+    /**
+     * Gets the ANSI settings.
+     */
     readonly settings: AnsiSettings;
 
+    /**
+     * Gets or sets the log level.
+     */
     level: AnsiLogLevel;
 
+    /**
+     * Sets the secret masker.
+     */
     set secretMasker(value: SecretMasker);
 
+    /**
+     * Determines if the log level is enabled.
+     * @param level The log level.
+     */
     enabled(level: AnsiLogLevel): boolean;
 
-    startGroup(name: string): AnsiWriter;
+    /**
+     * Starts a new group that groups a set of messages.
+     * @param name The group name.
+     * @returns The writer.
+     */
+    startGroup(name: string): this;
 
-    endGroup(): AnsiWriter;
+    /**
+     * Ends the current group.
+     * @returns The writer.
+     */
+    endGroup(): this;
 
-    success(message: string, ...args: unknown[]): AnsiWriter;
+    /**
+     * Writes a success message to the output.
+     * @param message The message to write.
+     * @param args The message arguments.
+     * @returns The writer.
+     */
+    success(message: string, ...args: unknown[]): this;
 
-    progress(name: string, value: number): AnsiWriter;
+    /**
+     * Writes the progress of an operation to the output.
+     * @param name The name of the progress.
+     * @param value The value of the progress.
+     * @returns The writer.
+     */
+    progress(name: string, value: number): this;
 
-    command(message: string, ...args: unknown[]): AnsiWriter;
+    /**
+     * Writes a command to the output.
+     * @param message The executable.
+     * @param args The arguments passed to the command.
+     * @returns The writer.
+     */
+    command(command: string, ...args: string[]): this;
 
-    debug(message: string, ...args: unknown[]): AnsiWriter;
+    /**
+     * Writes a debug message to the output.
+     * @param message The message to write.
+     * @param args The message arguments.
+     * @returns The writer.
+     */
+    debug(message: string, ...args: unknown[]): this;
 
-    trace(message: string, ...args: unknown[]): AnsiWriter;
+    /**
+     * Writes a trace message to the output.
+     * @param message The message to write.
+     * @param args The message arguments.
+     * @returns The writer.
+     */
+    trace(message: string, ...args: unknown[]): this;
 
-    info(message: string, ...args: unknown[]): AnsiWriter;
+    /**
+     * Writes an information message to the output.
+     * @param message The message to write.
+     * @param args The message arguments.
+     * @returns The writer.
+     */
+    info(message: string, ...args: unknown[]): this;
 
-    error(e: Error, message?: string, ...args: unknown[]): AnsiWriter;
-    error(message: string, ...args: unknown[]): AnsiWriter;
+    /**
+     * Writes an error message to the output.
+     * @param e The error.
+     * @param message The message to write.
+     * @param args The message arguments.
+     * @returns The writer.
+     */
+    error(e: Error, message?: string, ...args: unknown[]): this;
+    /**
+     * Writes an error message to the output.
+     * @param message The message to write.
+     * @param args The message arguments.
+     * @returns The writer.
+     */
+    error(message: string, ...args: unknown[]): this;
 
-    warn(e: Error, message?: string, ...args: unknown[]): AnsiWriter;
-    warn(message: string, ...args: unknown[]): AnsiWriter;
+    /**
+     * Writes an warning message to the output.
+     * @param e The error.
+     * @param message The message to write.
+     * @param args The message arguments.
+     * @returns The writer.
+     */
+    warn(e: Error, message?: string, ...args: unknown[]): this;
+    /**
+     * Writes an warning message to the output.
+     * @param message The message to write.
+     * @param args The message arguments.
+     * @returns The writer.
+     */
+    warn(message: string, ...args: unknown[]): this;
 
-    write(message?: string, ...args: unknown[]): AnsiWriter;
+    /**
+     * Writes a message to the output.
+     * @param message The message to write.
+     * @param args The message arguments.
+     * @returns The writer.
+     */
+    write(message?: string, ...args: unknown[]): this;
 
-    writeLine(message?: string, ...args: unknown[]): AnsiWriter;
+    /**
+     * Writes a message as new line to the output.
+     * @param message The message to write.
+     * @param args The message arguments.
+     * @returns The writer.
+     */
+    writeLine(message?: string, ...args: unknown[]): this;
 
-    exportVariable(name: string, value: string, secret: boolean): AnsiWriter;
+    /**
+     * Exports a variable to the environment.  If the secret masker is set,
+     * the value is masked.
+     * @param name The name of the variable.
+     * @param value The value of the variable.
+     * @param secret Determines if the value is a secret.
+     * @returns The writer.
+     */
+    exportVariable(name: string, value: string, secret: boolean): this;
 }
 
+/**
+ * The default implementation of the ANSI writer.
+ */
 export class DefaultAnsiWriter implements AnsiWriter {
     #interactive?: boolean;
     #level: AnsiLogLevel;
     #secretMasker?: SecretMasker;
 
+    /**
+     * Creates a new instance of DefaultAnsiWriter.
+     * @param level The log level.
+     * @param secretMasker The secret masker.
+     */
     constructor(level?: AnsiLogLevel, secretMasker?: SecretMasker) {
         this.#level = level ?? AnsiLogLevel.Debug;
         this.#secretMasker = secretMasker;
     }
 
+    /**
+     * Gets or sets the log level.
+     */
     get level(): AnsiLogLevel {
         return this.#level;
     }
@@ -150,14 +261,25 @@ export class DefaultAnsiWriter implements AnsiWriter {
         this.#level = value;
     }
 
+    /**
+     * Sets the secret masker.
+     */
     set secretMasker(value: SecretMasker) {
         this.#secretMasker = value;
     }
 
+    /**
+     * Determines if the log level is enabled.
+     * @param level The log level.
+     * @returns `true` if the log level is enabled, `false` otherwise.
+     */
     enabled(level: AnsiLogLevel): boolean {
         return this.#level >= level;
     }
 
+    /**
+     * Determines if the current environment is interactive.
+     */
     get interactive(): boolean {
         if (this.#interactive !== undefined) {
             return this.#interactive;
@@ -195,16 +317,25 @@ export class DefaultAnsiWriter implements AnsiWriter {
         return this.#interactive;
     }
 
+    /**
+     * Gets the ANSI settings.
+     */
     get settings(): AnsiSettings {
         return AnsiSettings.current;
     }
 
-    progress(name: string, value: number): AnsiWriter {
+    progress(name: string, value: number): this {
         this.write(`${name}: ${green(value.toString().padStart(2))}% \r`);
         return this;
     }
 
-    command(message: string, args: unknown[]): AnsiWriter {
+    /**
+     * Writes a command to the output.
+     * @param message The executable.
+     * @param args The arguments passed to the command.
+     * @returns The writer.
+     */
+    command(message: string, ...args: string[]): this {
         if (this.#level < AnsiLogLevel.Warning) {
             return this;
         }
@@ -227,7 +358,15 @@ export class DefaultAnsiWriter implements AnsiWriter {
         return this;
     }
 
-    exportVariable(name: string, value: string, secret = false): AnsiWriter {
+    /**
+     * Exports a variable to the environment.  If the secret masker is set,
+     * the value is masked.
+     * @param name The name of the variable.
+     * @param value The value of the variable.
+     * @param secret Determines if the value is a secret.
+     * @returns the writer.
+     */
+    exportVariable(name: string, value: string, secret = false): this {
         env.set(name, value);
         if (secret && this.#secretMasker !== undefined) {
             this.#secretMasker.add(value);
@@ -235,7 +374,13 @@ export class DefaultAnsiWriter implements AnsiWriter {
         return this;
     }
 
-    trace(message: string, ...args: unknown[]): AnsiWriter {
+    /**
+     * Writes a trace message to the output.
+     * @param message The message to write.
+     * @param args The message arguments.
+     * @returns the writer.
+     */
+    trace(message: string, ...args: unknown[]): this {
         if (this.#level > AnsiLogLevel.Debug) {
             return this;
         }
@@ -251,7 +396,13 @@ export class DefaultAnsiWriter implements AnsiWriter {
         return this;
     }
 
-    debug(message: string, ...args: unknown[]): AnsiWriter {
+    /**
+     * Writes a debug message to the output.
+     * @param message The message to write.
+     * @param args The message arguments.
+     * @returns the writer.
+     */
+    debug(message: string, ...args: unknown[]): this {
         if (this.#level < AnsiLogLevel.Debug) {
             return this;
         }
@@ -267,9 +418,22 @@ export class DefaultAnsiWriter implements AnsiWriter {
         return this;
     }
 
-    warn(e: Error, message?: string, ...args: unknown[]): AnsiWriter;
-    warn(message: string, ...args: unknown[]): AnsiWriter;
-    warn(): AnsiWriter {
+    /**
+     * Writes an warning message to the output.
+     * @param e The error.
+     * @param message The message to write.
+     * @param args The message arguments.
+     * @returns the writer.
+     */
+    warn(e: Error, message?: string, ...args: unknown[]): this;
+    /**
+     * Writes a warning message to the output.
+     * @param message The message to write.
+     * @param args The message arguments.
+     * @returns the writer.
+     */
+    warn(message: string, ...args: unknown[]): this;
+    warn(): this {
         if (this.#level < AnsiLogLevel.Warning) {
             return this;
         }
@@ -293,9 +457,22 @@ export class DefaultAnsiWriter implements AnsiWriter {
         return this;
     }
 
-    error(e: Error, message?: string, ...args: unknown[]): AnsiWriter;
-    error(message: string, ...args: unknown[]): AnsiWriter;
-    error(): AnsiWriter {
+    /**
+     * Writes an error message to the output.
+     * @param e The error.
+     * @param message The message to write.
+     * @param args The message arguments.
+     * @returns the writer.
+     */
+    error(e: Error, message?: string, ...args: unknown[]): this;
+    /**
+     * Writes an error message to the output.
+     * @param message The message to write.
+     * @param args The message arguments.
+     * @returns the writer.
+     */
+    error(message: string, ...args: unknown[]): this;
+    error(): this {
         if (this.#level < AnsiLogLevel.Error) {
             return this;
         }
@@ -319,7 +496,13 @@ export class DefaultAnsiWriter implements AnsiWriter {
         return this;
     }
 
-    success(message: string, ...args: unknown[]): AnsiWriter {
+    /**
+     * Writes a success message to the output.
+     * @param message The message to write.
+     * @param args The message arguments.
+     * @returns The writer.
+     */
+    success(message: string, ...args: unknown[]): this {
         switch (arguments.length) {
             case 0:
                 return this;
@@ -346,7 +529,13 @@ export class DefaultAnsiWriter implements AnsiWriter {
         }
     }
 
-    info(message: string, ...args: unknown[]): AnsiWriter {
+    /**
+     * Writes an informational message to the output.
+     * @param message The message to write.
+     * @param args The message arguments.
+     * @returns the writer.
+     */
+    info(message: string, ...args: unknown[]): this {
         if (this.#level < AnsiLogLevel.Information) {
             return this;
         }
@@ -361,7 +550,13 @@ export class DefaultAnsiWriter implements AnsiWriter {
         return this;
     }
 
-    write(message?: string, ...args: unknown[]): AnsiWriter {
+    /**
+     * Writes a message to the output.
+     * @param message The message to write.
+     * @param args The message arguments.
+     * @returns the writer.
+     */
+    write(message?: string, ...args: unknown[]): this {
         if (message === undefined) {
             return this;
         }
@@ -386,7 +581,13 @@ export class DefaultAnsiWriter implements AnsiWriter {
         return this;
     }
 
-    writeLine(message?: string, ...args: unknown[]): AnsiWriter {
+    /**
+     * Writes a message as a new line to the output.
+     * @param message The message to write.
+     * @param args The message arguments.
+     * @returns the writer.
+     */
+    writeLine(message?: string, ...args: unknown[]): this {
         switch (arguments.length) {
             case 0:
                 write("\n");
@@ -408,7 +609,12 @@ export class DefaultAnsiWriter implements AnsiWriter {
         return this;
     }
 
-    startGroup(name: string): AnsiWriter {
+    /**
+     * Starts a new group that groups a set of messages.
+     * @param name The group name.
+     * @returns the writer.
+     */
+    startGroup(name: string): this {
         if (this.settings.stdout) {
             this.writeLine(magenta(`> ${name}`));
         } else {
@@ -418,10 +624,14 @@ export class DefaultAnsiWriter implements AnsiWriter {
         return this;
     }
 
-    endGroup(): AnsiWriter {
+    /**
+     * Ends the current group.
+     * @returns the writer.
+     */
+    endGroup(): this {
         this.writeLine();
         return this;
     }
 }
 
-export const ansiWriter: AnsiWriter = new DefaultAnsiWriter();
+export const writer: AnsiWriter = new DefaultAnsiWriter();

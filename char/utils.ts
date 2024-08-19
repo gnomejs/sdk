@@ -112,6 +112,51 @@ export function isBetween(value: number, start: number, end: number): boolean {
 }
 
 /**
+ * Checks if the given value is a digit.
+ *
+ * @param value - The value to check.
+ * @returns `true` if the value is a digit, `false` otherwise.
+ *
+ * @example
+ * ```typescript
+ * import { isDigit } from '@gnome/char';
+ *
+ * console.log(isDigit('5'.charCodeAt(0))); // Output: true
+ * console.log(isDigit('a'.charCodeAt(0))); // Output: false
+ * ```
+ */
+export function isDigit(value: number): boolean {
+    return value >= latinZero && value <= latinNine;
+}
+
+/**
+ * Checks if the character at the specified index in the given string is a digit.
+ *
+ * @param value - The string to check.
+ * @param index - The index of the character to check.
+ * @returns `true` if the character at the specified index is a digit, `false` otherwise.
+ * @example
+ * ```typescript
+ * import { isDigitAt } from "@gnome/char";
+ *
+ * const str = "Hello, world!";
+ * const index = 4;
+ * const isDigit = isDigitAt(str, index);
+ * console.log(isDigit); // Output: false
+ *
+ * const str1 = "Hello, 123!";
+ * const index1 = 8;
+ * const isDigit1 = isDigitAt(str1, index1);
+ * console.log(isDigit1); // Output: true
+ *
+ * ```
+ */
+export function isDigitAt(value: string, index: number): boolean {
+    const code = value.charCodeAt(index) as number;
+    return code >= latinZero && code <= latinNine;
+}
+
+/**
  * Checks if the character at the specified index in the given string is a digit.
  *
  * @param value - The string to check.
@@ -139,6 +184,47 @@ export function isDigitUtf16At(value: string, index: number): boolean {
         return false;
     }
     return code >= latinZero && code <= latinNine;
+}
+
+/**
+ * Checks if the character at the specified index in the given string is a Latin-1 character.
+ * Latin-1 characters have code points less than the `latinMax` constant.
+ *
+ * @param value - The string to check.
+ * @param index - The index of the character to check.
+ * @returns `true` if the character at the specified index is a Latin-1 character, `false` otherwise.
+ *
+ * @example
+ * ```typescript
+ * import { isLatin1At } from "@gnome/char";
+ *
+ * const str = "Hello, world!";
+ * const index = 4;
+ * const isLatin1 = isLatin1At(str, index);
+ * console.log(isLatin1); // Output: true
+ * ```
+ */
+export function isLatin1At(value: string, index: number): boolean {
+    return value.codePointAt(index) as number < latinMax;
+}
+
+/**
+ * Checks if the given value is a Latin-1 character.
+ *
+ * @param value - The value to check.
+ * @returns `true` if the value is a Latin-1 character, `false` otherwise.
+ *
+ * @example
+ * ```typescript
+ * import { isLatin1 } from '@gnome/char';
+ *
+ * console.log(isLatin1("Ď".charCodeAt(0))); // Output: false
+ * console.log(isLatin1(65)); // Output: true
+ * console.log(isLatin1(256)); // Output: false
+ * ```
+ */
+export function isLatin1(value: number): boolean {
+    return value < latinMax;
 }
 
 /**
@@ -394,6 +480,62 @@ export function isLetterOrDigitUtf16At(value: string, index: number): boolean {
     }
 
     return isDigit(code) || isLetter(code);
+}
+
+/**
+ * Checks if the given value represents an uppercase character.
+ *
+ * @param value - The character value to check.
+ * @returns `true` if the character is uppercase, `false` otherwise.
+ *
+ * @example
+ * ```typescript
+ * import { isUpper } from '@gnome/char';
+ *
+ * console.log(isUpper(65)); // Output: true
+ * console.log(isUpper(97)); // Output: false
+ * ```
+ */
+export function isUpper(value: number): boolean {
+    if (isLatin1(value)) {
+        const code = latin[value] as number;
+        return (code & latinUpperMask) != 0;
+    }
+
+    if (!isLetter(value)) {
+        return false;
+    }
+
+    return IS_UPPER_EXP.test(String.fromCodePoint(value));
+}
+
+/**
+ * Checks if the character at the specified index in the given string is an uppercase letter.
+ *
+ * @param value - The string to check.
+ * @param index - The index of the character to check.
+ * @returns `true` if the character is an uppercase letter, `false` otherwise.
+ *
+ * @example
+ * ```typescript
+ * import { isUpperAt } from "@gnome/char";
+ *
+ * const str = "Hello, world!";
+ * console.log(isUpperAt(str, 4)); // Output: false
+ * console.log(isUpperAt(str, 0)); // Output: true
+ * ```
+ */
+export function isUpperAt(value: string, index: number): boolean {
+    const code = value.charCodeAt(index) as number;
+    if (isLatin1(code)) {
+        return (latin[code] & latinUpperMask) != 0;
+    }
+
+    if (!isLetter(code)) {
+        return false;
+    }
+
+    return IS_UPPER_EXP.test(value[index]);
 }
 
 /**

@@ -1,4 +1,4 @@
-import { RUNTIME } from "@gnome/runtime-constants";
+import { RUNTIME } from "@gnome/runtime-info/js";
 import type { FileSystem } from "./types.ts";
 
 let fs: FileSystem;

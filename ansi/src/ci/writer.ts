@@ -1,8 +1,8 @@
-import { DefaultAnsiWriter } from "@gnome/ansi/writer";
-import { AnsiLogLevel } from "@gnome/ansi/enums";
-import { cyan, gray, green, yellow, red } from "@gnome/ansi/ansi";
-import { CI, CI_PROVIDER } from "./ci.ts";
-import { sprintf } from "@std/fmt/printf";
+import { type AnsiWriter, DefaultAnsiWriter } from "../writer.ts";
+import { AnsiLogLevel } from "../enums.ts";
+import { cyan, gray, green, red, yellow } from "../ansi.ts";
+import { CI, CI_PROVIDER } from "./provider.ts";
+import { sprintf } from "@gnome/fmt/printf";
 import { env } from "@gnome/env";
 import { writeTextFileSync } from "@gnome/fs";
 import { stringify } from "@std/dotenv";
@@ -78,13 +78,19 @@ export function setSecret(name: string, value: string): void {
 }
 
 export class PipelineWriter extends DefaultAnsiWriter {
-    override command(message: string, ...args: string[]): this {
+    /**
+     * Write a command to the output.
+     * @param command The name of the command.
+     * @param args The arguments passed to the command.
+     * @returns The writer instance.
+     */
+    override command(command: string, ...args: string[]): this {
         switch (CI_PROVIDER) {
             case "azdo":
-                this.writeLine(`##vso[task.command]${message} ${args.join(" ")}`);
+                this.writeLine(`##vso[task.command]${command} ${args.join(" ")}`);
                 return this;
             default: {
-                const fmt = `[CMD]: ${message} ${defaultSecretMasker.mask(args.join(" "))}`;
+                const fmt = `[CMD]: ${command} ${defaultSecretMasker.mask(args.join(" "))}`;
                 if (this.settings.stdout) {
                     this.writeLine(cyan(fmt));
                     return this;
@@ -95,6 +101,11 @@ export class PipelineWriter extends DefaultAnsiWriter {
         }
     }
 
+    /**
+     * Prepend a path to the environment path.
+     * @param path The path to append to the environment path.
+     * @returns The writer instance.
+     */
     prependPath(path: string): this {
         env.path.prepend(path);
 
@@ -124,6 +135,12 @@ export class PipelineWriter extends DefaultAnsiWriter {
         }
     }
 
+    /**
+     * Writes the progress of an operation to the output.
+     * @param name The name of the progress indicator.
+     * @param value The value of the progress indicator.
+     * @returns The writer instance.
+     */
     override progress(name: string, value: number): this {
         switch (CI_PROVIDER) {
             case "azdo":
@@ -140,7 +157,14 @@ export class PipelineWriter extends DefaultAnsiWriter {
         }
     }
 
-    setOutput(name: string, value: string, secret = false): this {
+    /**
+     * Set an output variable for the CI environment.
+     * @param name The name of the output variable.
+     * @param value The value of the output variable.
+     * @param secret True if the value should be masked in the logs.
+     * @returns
+     */
+    setOutput(name: string, value: string, secret = false): AnsiWriter {
         if (secret) {
             defaultSecretMasker.add(value);
         }
@@ -184,6 +208,21 @@ export class PipelineWriter extends DefaultAnsiWriter {
         }
     }
 
+    /**
+     * Export a variable to the CI environment.
+     *
+     * @description
+     * For Azure DevOps, the variable is set using the `##vso[task.setvariable]` command.
+     * For GitHub Actions, the variable is set using the `GITHUB_ENV` variable.
+     * For GitLab CI, the variable is set using the `GITLAB_ENV` variable.
+     * For other CI providers, the variable is set using the `GNOME_CI_ENV` which is a file path
+     * to a file that contains the environment variables.
+     *
+     * @param name The name of the variable.
+     * @param value The value of the variable.
+     * @param secret Whether the value should be masked in the logs.
+     * @returns The writer instance.
+     */
     override exportVariable(name: string, value: string, secret = false): this {
         env.set(name, value);
 
@@ -239,6 +278,11 @@ export class PipelineWriter extends DefaultAnsiWriter {
         }
     }
 
+    /**
+     * Start a new group of log messages.
+     * @param name The name of the group.
+     * @returns The writer instance.
+     */
     override startGroup(name: string): this {
         super.exportVariable;
         switch (CI_PROVIDER) {
@@ -253,6 +297,10 @@ export class PipelineWriter extends DefaultAnsiWriter {
         }
     }
 
+    /**
+     * Ends the current group.
+     * @returns The writer instance.
+     */
     override endGroup(): this {
         switch (CI_PROVIDER) {
             case "azdo":
@@ -266,7 +314,20 @@ export class PipelineWriter extends DefaultAnsiWriter {
         }
     }
 
+    /**
+     * Write a debug message to the output.
+     * @param e The error to write.
+     * @param message The message to write.
+     * @param args The arguments to format the message.
+     * @returns The writer instance.
+     */
     override debug(e: Error, message?: string | undefined, ...args: unknown[]): this;
+    /**
+     * Write a debug message to the output.
+     * @param message The debug message.
+     * @param args The arguments to format the message.
+     * @returns The writer instance.
+     */
     override debug(message: string, ...args: unknown[]): this;
     override debug(): this {
         if (this.level < AnsiLogLevel.Debug) {
@@ -307,6 +368,12 @@ export class PipelineWriter extends DefaultAnsiWriter {
     }
 
     error(e: Error, message?: string | undefined, ...args: unknown[]): this;
+    /**
+     * Write an error message to the output.
+     * @param message The error message.
+     * @param args The arguments to format the message.
+     * @returns The writer instance.
+     */
     error(message: string, ...args: unknown[]): this;
     error(): this {
         if (this.level < AnsiLogLevel.Error) {
@@ -353,6 +420,12 @@ export class PipelineWriter extends DefaultAnsiWriter {
     }
 
     override warn(e: Error, message?: string | undefined, ...args: unknown[]): this;
+    /**
+     * Write a warning message to the output.
+     * @param message The warning message.
+     * @param args The arguments to format the message.
+     * @returns The writer instance.
+     */
     override warn(message: string, ...args: unknown[]): this;
     override warn(): this {
         if (this.level < AnsiLogLevel.Warning) {
@@ -393,6 +466,6 @@ export class PipelineWriter extends DefaultAnsiWriter {
     }
 }
 
-export const plWriter: PipelineWriter = new PipelineWriter();
+export const writer: PipelineWriter = new PipelineWriter();
 
 export { defaultSecretMasker as secretMasker };

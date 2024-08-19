@@ -232,8 +232,6 @@ Deno.test(
                 "run",
                 "--quiet",
                 "--no-lock",
-                "--config",
-                "deno.json",
                 exampleUrl.toString(),
             ],
         });

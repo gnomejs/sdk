@@ -18,7 +18,7 @@ import { getFileInfoType, isSubdir, toPathString } from "./utils.ts";
 import { isNotFoundError, readLink, utimeSync } from "./fs.ts";
 import { AlreadyExistsError } from "./errors.ts";
 import type { FileInfo } from "./types.ts";
-import { WINDOWS } from "@gnome/runtime-info/os"
+import { WINDOWS } from "@gnome/runtime-info/os";
 
 /** Options for {@linkcode copy} and {@linkcode copySync}. */
 export interface CopyOptions {

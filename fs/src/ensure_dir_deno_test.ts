@@ -6,7 +6,7 @@ import { ensureFile, ensureFileSync } from "./ensure_file.ts";
 import { lstat, lstatSync, makeDir, makeDirSync, remove, removeSync, stat, statSync } from "./fs.ts";
 
 const moduleDir = path.dirname(path.fromFileUrl(import.meta.url));
-const testdataDir = path.resolve(moduleDir,  "testdata", "ensure_dir");
+const testdataDir = path.resolve(moduleDir, "testdata", "ensure_dir");
 
 Deno.test("ensureDir() creates dir if it does not exist", async function () {
     const baseDir = path.join(testdataDir, "not_exist");

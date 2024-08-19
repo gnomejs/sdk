@@ -1,6 +1,7 @@
-import { DARWIN, WINDOWS } from "@gnome/os-constants";
+import { DARWIN, WINDOWS } from "@gnome/runtime-info/os";
 import { env } from "@gnome/env";
-import { equalsIgnoreCase, startsWithIgnoreCase } from "@gnome/strings";
+import { equalFold } from "@gnome/strings/equal";
+import { startsWithFold } from "@gnome/strings/starts-with";
 import { AnsiMode } from "./enums.ts";
 
 let RELEASE = "";
@@ -12,7 +13,11 @@ if (typeof g.Deno !== "undefined" || typeof g.process !== "undefined") {
     RELEASE = release();
 }
 
-function isTermVariableAnsiCompatible() {
+/**
+ * Determines if the terminal is ANSI compatible by checking the `TERM` environment variable.
+ * @returns `true` if the terminal is ANSI compatible, `false` otherwise.
+ */
+function isTermVariableAnsiCompatible(): boolean {
     const set = [
         "^xterm",
         "^rxvt",
@@ -40,14 +45,14 @@ function isTermVariableAnsiCompatible() {
 
     for (const s of set) {
         if (s[0] === "^") {
-            if (startsWithIgnoreCase(term, s.substring(1))) {
+            if (startsWithFold(term, s.substring(1))) {
                 return true;
             }
 
             continue;
         }
 
-        if (equalsIgnoreCase(term, s)) {
+        if (equalFold(term, s)) {
             return true;
         }
     }
@@ -55,7 +60,11 @@ function isTermVariableAnsiCompatible() {
     return false;
 }
 
-function detectCi() {
+/**
+ * Gets the CI environment variable and determines if the terminal is ANSI compatible.
+ * @returns The ANSI mode if the terminal is ANSI compatible, `null` otherwise.
+ */
+function detectCi(): AnsiMode | null {
     if (env.has("CI")) {
         if (env.has("GITHUB_ACTIONS") || env.has("GITEA_ACTIONS")) {
             return AnsiMode.FourBit;
@@ -79,6 +88,10 @@ function detectCi() {
     return null;
 }
 
+/**
+ * Detects the ANSI mode of the terminal.
+ * @returns The ANSI mode of the terminal.
+ */
 export function detectMode(): AnsiMode {
     const gsterm = env.get("GNOMESTACK_TERM");
     if (gsterm && gsterm.length) {

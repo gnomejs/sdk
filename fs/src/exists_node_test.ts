@@ -3,9 +3,19 @@ import {} from "../../.tasks/node_shim.ts";
 import { assert, assertEquals, assertStringIncludes } from "@std/assert";
 import * as path from "@std/path";
 import { exists, existsSync } from "./exists.ts";
-import { chmod, chmodSync, makeTempDir, makeTempDirSync, remove, removeSync, symlink, symlinkSync, writeFileSync, writeFile  } from "./fs.ts";
+import {
+    chmod,
+    chmodSync,
+    makeTempDir,
+    makeTempDirSync,
+    remove,
+    removeSync,
+    symlink,
+    symlinkSync,
+    writeFile,
+    writeFileSync,
+} from "./fs.ts";
 import { WINDOWS } from "@gnome/runtime-info/os";
-
 
 Deno.test("exists() returns false for a non-existent path", async function () {
     const tempDirPath = await makeTempDir();

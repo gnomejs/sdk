@@ -1,5 +1,5 @@
 import { DefaultEnvPath, EnvBase } from "../base/mod.ts";
-import type { Env } from "../types.d.ts";
+import type { Env } from "../types.ts";
 
 // deno-lint-ignore no-explicit-any
 const g = globalThis as any;

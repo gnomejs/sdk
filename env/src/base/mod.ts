@@ -1,7 +1,7 @@
 import { equalFold } from "@gnome/strings/equal";
 import { expand } from "../expand.ts";
 import type { Env, EnvPath, SubstitutionOptions } from "../types.ts";
-import { PATH_SEP, WINDOWS, BUN, DENO, NODE } from "@gnome/runtime-info";
+import { BUN, DENO, NODE, PATH_SEP, WINDOWS } from "@gnome/runtime-info";
 import { decodeBase64 } from "@std/encoding";
 
 const RT = DENO || BUN || NODE;
