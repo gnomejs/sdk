@@ -23,13 +23,30 @@ Deno.test("process::deno", async () => {
 });
 
 Deno.test("process::node", async () => {
+
     let cmd = new Deno.Command("tsx", {
         args: ["--version"],
     });
 
-    const r = await cmd.output();
-    const code = r.code;
-    if (code !== 0) {
+    let ec = 1;
+
+    try {
+        const r = await cmd.output();
+        ec = r.code;
+    } catch {
+        try {
+            cmd = new Deno.Command("npm", {
+                args: ["install", "-g", "tsx"],
+            });
+
+            const r = await cmd.output();
+            ec = r.code;
+        } catch {
+            ec = 1;
+        }
+    }
+  
+    if (ec !== 0) {
         console.warn("tsx is not installed. Skipping test.");
     } else {
         cmd = new Deno.Command("npm", {
