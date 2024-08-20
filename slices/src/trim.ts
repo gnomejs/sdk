@@ -27,7 +27,7 @@ export function trimEndSpace(value: CharBuffer): Uint32Array {
     return buffer;
 }
 
-export function trimEndChar(value: CharBuffer, suffix: number) : Uint32Array {
+export function trimEndChar(value: CharBuffer, suffix: number): Uint32Array {
     const s = toCharSliceLike(value);
 
     let size = s.length;
@@ -108,7 +108,6 @@ export function trimEnd(value: CharBuffer, suffix?: CharBuffer): Uint32Array {
     return trimEndSlice(value, suffix);
 }
 
-
 export function trimStartSpace(value: CharBuffer): Uint32Array {
     const s = toCharSliceLike(value);
     let size = s.length;
@@ -138,15 +137,13 @@ export function trimStartSpace(value: CharBuffer): Uint32Array {
     return buffer;
 }
 
-export function trimStartChar(value: CharBuffer, prefix: number) : Uint32Array {
+export function trimStartChar(value: CharBuffer, prefix: number): Uint32Array {
     if (!Number.isInteger(prefix) || prefix < 0 || prefix > 0x10FFFF) {
         throw new RangeError("Invalid code point");
     }
 
     const s = toCharSliceLike(value);
     let size = s.length;
-
-
 
     for (let i = 0; i < s.length; i++) {
         if (s.at(i) === prefix) {
@@ -173,10 +170,9 @@ export function trimStartChar(value: CharBuffer, prefix: number) : Uint32Array {
     return buffer;
 }
 
-export function trimStartSlice(value: CharBuffer, prefix: CharBuffer) : Uint32Array {
+export function trimStartSlice(value: CharBuffer, prefix: CharBuffer): Uint32Array {
     const s = toCharSliceLike(value);
     const t = toCharSliceLike(prefix);
-
 
     let size = s.length;
     let j = 0;
@@ -221,15 +217,13 @@ export function trimStart(s: CharBuffer, prefix?: CharBuffer): Uint32Array {
 
     if (prefix.length === 1) {
         const t = toCharSliceLike(prefix);
-        const rune = t.at(0) ?? -1
+        const rune = t.at(0) ?? -1;
 
         trimStartChar(s, rune);
     }
 
     return trimStartSlice(s, prefix);
 }
-
-
 
 export function trimSpace(value: CharBuffer): Uint32Array {
     const s = toCharSliceLike(value);
@@ -320,7 +314,7 @@ export function trimChar(value: CharBuffer, prefix: number): Uint32Array {
     return buffer;
 }
 
-export function trimSlice(value: CharBuffer, chars: CharBuffer) : Uint32Array {
+export function trimSlice(value: CharBuffer, chars: CharBuffer): Uint32Array {
     const s = toCharSliceLike(value);
     const t = toCharSliceLike(chars);
 
@@ -378,7 +372,7 @@ export function trimSlice(value: CharBuffer, chars: CharBuffer) : Uint32Array {
     return buffer;
 }
 
-export function trim(value: CharBuffer, chars?: CharBuffer) : Uint32Array {
+export function trim(value: CharBuffer, chars?: CharBuffer): Uint32Array {
     if (chars === undefined) {
         return trimSpace(value);
     }

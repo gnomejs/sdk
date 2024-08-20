@@ -27,7 +27,7 @@ export interface CapitalizeOptions {
  * @example
  * ```typescript
  * import { capitalize } from '@gnome/slices/capitalize';
- * 
+ *
  * const capitalized = capitalize("hello world");
  * console.log(String.fromCodePoint(...capitalized)); // Output: "Hello world"
  * ```

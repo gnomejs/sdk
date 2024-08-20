@@ -21,5 +21,5 @@
  *
  * [MIT License](./LICENSE.md)
  */
-export * from "./utils.ts";
-export * from "./intptr-runtimes.ts";
+export * from "./marshal.ts";
+export * from "./errors.ts"

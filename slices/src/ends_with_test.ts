@@ -1,5 +1,5 @@
 import { equal } from "@std/assert";
-import { endsWithFold, endsWith } from "./ends_with.ts";
+import { endsWith, endsWithFold } from "./ends_with.ts";
 
 Deno.test("slices::endsWithFold", () => {
     const tests = [

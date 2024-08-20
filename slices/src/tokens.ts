@@ -12,7 +12,7 @@ export class Tokens implements Iterable<Uint32Array> {
         return this.#set[Symbol.iterator]();
     }
 
-    get length() : number {
+    get length(): number {
         return this.#set.length;
     }
 
@@ -21,7 +21,7 @@ export class Tokens implements Iterable<Uint32Array> {
         return this;
     }
 
-    indexOf(word: Uint32Array) : number {
+    indexOf(word: Uint32Array): number {
         for (let i = 0; i < this.#set.length; i++) {
             if (equalFold(word, this.#set[i])) {
                 return i;

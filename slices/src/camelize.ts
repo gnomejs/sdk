@@ -1,7 +1,7 @@
 import { CharArrayBuilder } from "./char_array_builder.ts";
 import { CHAR_HYPHEN_MINUS, CHAR_UNDERSCORE } from "@gnome/chars/constants";
 import { isDigit, isLetter, isSpace, toLower, toUpper } from "@gnome/chars";
-import { toCharSliceLike, type CharBuffer } from "./utils.ts";
+import { type CharBuffer, toCharSliceLike } from "./utils.ts";
 
 /**
  * Options for the `camelize` function.

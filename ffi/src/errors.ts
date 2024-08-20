@@ -1,9 +1,9 @@
-import { SystemError } from "@gnome/errors";
+
 
 /**
  * Represents an error that occurs when a symbol is missing in a library.
  */
-export class MissingSymbolError extends SystemError {
+export class MissingSymbolError extends Error {
     /**
      * Creates a new instance of the MissingSymbolError class.
      * @param symbol The name of the missing symbol.

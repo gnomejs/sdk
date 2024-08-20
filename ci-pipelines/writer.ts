@@ -1,6 +1,6 @@
 import { DefaultAnsiWriter } from "@gnome/ansi/writer";
 import { AnsiLogLevel } from "@gnome/ansi/enums";
-import { cyan, gray, green, yellow, red } from "@gnome/ansi/ansi";
+import { cyan, gray, green, red, yellow } from "@gnome/ansi/ansi";
 import { CI, CI_PROVIDER } from "./ci.ts";
 import { sprintf } from "@std/fmt/printf";
 import { env } from "@gnome/env";

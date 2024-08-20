@@ -2,7 +2,11 @@
     "compilerOptions": {
         "lib": [
             "deno.window",
-            "deno.unstable"
+            "deno.unstable",
+            "bun"
+        ],
+        "types": [
+            "npm:bun-types"
         ],
         "strict": true
     },
@@ -45,7 +49,8 @@
         "@std/fmt": "jsr:@std/fmt@^1.0.0",
         "@std/path": "jsr:@std/path@^0.225.2",
         "@types/bun": "npm:@types/bun@^1.1.6",
-        "@types/node": "npm:@types/node@^20.14.9"
+        "@types/node": "npm:@types/node@^20.14.9",
+        "bun-types": "npm:bun-types@^1.1.24"
     },
 
     "workspace": [
@@ -61,6 +66,7 @@
         "./ffi",
         "./fmt",
         "./fs",
+        "./monads",
         "./optional",
         "./process",
         "./os-constants",

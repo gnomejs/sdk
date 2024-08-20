@@ -1,13 +1,5 @@
 // deno-lint-ignore-file no-explicit-any
-export type TypedArray =
-    | Uint8Array
-    | Uint16Array
-    | Uint32Array
-    | Int8Array
-    | Int16Array
-    | Int32Array
-    | Float32Array
-    | Float64Array;
+import type { TypedArray } from "../base/types.ts";
 
 export enum FFIType {
     char = 0,

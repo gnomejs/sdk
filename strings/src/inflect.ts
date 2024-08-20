@@ -551,7 +551,6 @@ const singularRules: [RegExp, string?][] = [
     [regex.plural.s, ""],
 ];
 
-
 /**
  * A helper method that applies rules based replacement to a String.
  * @param str String to modify and return based on the passed rules.

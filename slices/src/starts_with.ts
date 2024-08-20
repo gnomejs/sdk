@@ -1,7 +1,7 @@
 import { simpleFold } from "@gnome/chars/simple-fold";
 import { type CharBuffer, toCharSliceLike } from "./utils.ts";
 
-export function startsWithFold(value: CharBuffer, prefix: CharBuffer) : boolean {
+export function startsWithFold(value: CharBuffer, prefix: CharBuffer): boolean {
     const s = toCharSliceLike(value);
     const t = toCharSliceLike(prefix);
 
@@ -84,8 +84,7 @@ export function startsWithFold(value: CharBuffer, prefix: CharBuffer) : boolean 
     return true;
 }
 
-export function startsWith(value: CharBuffer, prefix: CharBuffer) : boolean {
-
+export function startsWith(value: CharBuffer, prefix: CharBuffer): boolean {
     const s = toCharSliceLike(value);
     const t = toCharSliceLike(prefix);
 

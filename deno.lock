@@ -139,7 +139,8 @@
       "jsr:@std/fmt@^1.0.0",
       "jsr:@std/path@^0.225.2",
       "npm:@types/bun@^1.1.6",
-      "npm:@types/node@^20.14.9"
+      "npm:@types/node@^20.14.9",
+      "npm:bun-types@^1.1.24"
     ]
   }
 }

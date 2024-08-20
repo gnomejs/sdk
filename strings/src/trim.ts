@@ -1,5 +1,12 @@
-import { trimChar as ogChar, trimSlice as ogSlice, trimEndChar as ogEndChar, trimEndSlice as ogEndSlice, trimStartChar as ogStartChar, trimStartSlice as ogStartSlice } from "@gnome/slices/trim";
-import { toCharSliceLike, type CharBuffer } from "@gnome/slices/utils";
+import {
+    trimChar as ogChar,
+    trimEndChar as ogEndChar,
+    trimEndSlice as ogEndSlice,
+    trimSlice as ogSlice,
+    trimStartChar as ogStartChar,
+    trimStartSlice as ogStartSlice,
+} from "@gnome/slices/trim";
+import { type CharBuffer, toCharSliceLike } from "@gnome/slices/utils";
 
 export function trimEndChar(value: string, suffix: number): string {
     const r = ogEndChar(value, suffix);
@@ -49,8 +56,6 @@ export function trimStart(value: string, prefix?: CharBuffer): string {
 
     return trimStartSlice(value, prefix);
 }
-
-
 
 export function trimChar(value: string, char: number): string {
     const r = ogChar(value, char);

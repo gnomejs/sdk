@@ -84,7 +84,6 @@ export function equalFold(value: CharBuffer, test: CharBuffer): boolean {
     return true;
 }
 
-
 export function equal(value: CharBuffer, test: CharBuffer): boolean {
     const s = toCharSliceLike(value);
     const t = toCharSliceLike(test);

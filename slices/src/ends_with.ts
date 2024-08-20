@@ -1,5 +1,4 @@
-
-import { toCharSliceLike, type CharBuffer} from "./utils.ts";
+import { type CharBuffer, toCharSliceLike } from "./utils.ts";
 import { simpleFold } from "@gnome/chars/simple-fold";
 
 export function endsWithFold(value: CharBuffer, test: CharBuffer): boolean {

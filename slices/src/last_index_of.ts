@@ -1,8 +1,7 @@
 import { simpleFold } from "@gnome/chars/simple-fold";
-import { toCharSliceLike, type CharBuffer} from "./utils.ts";
+import { type CharBuffer, toCharSliceLike } from "./utils.ts";
 
 export function lastIndexOfFold(value: CharBuffer, test: CharBuffer, index = 0): number {
-   
     const s = toCharSliceLike(value);
     const t = toCharSliceLike(test);
 
@@ -66,14 +65,13 @@ export function lastIndexOfFold(value: CharBuffer, test: CharBuffer, index = 0):
                 if (f === t.length) {
                     return i - t.length + 1;
                 }
-                
+
                 continue;
             }
 
             f = 0;
             break;
         }
-        
 
         if (f === t.length) {
             return i - t.length + 1;
@@ -118,7 +116,6 @@ export function lastIndexOf(value: CharBuffer, test: CharBuffer, index = Infinit
             f = 0;
             break;
         }
-        
 
         if (f === t.length) {
             return i - t.length + 1;

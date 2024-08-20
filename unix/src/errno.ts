@@ -33,6 +33,7 @@ export const ENAMETOOLONG = 38;
 export class UnixError extends Error {
     constructor(errno: number, message: string) {
         super(message ?? `Unix error ${errno}`);
+        this.name = "UnixError";
         this.errno = errno;
     }
 

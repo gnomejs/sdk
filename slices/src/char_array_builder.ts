@@ -25,7 +25,7 @@ export class CharArrayBuilder {
     /**
      * Gets the length of the char or string builder.
      */
-    get length() : number {
+    get length(): number {
         return this.#length;
     }
 
@@ -131,7 +131,6 @@ export class CharArrayBuilder {
      * @returns The updated string builder.
      */
     appendLine(value?: CharBuffer): this {
-       
         if (value !== undefined && value.length > 0) {
             this.appendSlice(value);
         }

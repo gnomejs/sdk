@@ -1,26 +1,21 @@
 {
     "name": "@gnome/ffi",
-    "version": "0.0.0-beta-002",
+    "version": "0.0.0",
     "exports": {
-        ".": "./mod.ts",
-        "./intptr": "./intptr-runtimes.ts",
-        "./utils": "./utils.ts",
-        "./errors": "./errors.ts",
-        "./bun": "./bun/mod.ts",
-        "./bun/ffi": "./bun/ffi.d.ts",
-        "./deno": "./deno/mod.ts"
+        ".": "./src/mod.ts",
+        "./marshal": "./src/marshal.ts",
+        "./errors": "./src/errors.ts",
+        "./bun": "./src/bun/mod.ts",
+        "./bun/ffi": "./src/bun/ffi.d.ts"
     },
 
     "publish": {
         "include": [
-            "mod.ts",
-            "utils.ts",
-            "errors.ts",
-            "bun/ffi.d.ts",
-            "bun/mod.ts",
-            "deno/mod.ts",
-            "intptr.ts",
-            "intptr-runtimes.ts",
+            "src/mod.ts",
+            "src/marshal.ts",
+            "src/bun/ffi.d.ts",
+            "src/bun/mod.ts",
+            "src/errors.ts",
             "README.md",
             "LICENSE.md",
             "deno.json"

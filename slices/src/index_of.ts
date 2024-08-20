@@ -123,7 +123,6 @@ export function indexOfFold(value: CharBuffer, test: CharBuffer, index = 0): num
     return -1;
 }
 
-
 export function indexOf(value: CharBuffer, test: CharBuffer, index = 0): number {
     const s = toCharSliceLike(value);
     const t = toCharSliceLike(test);
@@ -154,7 +153,6 @@ export function indexOf(value: CharBuffer, test: CharBuffer, index = 0): number 
 
         f = 0;
     }
-
 
     if (f === t.length) {
         return i - f;

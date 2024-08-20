@@ -1,0 +1,22 @@
+{
+    "name": "@gnome/monads",
+    "version": "0.0.0",
+    "exports": {
+        ".": "./src/mod.ts",
+        "./option": "./src/option.ts",
+        "./result": "./src/result.ts",
+        "./lazy": "./src/lazy.ts"
+    },
+
+    "publish": {
+        "include": [
+            "src/mod.ts",
+            "src/option.ts",
+            "src/result.ts",
+            "src/lazy.ts",
+            "README.md",
+            "LICENSE.md",
+            "deno.json"
+        ]
+    }
+}

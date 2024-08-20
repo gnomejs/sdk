@@ -1,10 +1,10 @@
 import { ArgumentRangeError } from "@gnome/errors/argument-range-error";
 import { isSpace, toLower, toUpper } from "@gnome/chars";
-import { equalFold, equal } from "./equal.ts";
-import { type CharBuffer,type CharSequence, toCharSliceLike, type CharSliceLike } from "./utils.ts";
-import { endsWithFold, endsWith } from "./ends_with.ts";
-import { startsWithFold, startsWith } from "./starts_with.ts";
-import { indexOfFold, indexOf } from "./index_of.ts";
+import { equal, equalFold } from "./equal.ts";
+import { type CharBuffer, type CharSequence, type CharSliceLike, toCharSliceLike } from "./utils.ts";
+import { endsWith, endsWithFold } from "./ends_with.ts";
+import { startsWith, startsWithFold } from "./starts_with.ts";
+import { indexOf, indexOfFold } from "./index_of.ts";
 import { lastIndexOf, lastIndexOfFold } from "./last_index_of.ts";
 
 /** */
@@ -66,15 +66,15 @@ export class ReadOnlyCharSlice {
         return new ReadOnlyCharSlice(buffer);
     }
 
-    includes(value: CharBuffer, index = 0) : boolean {
+    includes(value: CharBuffer, index = 0): boolean {
         return this.indexOf(value, index) !== -1;
     }
 
-    includesFold(value: CharBuffer, index = 0) : boolean {
+    includesFold(value: CharBuffer, index = 0): boolean {
         return this.indexOfFold(value, index) !== -1;
     }
 
-    indexOf(value: CharBuffer | number, index = 0) : number {
+    indexOf(value: CharBuffer | number, index = 0): number {
         if (typeof value === "number") {
             value = new Uint32Array([value]);
         }
@@ -82,7 +82,7 @@ export class ReadOnlyCharSlice {
         return indexOf(this, value, index);
     }
 
-    indexOfFold(value: CharBuffer | number, index = 0) : number {
+    indexOfFold(value: CharBuffer | number, index = 0): number {
         if (typeof value === "number") {
             value = new Uint32Array([value]);
         }
@@ -90,7 +90,7 @@ export class ReadOnlyCharSlice {
         return indexOfFold(this, value, index);
     }
 
-    equals(other: CharBuffer) : boolean {
+    equals(other: CharBuffer): boolean {
         if (this.length !== other.length) {
             return false;
         }
@@ -98,7 +98,7 @@ export class ReadOnlyCharSlice {
         return equal(this, other);
     }
 
-    equalsFold(other: CharBuffer) : boolean {
+    equalsFold(other: CharBuffer): boolean {
         if (this.length !== other.length) {
             return false;
         }
@@ -342,7 +342,7 @@ export class ReadOnlyCharSlice {
         return this.trimSlice(t);
     }
 
-    toString() : string {
+    toString(): string {
         return String.fromCodePoint(...this.#buffer.slice(this.#start, this.#end));
     }
 }
@@ -443,35 +443,35 @@ export class CharSlice implements CharSequence {
         return -1;
     }
 
-    includes(value: CharBuffer, index = 0) : boolean {
+    includes(value: CharBuffer, index = 0): boolean {
         return this.indexOf(value, index) !== -1;
     }
 
-    includesFold(value: CharBuffer, index = 0) : boolean {
+    includesFold(value: CharBuffer, index = 0): boolean {
         return this.indexOfFold(value, index) !== -1;
     }
 
-    indexOf(value: CharBuffer, index = 0) : number {
-         return indexOf(this, value, index);
+    indexOf(value: CharBuffer, index = 0): number {
+        return indexOf(this, value, index);
     }
 
-    indexOfFold(value: CharBuffer, index = 0) : number {
+    indexOfFold(value: CharBuffer, index = 0): number {
         return indexOfFold(this, value, index);
     }
 
-    lastIndexOf(value: CharBuffer, index = 0) : number {
-         return lastIndexOf(this, value, index);
+    lastIndexOf(value: CharBuffer, index = 0): number {
+        return lastIndexOf(this, value, index);
     }
 
-    lastIndexOfFold(value: CharBuffer, index = 0) : number {
+    lastIndexOfFold(value: CharBuffer, index = 0): number {
         return lastIndexOfFold(this, value, index);
     }
 
-    equals(other: CharBuffer) : boolean {
+    equals(other: CharBuffer): boolean {
         return equal(this, other);
     }
 
-    equalsFold(other: CharBuffer) : boolean {
+    equalsFold(other: CharBuffer): boolean {
         return equalFold(this, other);
     }
 
@@ -736,7 +736,7 @@ export class CharSlice implements CharSequence {
         return this.trimSlice(t);
     }
 
-    toString() : string {
+    toString(): string {
         return String.fromCodePoint(...this.#buffer.slice(this.#start, this.#end));
     }
 }

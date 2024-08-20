@@ -3,12 +3,12 @@ import { isLetter, isLetterOrDigit, isLower, isSpace, isUpper, toLower, toUpper 
 import { CharArrayBuilder } from "./char_array_builder.ts";
 import { equalFold } from "./equal.ts";
 import { Tokens } from "./tokens.ts";
-import { toCharSliceLike, type CharSliceLike } from "./utils.ts";
+import { type CharSliceLike, toCharSliceLike } from "./utils.ts";
 
 /**
  * @description This is a list of words that should not be capitalized for title case.
  */
-export const NoCapitalizeWords : Tokens = new Tokens();
+export const NoCapitalizeWords: Tokens = new Tokens();
 [
     "and",
     "or",

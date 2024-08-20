@@ -1,7 +1,6 @@
 import { equal as og, equalFold as ogFold } from "@gnome/slices/equal";
 import type { CharBuffer } from "@gnome/slices/utils";
 
-
 export function equal(value: string, other: CharBuffer): boolean {
     return og(value, other);
 }

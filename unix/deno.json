@@ -1,22 +1,23 @@
 {
     "name": "@gnome/unix",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "exports": {
-        ".": "./mod.ts",
-        "./errno": "./errno.ts",
-        "./types": "./types.ts",
-        "./bun": "./bun.ts",
-        "./deno": "./deno.ts"
+        ".": "./src/mod.ts",
+        "./errno": "./src/errno.ts",
+        "./libc": "./src/libc/mod.ts",
+        "./libc/bun": "./src/libc/bun.ts",
+        "./libc/deno": "./src/libc/deno.ts",
+        "./libc/structs": "./src/libc/structs.ts"
     },
 
     "publish": {
         "include": [
-            "_utils.ts",
-            "bun.ts",
-            "deno.ts",
-            "errno.ts",
-            "mod.ts",
-            "types.ts",
+            "src/mod.ts",
+            "src/errno.ts",
+            "src/libc/mod.ts",
+            "src/libc/bun.ts",
+            "src/libc/deno.ts",
+            "src/libc/structs.ts",
             "README.md",
             "LICENSE.md",
             "deno.json"

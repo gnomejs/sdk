@@ -28,30 +28,33 @@ The following libc methods are implemented:
 - getgroups
 - getgrgid_r
 
-Each function that maps to a libc FFI call will open and close the library.
-If you want to open the library, make multiple calls and then close it,
-then use the `openLibc` function.
+Each function is implemented as a normal function that throws exceptions
+or as a result function that returns a tupple of the result or error.
 
 ## Basic Usage
 
 ```typescript
-import { openLibc, getUserName, getUserId, getHostName } from "@gnome/unix";
+import { 
+    usernameResult,
+    passwdEntry,
+    uidResult,
+    hostnameResult,
+    hostname 
+} 
+from "@gnome/unix";
 
 // expect will return a value or throw with the provided message.
-const uid = getUserId().expect("Failed to get user id");
-const username = getUserName(uid).expect("Failed to get username");
+const uid = uidResult().expect("Failed to get user id");
+const username = usernameResult(uid).expect("Failed to get username");
 console.log(username);
 
-let hn = "";
-cosnt r0 = getHostName();
+// using the result function.
+cosnt r0 = hostnameResult();
 r0.inspect(o => console.log(o));
 
-using lib = openLibc();
-lib.getProcessId().inspect(o => console.log(o));
-
-// gets the user's  entries from the /etc/passwd file.
-lib.getPasswordEntry(uid).inspect(o => console.log(o));
-
+// without the result function.
+console.log(hostname());
+console.log(passwdEntry(uid)); // shows the passwd data the user from /etc/passwd
 ```
 
 [MIT License](./LICENSE.md)

@@ -1,16 +1,13 @@
-
-
-
 export interface CharSliceLike {
     at(index: number): number | undefined;
     length: number;
 }
 
-export interface CharSequence extends CharSliceLike{
+export interface CharSequence extends CharSliceLike {
     slice(start: number, end?: number): CharSequence;
 }
 
-export type CharBuffer = string | Uint32Array | Uint16Array | Uint8Array | CharSequence
+export type CharBuffer = string | Uint32Array | Uint16Array | Uint8Array | CharSequence;
 
 export function toCharArray(s: string): Uint32Array {
     const set = new Uint32Array(s.length);
@@ -50,7 +47,6 @@ export function toString(buffer: CharBuffer): string {
 
 export function toCharSliceLike(s: CharBuffer): CharSliceLike {
     if (typeof s === "string") {
-
         return {
             at(i: number): number | undefined {
                 return s.codePointAt(i);
@@ -66,7 +62,7 @@ export function toCharSliceLike(s: CharBuffer): CharSliceLike {
     if (s instanceof Uint16Array) {
         return new Uint32Array(s.buffer);
     }
-    
+
     if (s instanceof Uint8Array) {
         return new Uint32Array(s.buffer);
     }
