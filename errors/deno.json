@@ -1,6 +1,6 @@
 {
     "name": "@gnome/errors",
-    "version": "0.2.0",
+    "version": "0.3.0",
     "exports": {
         ".": "./src/mod.ts",
         "./abstractsion": "./src/abstractions.ts",
@@ -12,7 +12,6 @@
         "./argument-empty-error": "./src/argument_empty_error.ts",
         "./assertion-error": "./src/assertion_error.ts",
         "./collect": "./src/collect.ts",
-        "./errorf": "./src/errorf.ts",
         "./error-info": "./src/error_info.ts",
         "./format-error": "./src/format_error.ts",
         "./invalid-cast-error": "./src/invalid_cast_error.ts",

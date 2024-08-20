@@ -1,24 +1,31 @@
 {
     "name": "@gnome/ansi",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "exports": {
-        ".": "./mod.ts",
-        "./ansi": "./ansi.ts",
-        "./detector": "./detector.ts",
-        "./enums": "./enums.ts",
-        "./settings": "./settings.ts",
-        "./writer": "./writer.ts"
+        ".": "./src/mod.ts",
+        "./ansi": "./src/ansi.ts",
+        "./detector": "./src/detector.ts",
+        "./enums": "./src/enums.ts",
+        "./settings": "./src/settings.ts",
+        "./writer": "./src/writer.ts",
+        "./ci/provider": "./src/ci/provider.ts",
+        "./ci/writer": "./src/ci/writer.ts",
+        "./ci/mod": "./src/ci/mod.ts"
     },
 
     "publish": {
         "include": [
-            "mod.ts",
-            "_lazy.ts",
-            "ansi.ts",
-            "detector.ts",
-            "enums.ts",
-            "settings.ts",
-            "writer.ts",
+            "src/mod.ts",
+            "src/_lazy.ts",
+            "src/ansi.ts",
+            "src/detector.ts",
+            "src/enums.ts",
+            "src/settings.ts",
+            "src/writer.ts",
+            "src/ci/provider.ts",
+            "src/ci/writer.ts",
+            "src/ci/mod.ts",
+            "src/ci/README.md",
             "README.md",
             "LICENSE.md",
             "deno.json"

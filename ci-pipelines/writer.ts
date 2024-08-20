@@ -1,9 +1,8 @@
-import { type AnsiWriter, DefaultAnsiWriter } from "@gnome/ansi/writer";
+import { DefaultAnsiWriter } from "@gnome/ansi/writer";
 import { AnsiLogLevel } from "@gnome/ansi/enums";
-import { cyan, gray, green, yellow } from "@gnome/ansi/ansi";
+import { cyan, gray, green, red, yellow } from "@gnome/ansi/ansi";
 import { CI, CI_PROVIDER } from "./ci.ts";
 import { sprintf } from "@std/fmt/printf";
-import { red } from "jsr:@gnome/ansi@^0.0.0/ansi";
 import { env } from "@gnome/env";
 import { writeTextFileSync } from "@gnome/fs";
 import { stringify } from "@std/dotenv";
@@ -79,7 +78,7 @@ export function setSecret(name: string, value: string): void {
 }
 
 export class PipelineWriter extends DefaultAnsiWriter {
-    override command(message: string, args: unknown[]): AnsiWriter {
+    override command(message: string, args: string[]): this {
         switch (CI_PROVIDER) {
             case "azdo":
                 this.writeLine(`##vso[task.command]${message} ${args.join(" ")}`);
@@ -96,7 +95,7 @@ export class PipelineWriter extends DefaultAnsiWriter {
         }
     }
 
-    prependPath(path: string): AnsiWriter {
+    prependPath(path: string): this {
         env.path.prepend(path);
 
         switch (CI_PROVIDER) {
@@ -125,7 +124,7 @@ export class PipelineWriter extends DefaultAnsiWriter {
         }
     }
 
-    override progress(name: string, value: number): AnsiWriter {
+    override progress(name: string, value: number): this {
         switch (CI_PROVIDER) {
             case "azdo":
                 this.writeLine(`##vso[task.setprogress value=${value};]${name}`);
@@ -141,7 +140,7 @@ export class PipelineWriter extends DefaultAnsiWriter {
         }
     }
 
-    setOutput(name: string, value: string, secret = false): AnsiWriter {
+    setOutput(name: string, value: string, secret = false): this {
         if (secret) {
             defaultSecretMasker.add(value);
         }
@@ -185,7 +184,7 @@ export class PipelineWriter extends DefaultAnsiWriter {
         }
     }
 
-    override exportVariable(name: string, value: string, secret = false): AnsiWriter {
+    override exportVariable(name: string, value: string, secret = false): this {
         env.set(name, value);
 
         if (secret) {
@@ -240,7 +239,7 @@ export class PipelineWriter extends DefaultAnsiWriter {
         }
     }
 
-    override startGroup(name: string): AnsiWriter {
+    override startGroup(name: string): this {
         super.exportVariable;
         switch (CI_PROVIDER) {
             case "azdo":
@@ -254,7 +253,7 @@ export class PipelineWriter extends DefaultAnsiWriter {
         }
     }
 
-    override endGroup(): AnsiWriter {
+    override endGroup(): this {
         switch (CI_PROVIDER) {
             case "azdo":
                 this.writeLine("##[endgroup]");
@@ -267,9 +266,9 @@ export class PipelineWriter extends DefaultAnsiWriter {
         }
     }
 
-    override debug(e: Error, message?: string | undefined, ...args: unknown[]): AnsiWriter;
-    override debug(message: string, ...args: unknown[]): AnsiWriter;
-    override debug(): AnsiWriter {
+    override debug(e: Error, message?: string | undefined, ...args: unknown[]): this;
+    override debug(message: string, ...args: unknown[]): this;
+    override debug(): this {
         if (this.level < AnsiLogLevel.Debug) {
             return this;
         }
@@ -307,9 +306,9 @@ export class PipelineWriter extends DefaultAnsiWriter {
         }
     }
 
-    error(e: Error, message?: string | undefined, ...args: unknown[]): AnsiWriter;
-    error(message: string, ...args: unknown[]): AnsiWriter;
-    error(): AnsiWriter {
+    error(e: Error, message?: string | undefined, ...args: unknown[]): this;
+    error(message: string, ...args: unknown[]): this;
+    error(): this {
         if (this.level < AnsiLogLevel.Error) {
             return this;
         }
@@ -353,9 +352,9 @@ export class PipelineWriter extends DefaultAnsiWriter {
         }
     }
 
-    override warn(e: Error, message?: string | undefined, ...args: unknown[]): AnsiWriter;
-    override warn(message: string, ...args: unknown[]): AnsiWriter;
-    override warn(): AnsiWriter {
+    override warn(e: Error, message?: string | undefined, ...args: unknown[]): this;
+    override warn(message: string, ...args: unknown[]): this;
+    override warn(): this {
         if (this.level < AnsiLogLevel.Warning) {
             return this;
         }

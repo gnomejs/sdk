@@ -1,0 +1,8 @@
+{
+    "name": "@gnome/fmt",
+    "version": "0.0.0",
+    "exports": {
+        ".": "./src/mod.ts",
+        "./printf": "./src/printf.ts"
+    }
+}

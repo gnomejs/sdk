@@ -47,7 +47,6 @@ export * from "./argument_range_error.ts";
 export * from "./assertion_error.ts";
 export * from "./collect.ts";
 export * from "./error_info.ts";
-export * from "./errorf.ts";
 export * from "./format_error.ts";
 export * from "./invalid_cast_error.ts";
 export * from "./invalid_operation_error.ts";
