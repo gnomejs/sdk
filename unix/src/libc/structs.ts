@@ -1,4 +1,3 @@
-
 export interface PwEnt {
     name: string;
     uid: number;

@@ -2,8 +2,7 @@
     "compilerOptions": {
         "lib": [
             "deno.window",
-            "deno.unstable",
-            "bun"
+            "deno.unstable"
         ],
         "types": [
             "npm:bun-types"

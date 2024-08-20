@@ -78,7 +78,7 @@ export function setSecret(name: string, value: string): void {
 }
 
 export class PipelineWriter extends DefaultAnsiWriter {
-    override command(message: string, ...args: string[]): this {
+    override command(message: string, args: string[]): this {
         switch (CI_PROVIDER) {
             case "azdo":
                 this.writeLine(`##vso[task.command]${message} ${args.join(" ")}`);

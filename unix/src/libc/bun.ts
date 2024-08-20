@@ -1,10 +1,10 @@
-import { DARWIN,  WINDOWS } from "@gnome/runtime-info/os";
-import { ptr, dlopen, CString, read, type Pointer } from "@gnome/ffi/bun";
-import { MissingSymbolError, fromCString } from "@gnome/ffi";
+import { DARWIN, WINDOWS } from "@gnome/runtime-info/os";
+import { CString, dlopen, type Pointer, ptr, read } from "@gnome/ffi/bun";
+import { fromCString, MissingSymbolError } from "@gnome/ffi";
 import { NotSupportedError } from "@gnome/errors/not-supported-error";
 import { ENAMETOOLONG, ERANGE, UnixError } from "../errno.ts";
-import { type Result, ok, err } from "@gnome/monads/result"
-import type { PwEnt, GrEnt } from "./structs.ts";
+import { err, ok, type Result } from "@gnome/monads/result";
+import type { GrEnt, PwEnt } from "./structs.ts";
 
 const libc = dlopen(DARWIN ? "libSystem.dylib" : "libc.so.6", {
     getpwuid_r: {

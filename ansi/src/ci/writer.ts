@@ -84,7 +84,7 @@ export class PipelineWriter extends DefaultAnsiWriter {
      * @param args The arguments passed to the command.
      * @returns The writer instance.
      */
-    override command(command: string, ...args: string[]): this {
+    override command(command: string, args: string[]): this {
         switch (CI_PROVIDER) {
             case "azdo":
                 this.writeLine(`##vso[task.command]${command} ${args.join(" ")}`);

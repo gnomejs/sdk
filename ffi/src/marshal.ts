@@ -1,8 +1,7 @@
 import type { TypedArray } from "./base/types.ts";
 
 export abstract class FFIStruct {
-    
-    abstract get buffer(): Uint8Array | null
+    abstract get buffer(): Uint8Array | null;
 }
 
 export class WideString extends FFIStruct {
@@ -22,7 +21,7 @@ export class WideString extends FFIStruct {
             this.#buffer = new Uint8Array(
                 new Uint16Array(new TextEncoder().encode(buffer + "\0")).buffer,
             );
-            return
+            return;
         }
 
         if (buffer instanceof Uint8Array) {
@@ -48,7 +47,7 @@ export class WideString extends FFIStruct {
             for (let i = 0; i < view.byteLength; i += 2) {
                 codes.push(view.getUint16(i, true));
             }
-        
+
             this.#string = new TextDecoder("utf-16le").decode(new Uint16Array(codes));
         }
     }
@@ -67,7 +66,7 @@ export class CString extends FFIStruct {
     #string: string | null;
 
     constructor(buffer: Uint8Array | Uint32Array | string | null | undefined) {
-        super()
+        super();
         if (buffer === null || buffer === undefined) {
             this.#buffer = null;
             this.#string = null;
@@ -79,9 +78,9 @@ export class CString extends FFIStruct {
                 new TextEncoder().encode(buffer + "\0"),
             );
             this.#string = buffer;
-            return 
-        } 
-        
+            return;
+        }
+
         if (buffer instanceof Uint8Array) {
             this.#buffer = buffer;
         } else if (buffer instanceof Uint32Array) {
@@ -157,14 +156,14 @@ export function fromWideString(value?: string | null | Uint8Array | Uint16Array 
 }
 
 // deno-lint-ignore no-unused-vars
-let ptr = function(value: TypedArray | DataView | ArrayBuffer | FFIStruct) : Ptr {
+let ptr = function (value: TypedArray | DataView | ArrayBuffer | FFIStruct): Ptr {
     throw new Error("Not implemented");
-}
+};
 
 // deno-lint-ignore no-explicit-any
 const g = globalThis as any;
 if (g.Deno) {
-    ptr = function(value: TypedArray | DataView | ArrayBuffer | FFIStruct) : Ptr {
+    ptr = function (value: TypedArray | DataView | ArrayBuffer | FFIStruct): Ptr {
         if (value instanceof FFIStruct) {
             const buffer = value.buffer;
             if (buffer === null) {
@@ -177,10 +176,10 @@ if (g.Deno) {
             const intptr = Deno.UnsafePointer.of(value);
             return new Ptr(intptr);
         }
-    }
+    };
 } else if (g.Bun) {
     const ffi = await import("./bun/mod.ts");
-    ptr = function(value: TypedArray | DataView | ArrayBuffer | FFIStruct) : Ptr {
+    ptr = function (value: TypedArray | DataView | ArrayBuffer | FFIStruct): Ptr {
         if (value instanceof FFIStruct) {
             const buffer = value.buffer;
             if (buffer === null) {
@@ -191,9 +190,7 @@ if (g.Deno) {
         } else {
             return new Ptr(ffi.ptr(value));
         }
-    }
-} 
-
-export {
-    ptr
+    };
 }
+
+export { ptr };

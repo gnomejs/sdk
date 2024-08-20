@@ -1,5 +1,3 @@
-
-
 enum State {
     Some,
     None,

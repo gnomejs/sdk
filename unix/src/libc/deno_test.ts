@@ -1,5 +1,15 @@
 import { assert as ok } from "@std/assert";
-import { euidResult,  gidResult, groupEntryResult, groupnameResult, groupsResult, hostnameResult, passwdEntryResult, uidResult, usernameResult } from "./deno.ts"
+import {
+    euidResult,
+    gidResult,
+    groupEntryResult,
+    groupnameResult,
+    groupsResult,
+    hostnameResult,
+    passwdEntryResult,
+    uidResult,
+    usernameResult,
+} from "./deno.ts";
 
 const WINDOWS = Deno.build.os === "windows";
 

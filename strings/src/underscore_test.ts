@@ -13,5 +13,5 @@ Deno.test("strings::underscore", () => {
     equal("hello_world", underscore("hello   world"));
     equal("hello_world", underscore("hello----world"));
     equal("hello_world", underscore("   helloWorld"));
-    equal("HELLO_WORLD", underscore("hello world", true));
+    equal("HELLO_WORLD", underscore("hello world", { screaming: true }));
 });

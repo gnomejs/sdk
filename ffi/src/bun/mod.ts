@@ -18,7 +18,7 @@ if (typeof g.Bun === "undefined") {
 
 // @ts-types="bun-types"
 const bunFFISpecifier = "bun:ffi";
-const ffi = await import(bunFFISpecifier) as typeof bunFFI
+const ffi = await import(bunFFISpecifier) as typeof bunFFI;
 
 export const dlopen = ffi.dlopen;
 export const FFIType = ffi.FFIType;

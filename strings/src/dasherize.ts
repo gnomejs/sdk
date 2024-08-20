@@ -1,6 +1,6 @@
-import { dasherize as og } from "@gnome/slices/dasherize";
+import { dasherize as og, type DasherizeOptions } from "@gnome/slices/dasherize";
 
-export function dasherize(s: string): string {
-    const r = og(s);
+export function dasherize(value: string, options?: DasherizeOptions): string {
+    const r = og(value, options);
     return String.fromCodePoint(...r);
 }

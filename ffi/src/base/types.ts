@@ -1,6 +1,4 @@
-
-
-export type TypedArray = 
+export type TypedArray =
     | Uint8Array
     | Uint16Array
     | Uint32Array
@@ -9,7 +7,6 @@ export type TypedArray =
     | Int32Array
     | Float32Array
     | Float64Array;
-
 
 export interface Ptr {
     readonly isNull: boolean;
@@ -43,57 +40,55 @@ export enum FFITypes {
     buffer = 99,
 }
 
-export interface FFIArgs  {
-    [FFITypes.i8] : number;
-    [FFITypes.u8] : number;
-    [FFITypes.i16] : number;
-    [FFITypes.u16] : number;
-    [FFITypes.i32] : number;
-    [FFITypes.u32] : number;
-    [FFITypes.i64] : bigint;
-    [FFITypes.u64] : bigint;
-    [FFITypes.f64] : number;
-    [FFITypes.f32] : number;
-    [FFITypes.bool] : boolean;
-    [FFITypes.ptr] : Ptr | null;
-    [FFITypes.function] : Ptr | null;
-    [FFITypes.buffer] : TypedArray | null;
+export interface FFIArgs {
+    [FFITypes.i8]: number;
+    [FFITypes.u8]: number;
+    [FFITypes.i16]: number;
+    [FFITypes.u16]: number;
+    [FFITypes.i32]: number;
+    [FFITypes.u32]: number;
+    [FFITypes.i64]: bigint;
+    [FFITypes.u64]: bigint;
+    [FFITypes.f64]: number;
+    [FFITypes.f32]: number;
+    [FFITypes.bool]: boolean;
+    [FFITypes.ptr]: Ptr | null;
+    [FFITypes.function]: Ptr | null;
+    [FFITypes.buffer]: TypedArray | null;
 }
 
 export interface FFIStrings {
-    ['i8'] : FFITypes.i8;
-    ['u8'] : FFITypes.u8;
-    ['i16'] : FFITypes.i16;
-    ['u16'] : FFITypes.u16;
-    ['i32'] : FFITypes.i32;
-    ['u32'] : FFITypes.u32;
-    ['i64'] : FFITypes.i64;
-    ['u64'] : FFITypes.u64;
-    ['f64'] : FFITypes.f64;
-    ['f32'] : FFITypes.f32;
-    ['bool'] : FFITypes.bool;
-    ['ptr'] : FFITypes.ptr;
-    ['function'] : FFITypes.function;
-    ['buffer'] : FFITypes.buffer;
+    ["i8"]: FFITypes.i8;
+    ["u8"]: FFITypes.u8;
+    ["i16"]: FFITypes.i16;
+    ["u16"]: FFITypes.u16;
+    ["i32"]: FFITypes.i32;
+    ["u32"]: FFITypes.u32;
+    ["i64"]: FFITypes.i64;
+    ["u64"]: FFITypes.u64;
+    ["f64"]: FFITypes.f64;
+    ["f32"]: FFITypes.f32;
+    ["bool"]: FFITypes.bool;
+    ["ptr"]: FFITypes.ptr;
+    ["function"]: FFITypes.function;
+    ["buffer"]: FFITypes.buffer;
 }
 
 export interface FFIReturn {
-    [FFITypes.i8] : number;
-    [FFITypes.u8] : number;
-    [FFITypes.i16] : number;
-    [FFITypes.u16] : number;
-    [FFITypes.i32] : number;
-    [FFITypes.u32] : number;
-    [FFITypes.i64] : bigint;
-    [FFITypes.u64] : bigint;
-    [FFITypes.f64] : number;
-    [FFITypes.f32] : number;
-    [FFITypes.bool] : boolean;
-    [FFITypes.ptr] : Ptr | null;
-    [FFITypes.function] : Ptr | null;
-    [FFITypes.buffer] : Ptr | null;
+    [FFITypes.i8]: number;
+    [FFITypes.u8]: number;
+    [FFITypes.i16]: number;
+    [FFITypes.u16]: number;
+    [FFITypes.i32]: number;
+    [FFITypes.u32]: number;
+    [FFITypes.i64]: bigint;
+    [FFITypes.u64]: bigint;
+    [FFITypes.f64]: number;
+    [FFITypes.f32]: number;
+    [FFITypes.bool]: boolean;
+    [FFITypes.ptr]: Ptr | null;
+    [FFITypes.function]: Ptr | null;
+    [FFITypes.buffer]: Ptr | null;
 }
 
 export type FFIKey = FFIArgs | keyof FFIStrings;
-
-

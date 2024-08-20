@@ -3,7 +3,7 @@ import { CHAR_HYPHEN_MINUS, CHAR_UNDERSCORE } from "@gnome/chars/constants";
 import { isDigit, isLetter, isLower, isSpace, isUpper, toLower, toUpper } from "@gnome/chars";
 import { type CharBuffer, toCharSliceLike } from "./utils.ts";
 
-interface DasherizeOptions {
+export interface DasherizeOptions {
     screaming?: boolean;
     preserveCase?: boolean;
 }

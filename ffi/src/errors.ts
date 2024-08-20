@@ -1,5 +1,3 @@
-
-
 /**
  * Represents an error that occurs when a symbol is missing in a library.
  */

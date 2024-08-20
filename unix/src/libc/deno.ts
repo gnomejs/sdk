@@ -1,9 +1,9 @@
-import { DARWIN,  WINDOWS } from "@gnome/runtime-info/os";
-import { MissingSymbolError, fromCString } from "@gnome/ffi";
+import { DARWIN, WINDOWS } from "@gnome/runtime-info/os";
+import { fromCString, MissingSymbolError } from "@gnome/ffi";
 import { NotSupportedError } from "@gnome/errors/not-supported-error";
 import { ENAMETOOLONG, ERANGE, UnixError } from "../errno.ts";
-import { type Result, ok, err } from "@gnome/monads/result"
-import type { PwEnt, GrEnt } from "./structs.ts";
+import { err, ok, type Result } from "@gnome/monads/result";
+import type { GrEnt, PwEnt } from "./structs.ts";
 
 const libc = Deno.dlopen(DARWIN ? "libSystem.dylib" : "libc.so.6", {
     getpwuid_r: {
@@ -61,7 +61,7 @@ const libc = Deno.dlopen(DARWIN ? "libSystem.dylib" : "libc.so.6", {
         result: "i32",
         optional: true,
     },
-})
+});
 
 /**
  * Get the hostname of the system.
@@ -650,9 +650,7 @@ export function passwdEntry(uid: number): PwEnt {
             const gid = v.getInt32(20);
             const gecosId = v.getBigInt64(24);
             const gecosPtr = Deno.UnsafePointer.create(gecosId);
-            const gecos = gecosPtr === null
-                ? ""
-                : Deno.UnsafePointerView.getCString(gecosPtr as Deno.PointerObject);
+            const gecos = gecosPtr === null ? "" : Deno.UnsafePointerView.getCString(gecosPtr as Deno.PointerObject);
             const dirId = v.getBigInt64(32);
             const dirPtr = Deno.UnsafePointer.create(dirId);
             const dir = Deno.UnsafePointerView.getCString(dirPtr as Deno.PointerObject);
@@ -726,9 +724,7 @@ export function passwdEntryResult(uid: number): Result<PwEnt> {
             const gid = v.getInt32(20);
             const gecosId = v.getBigInt64(24);
             const gecosPtr = Deno.UnsafePointer.create(gecosId);
-            const gecos = gecosPtr === null
-                ? ""
-                : Deno.UnsafePointerView.getCString(gecosPtr as Deno.PointerObject);
+            const gecos = gecosPtr === null ? "" : Deno.UnsafePointerView.getCString(gecosPtr as Deno.PointerObject);
             const dirId = v.getBigInt64(32);
             const dirPtr = Deno.UnsafePointer.create(dirId);
             const dir = Deno.UnsafePointerView.getCString(dirPtr as Deno.PointerObject);

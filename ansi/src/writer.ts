@@ -147,7 +147,7 @@ export interface AnsiWriter {
      * @param args The arguments passed to the command.
      * @returns The writer.
      */
-    command(command: string, ...args: string[]): this;
+    command(command: string, args: string[]): this;
 
     /**
      * Writes a debug message to the output.
@@ -335,7 +335,7 @@ export class DefaultAnsiWriter implements AnsiWriter {
      * @param args The arguments passed to the command.
      * @returns The writer.
      */
-    command(message: string, ...args: string[]): this {
+    command(message: string, args: string[]): this {
         if (this.#level < AnsiLogLevel.Warning) {
             return this;
         }

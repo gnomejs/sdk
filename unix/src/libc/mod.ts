@@ -1,107 +1,105 @@
-import type { PwEnt, GrEnt } from "./structs.ts";
-import {type Result, err } from "@gnome/monads"
+import type { GrEnt, PwEnt } from "./structs.ts";
+import { err, type Result } from "@gnome/monads";
 import { NotSupportedError } from "@gnome/errors/not-supported-error";
 
 // deno-lint-ignore no-explicit-any
 const g = globalThis as any;
 
 // deno-lint-ignore no-unused-vars
-let passwdEntry = function(uid: number) : PwEnt {
+let passwdEntry = function (uid: number): PwEnt {
     throw new NotSupportedError("FFI for runtime not supported");
-}
+};
 
 // deno-lint-ignore no-unused-vars
-let passwdEntryResult = function(uid: number) : Result<PwEnt> {
+let passwdEntryResult = function (uid: number): Result<PwEnt> {
     return err(new NotSupportedError("FFI for runtime not supported"));
-}
+};
 
 // deno-lint-ignore no-unused-vars
-let groupEntry = function(gid: number) : GrEnt {
+let groupEntry = function (gid: number): GrEnt {
     throw new NotSupportedError("FFI for runtime not supported");
-}
+};
 
 // deno-lint-ignore no-unused-vars
-let groupEntryResult = function(gid: number) : Result<GrEnt> {
+let groupEntryResult = function (gid: number): Result<GrEnt> {
     return err(new NotSupportedError("FFI for runtime not supported"));
-}
+};
 
 // deno-lint-ignore no-unused-vars
-let username = function(uid: number) : string {
+let username = function (uid: number): string {
     throw new NotSupportedError("FFI for runtime not supported");
-}
+};
 
 // deno-lint-ignore no-unused-vars
-let usernameResult = function(uid: number) : Result<string> {
+let usernameResult = function (uid: number): Result<string> {
     return err(new NotSupportedError("FFI for runtime not supported"));
-}
+};
 
 // deno-lint-ignore no-unused-vars
-let groupname = function(gid: number) : string {
+let groupname = function (gid: number): string {
     throw new NotSupportedError("FFI for runtime not supported");
-}
+};
 
 // deno-lint-ignore no-unused-vars
-let groupnameResult = function(gid: number) : Result<string> {
+let groupnameResult = function (gid: number): Result<string> {
     return err(new NotSupportedError("FFI for runtime not supported"));
-}
+};
 
-
-let ppid = function() : number {
+let ppid = function (): number {
     throw new NotSupportedError("FFI for runtime not supported");
-}
+};
 
-let ppidResult = function() : Result<number> {
+let ppidResult = function (): Result<number> {
     return err(new NotSupportedError("FFI for runtime not supported"));
-}
+};
 
-let pid = function() : number {
+let pid = function (): number {
     throw new NotSupportedError("FFI for runtime not supported");
-}
+};
 
-let pidResult = function() : Result<number> {
+let pidResult = function (): Result<number> {
     return err(new NotSupportedError("FFI for runtime not supported"));
-}
+};
 
-let groups = function() : Uint32Array {
+let groups = function (): Uint32Array {
     throw new NotSupportedError("FFI for runtime not supported");
-}
+};
 
-let groupsResult = function() : Result<Uint32Array> {
+let groupsResult = function (): Result<Uint32Array> {
     return err(new NotSupportedError("FFI for runtime not supported"));
-}
+};
 
-let egid = function() : number {
+let egid = function (): number {
     throw new NotSupportedError("FFI for runtime not supported");
-}
+};
 
-let egidResult = function() : Result<number> {
+let egidResult = function (): Result<number> {
     return err(new NotSupportedError("FFI for runtime not supported"));
-}
+};
 
-let euid = function() : number {
+let euid = function (): number {
     throw new NotSupportedError("FFI for runtime not supported");
-}
+};
 
-let euidResult = function() : Result<number> {
+let euidResult = function (): Result<number> {
     return err(new NotSupportedError("FFI for runtime not supported"));
-}
+};
 
-let gid = function() : number {
+let gid = function (): number {
     throw new NotSupportedError("FFI for runtime not supported");
-}
+};
 
-let gidResult = function() : Result<number> {
+let gidResult = function (): Result<number> {
     return err(new NotSupportedError("FFI for runtime not supported"));
-}
+};
 
-let uid = function() : number {
+let uid = function (): number {
     throw new NotSupportedError("FFI for runtime not supported");
-}
+};
 
-let uidResult = function() : Result<number> {
+let uidResult = function (): Result<number> {
     return err(new NotSupportedError("FFI for runtime not supported"));
-}
-
+};
 
 if (g.Deno) {
     const deno = await import("./deno.ts");
@@ -154,26 +152,26 @@ if (g.Deno) {
 }
 
 export {
-    passwdEntry,
-    passwdEntryResult,
-    groupEntry,
-    groupEntryResult,
-    username,
-    usernameResult,
-    groupname,
-    groupnameResult,
-    ppid,
-    ppidResult,
-    pid,
-    pidResult,
-    groups,
-    groupsResult,
     egid,
     egidResult,
     euid,
     euidResult,
+    gid,
+    gidResult,
+    groupEntry,
+    groupEntryResult,
+    groupname,
+    groupnameResult,
+    groups,
+    groupsResult,
+    passwdEntry,
+    passwdEntryResult,
+    pid,
+    pidResult,
+    ppid,
+    ppidResult,
     uid,
     uidResult,
-    gid,
-    gidResult
-}
+    username,
+    usernameResult,
+};

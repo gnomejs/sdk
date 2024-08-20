@@ -22,4 +22,4 @@
  * [MIT License](./LICENSE.md)
  */
 export * from "./marshal.ts";
-export * from "./errors.ts"
+export * from "./errors.ts";
