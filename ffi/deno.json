@@ -6,6 +6,7 @@
         "./marshal": "./src/marshal.ts",
         "./errors": "./src/errors.ts",
         "./bun": "./src/bun/mod.ts",
+        "./base/types": "./src/base/types.ts",
         "./bun/ffi": "./src/bun/ffi.d.ts"
     },
 
@@ -16,6 +17,7 @@
             "src/bun/ffi.d.ts",
             "src/bun/mod.ts",
             "src/errors.ts",
+            "src/base/types.ts",
             "README.md",
             "LICENSE.md",
             "deno.json"

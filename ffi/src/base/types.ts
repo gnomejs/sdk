@@ -18,10 +18,6 @@ export interface Ptr {
     toPtr<T>(): T;
 }
 
-export interface StructPtr extends Ptr {
-    struct: TypedArray | null;
-}
-
 export enum FFITypes {
     i8 = 1,
     u8 = 2,
