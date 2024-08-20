@@ -5,7 +5,7 @@ import { ENAMETOOLONG, ERANGE, UnixError } from "../errno.ts";
 import { err, ok, type Result } from "@gnome/monads/result";
 import type { GrEnt, PwEnt } from "./structs.ts";
 
-const libc = Deno.dlopen(DARWIN ? "libSystem.dylib" : "libc.so.6", {
+let libc : undefined | Deno.DynamicLibrary<{
     getpwuid_r: {
         parameters: ["u32", "pointer", "pointer", "u32", "pointer"],
         result: "i32",
@@ -61,7 +61,69 @@ const libc = Deno.dlopen(DARWIN ? "libSystem.dylib" : "libc.so.6", {
         result: "i32",
         optional: true,
     },
-});
+}>;
+
+if (!WINDOWS) {
+
+    libc = Deno.dlopen(DARWIN ? "libSystem.dylib" : "libc.so.6", {
+        getpwuid_r: {
+            parameters: ["u32", "pointer", "pointer", "u32", "pointer"],
+            result: "i32",
+            optional: true,
+        },
+        getpid: {
+            parameters: [],
+            result: "i32",
+            optional: true,
+        },
+        getppid: {
+            parameters: [],
+            result: "i32",
+            optional: true,
+        },
+        getuid: {
+            parameters: [],
+            result: "u32",
+            optional: true,
+        },
+        geteuid: {
+            parameters: [],
+            result: "u32",
+            optional: true,
+        },
+        getgid: {
+            parameters: [],
+            result: "u32",
+            optional: true,
+        },
+        getegid: {
+            parameters: [],
+            result: "u32",
+            optional: true,
+        },
+        gethostname: {
+            parameters: ["buffer", "i32"],
+            result: "i32",
+            optional: true,
+        },
+        getgroups: {
+            parameters: ["i32", "buffer"],
+            result: "i32",
+            optional: true,
+        },
+        getgrgid_r: {
+            parameters: ["u32", "pointer", "pointer", "u32", "pointer"],
+            result: "i32",
+            optional: true,
+        },
+        strerror_r: {
+            parameters: ["i32", "buffer", "i32"],
+            result: "i32",
+            optional: true,
+        },
+    });
+}
+
 
 /**
  * Get the hostname of the system.
@@ -75,7 +137,7 @@ export function hostname(): string {
         throw new NotSupportedError("gethostname not implemented on Windows");
     }
 
-    if (libc.symbols.gethostname === undefined || libc.symbols.gethostname === null) {
+    if (libc?.symbols.gethostname === undefined || libc.symbols.gethostname === null) {
         throw new MissingSymbolError("gethostname", "libc");
     }
 
@@ -108,7 +170,7 @@ export function hostnameResult(): Result<string> {
         return err<string>(new NotSupportedError("gethostname not implemented on Windows"));
     }
 
-    if (libc.symbols.gethostname === undefined || libc.symbols.gethostname === null) {
+    if (libc?.symbols.gethostname === undefined || libc.symbols.gethostname === null) {
         return err<string>(new MissingSymbolError("gethostname", "libc"));
     }
 
@@ -148,7 +210,7 @@ export function uid(): number {
         throw new NotSupportedError("getuid not implemented on Windows");
     }
 
-    if (libc.symbols.getuid === undefined || libc.symbols.getuid === null) {
+    if (libc?.symbols.getuid === undefined || libc.symbols.getuid === null) {
         throw new MissingSymbolError("getuid", "libc");
     }
 
@@ -164,7 +226,7 @@ export function uidResult(): Result<number> {
         return err<number>(new NotSupportedError("getuid not implemented on Windows"));
     }
 
-    if (libc.symbols.getuid === undefined || libc.symbols.getuid === null) {
+    if (libc?.symbols.getuid === undefined || libc.symbols.getuid === null) {
         return err<number>(new MissingSymbolError("getuid", "libc"));
     }
 
@@ -187,7 +249,7 @@ export function euid(): number {
         throw new NotSupportedError("geteuid not implemented on Windows");
     }
 
-    if (libc.symbols.geteuid === undefined || libc.symbols.geteuid === null) {
+    if (libc?.symbols.geteuid === undefined || libc.symbols.geteuid === null) {
         throw new MissingSymbolError("geteuid", "libc");
     }
 
@@ -203,7 +265,7 @@ export function euidResult(): Result<number> {
         return err<number>(new NotSupportedError("geteuid not implemented on Windows"));
     }
 
-    if (libc.symbols.geteuid === undefined || libc.symbols.geteuid === null) {
+    if (libc?.symbols.geteuid === undefined || libc.symbols.geteuid === null) {
         return err<number>(new MissingSymbolError("geteuid", "libc"));
     }
 
@@ -226,7 +288,7 @@ export function gid(): number {
         throw new NotSupportedError("getgid not implemented on Windows");
     }
 
-    if (libc.symbols.getgid === undefined || libc.symbols.getgid === null) {
+    if (libc?.symbols.getgid === undefined || libc.symbols.getgid === null) {
         throw new MissingSymbolError("getgid", "libc");
     }
 
@@ -242,7 +304,7 @@ export function gidResult(): Result<number> {
         return err<number>(new NotSupportedError("getgid not implemented on Windows"));
     }
 
-    if (libc.symbols.getgid === undefined || libc.symbols.getgid === null) {
+    if (libc?.symbols.getgid === undefined || libc.symbols.getgid === null) {
         return err<number>(new MissingSymbolError("getgid", "libc"));
     }
 
@@ -265,7 +327,7 @@ export function egid(): number {
         throw new NotSupportedError("getegid not implemented on Windows");
     }
 
-    if (libc.symbols.getegid === undefined || libc.symbols.getegid === null) {
+    if (libc?.symbols.getegid === undefined || libc.symbols.getegid === null) {
         throw new MissingSymbolError("getegid", "libc");
     }
 
@@ -281,7 +343,7 @@ export function egidResult(): Result<number> {
         return err<number>(new NotSupportedError("getegid not implemented on Windows"));
     }
 
-    if (libc.symbols.getegid === undefined || libc.symbols.getegid === null) {
+    if (libc?.symbols.getegid === undefined || libc.symbols.getegid === null) {
         return err<number>(new MissingSymbolError("getegid", "libc"));
     }
 
@@ -304,7 +366,7 @@ export function groups(): Uint32Array {
         throw new NotSupportedError("getgroups not implemented on Windows");
     }
 
-    if (libc.symbols.getgroups === undefined || libc.symbols.getgroups === null) {
+    if (libc?.symbols.getgroups === undefined || libc.symbols.getgroups === null) {
         throw new MissingSymbolError("getgroups", "libc");
     }
 
@@ -327,7 +389,7 @@ export function groupsResult(): Result<Uint32Array> {
         return err<Uint32Array>(new NotSupportedError("getgroups not implemented on Windows"));
     }
 
-    if (libc.symbols.getgroups === undefined || libc.symbols.getgroups === null) {
+    if (libc?.symbols.getgroups === undefined || libc.symbols.getgroups === null) {
         return err<Uint32Array>(new MissingSymbolError("getgroups", "libc"));
     }
 
@@ -359,7 +421,7 @@ export function pid(): number {
         throw new NotSupportedError("getpid not implemented on Windows");
     }
 
-    if (libc.symbols.getpid === undefined || libc.symbols.getpid === null) {
+    if (libc?.symbols.getpid === undefined || libc.symbols.getpid === null) {
         throw new MissingSymbolError("getpid", "libc");
     }
 
@@ -375,7 +437,7 @@ export function pidResult(): Result<number> {
         return err<number>(new NotSupportedError("getpid not implemented on Windows"));
     }
 
-    if (libc.symbols.getpid === undefined || libc.symbols.getpid === null) {
+    if (libc?.symbols.getpid === undefined || libc.symbols.getpid === null) {
         return err<number>(new MissingSymbolError("getpid", "libc"));
     }
 
@@ -398,7 +460,7 @@ export function ppid(): number {
         throw new NotSupportedError("getppid not implemented on Windows");
     }
 
-    if (libc.symbols.getppid === undefined || libc.symbols.getppid === null) {
+    if (libc?.symbols.getppid === undefined || libc.symbols.getppid === null) {
         throw new MissingSymbolError("getppid", "libc");
     }
 
@@ -414,7 +476,7 @@ export function ppidResult(): Result<number> {
         return err<number>(new NotSupportedError("getppid not implemented on Windows"));
     }
 
-    if (libc.symbols.getppid === undefined || libc.symbols.getppid === null) {
+    if (libc?.symbols.getppid === undefined || libc.symbols.getppid === null) {
         return err<number>(new MissingSymbolError("getppid", "libc"));
     }
 
@@ -438,7 +500,7 @@ export function groupname(gid: number): string {
         throw new NotSupportedError("getgrgid_r not implemented on Windows");
     }
 
-    if (libc.symbols.getgrgid_r === undefined || libc.symbols.getgrgid_r === null) {
+    if (libc?.symbols.getgrgid_r === undefined || libc.symbols.getgrgid_r === null) {
         throw new MissingSymbolError("getgrgid_r", "libc");
     }
 
@@ -479,7 +541,7 @@ export function groupnameResult(gid: number): Result<string> {
         return err<string>(new NotSupportedError("getgrgid_r not implemented on Windows"));
     }
 
-    if (libc.symbols.getgrgid_r === undefined || libc.symbols.getgrgid_r === null) {
+    if (libc?.symbols.getgrgid_r === undefined || libc.symbols.getgrgid_r === null) {
         return err<string>(new MissingSymbolError("getgrgid_r", "libc"));
     }
 
@@ -527,7 +589,7 @@ export function username(uid: number): string {
         throw new NotSupportedError("getpwuid_r not implemented on Windows");
     }
 
-    if (libc.symbols.getpwuid_r === undefined || libc.symbols.getpwuid_r === null) {
+    if (libc?.symbols.getpwuid_r === undefined || libc.symbols.getpwuid_r === null) {
         throw new MissingSymbolError("getpwuid_r", "libc");
     }
 
@@ -569,7 +631,7 @@ export function usernameResult(uid: number): Result<string> {
         return err<string>(new NotSupportedError("getpwuid_r not implemented on Windows"));
     }
 
-    if (libc.symbols.getpwuid_r === undefined || libc.symbols.getpwuid_r === null) {
+    if (libc?.symbols.getpwuid_r === undefined || libc.symbols.getpwuid_r === null) {
         return err<string>(new MissingSymbolError("getpwuid_r", "libc"));
     }
 
@@ -617,7 +679,7 @@ export function passwdEntry(uid: number): PwEnt {
         throw new NotSupportedError("getpwuid_r not implemented on Windows");
     }
 
-    if (libc.symbols.getpwuid_r === undefined || libc.symbols.getpwuid_r === null) {
+    if (libc?.symbols.getpwuid_r === undefined || libc.symbols.getpwuid_r === null) {
         throw new MissingSymbolError("getpwuid_r", "libc");
     }
 
@@ -687,7 +749,7 @@ export function passwdEntryResult(uid: number): Result<PwEnt> {
         return err<PwEnt>(new NotSupportedError("getpwuid_r not implemented on Windows"));
     }
 
-    if (libc.symbols.getpwuid_r === undefined || libc.symbols.getpwuid_r === null) {
+    if (libc?.symbols.getpwuid_r === undefined || libc.symbols.getpwuid_r === null) {
         return err<PwEnt>(new MissingSymbolError("getpwuid_r", "libc"));
     }
 
@@ -764,7 +826,7 @@ export function groupEntry(gid: number): GrEnt {
         throw new NotSupportedError("getgrgid_r not implemented on Windows");
     }
 
-    if (libc.symbols.getgrgid_r === undefined || libc.symbols.getgrgid_r === null) {
+    if (libc?.symbols.getgrgid_r === undefined || libc.symbols.getgrgid_r === null) {
         throw new MissingSymbolError("getgrgid_r", "libc");
     }
 
@@ -837,7 +899,7 @@ export function groupEntryResult(gid: number): Result<GrEnt> {
         return err<GrEnt>(new NotSupportedError("getgrgid_r not implemented on Windows"));
     }
 
-    if (libc.symbols.getgrgid_r === undefined || libc.symbols.getgrgid_r === null) {
+    if (libc?.symbols.getgrgid_r === undefined || libc.symbols.getgrgid_r === null) {
         return err<GrEnt>(new MissingSymbolError("getgrgid_r", "libc"));
     }
 

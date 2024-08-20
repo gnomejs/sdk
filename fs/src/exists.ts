@@ -122,6 +122,8 @@ export async function exists(
         return true;
     } catch (error) {
         if (g.process) {
+            console.log(error);
+            console.log(error.code);
             if (error.code === "ENOENT") {
                 return false;
             }

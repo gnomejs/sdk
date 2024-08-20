@@ -8,7 +8,7 @@
  * @module
  */
 import type * as bunFFI from "./ffi.d.ts";
-import type { Pointer } from "./ffi.d.ts";
+import type { Pointer , Library} from "./ffi.d.ts";
 
 // deno-lint-ignore no-explicit-any
 const g = globalThis as any;
@@ -28,6 +28,6 @@ export const CFunction = ffi.CFunction;
 export const toArrayBuffer = ffi.toArrayBuffer;
 export const read = ffi.read;
 
-export type { Pointer };
+export type { Pointer, Library };
 
 export default ffi;
