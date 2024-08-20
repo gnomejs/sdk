@@ -1,6 +1,6 @@
 import type { ExistsOptions } from "./types.ts";
 import { gid, stat, uid } from "./fs.ts";
-import { WINDOWS } from "../../runtime-info/src/os.ts";
+import { WINDOWS } from "@gnome/runtime-info/os";
 
 // deno-lint-ignore no-explicit-any
 const g = globalThis as any;
