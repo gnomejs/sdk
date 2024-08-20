@@ -2,7 +2,7 @@
     "name": "@gnome/chars",
     "version": "0.2.0",
     "exports": {
-        ".": "././src/mod.ts",
+        ".": "./src/mod.ts",
         "./all": "./src/all.ts",
         "./constants": "./src/constants.ts",
         "./is-ascii": "./src/is_ascii.ts",
