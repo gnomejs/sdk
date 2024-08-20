@@ -1,5 +1,6 @@
 import type { ExistsOptions } from "./types.ts";
 import { gid, stat, uid } from "./fs.ts";
+import { WINDOWS } from "../../runtime-info/src/os.ts";
 
 // deno-lint-ignore no-explicit-any
 const g = globalThis as any;
@@ -122,12 +123,15 @@ export async function exists(
         return true;
     } catch (error) {
         if (g.process) {
-            console.log(error);
-            console.log(error.code);
+
             if (error.code === "ENOENT") {
                 return false;
             }
+
             if (error.code === "EPERM" || error.code === "EACCES") {
+                if (WINDOWS && error.code === "EACCES" && (options?.isDirectory || options?.isFile)) {
+                    return false; // can't determine if it's a directory or file
+                }
                 return !options?.isReadable;
             }
         }
@@ -268,6 +272,9 @@ export function existsSync(
                 return false;
             }
             if (error.code === "EPERM" || error.code === "EACCES") {
+                if (WINDOWS && error.code === "EACCES" && (options?.isDirectory || options?.isFile)) {
+                    return false; // can't determine if it's a directory or file
+                }
                 return !options?.isReadable;
             }
         }
