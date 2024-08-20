@@ -3,7 +3,7 @@ import { WINDOWS } from "@gnome/runtime-info/os";
 import { type CharBuffer, toCharSliceLike } from "./utils.ts";
 import { toCharArray } from "./utils.ts";
 import { sprintf } from "@gnome/fmt/printf";
-import { ArgumentError } from "../../errors/src/argument_error.ts";
+import { ArgumentError } from "@gnome/errors/argument-error";
 
 /**
  * Represents a mutable string of characters that are stored
